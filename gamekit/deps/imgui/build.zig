@@ -60,10 +60,12 @@ fn addImGuiGlImplementation(b: *Builder, exe: *std.build.LibExeObjStep, target: 
         const lib = b.addStaticLibrary("gl3w", null);
         lib.setBuildMode(b.standardReleaseOptions());
         lib.setTarget(target);
+        lib.linkLibC();
 
         if (target.isWindows()) {
             lib.linkSystemLibrary("user32");
             lib.linkSystemLibrary("gdi32");
+            lib.addIncludeDir("c:\\SDL2\\include");
         } else if (target.isDarwin()) {
             const frameworks_dir = macosFrameworksDir(b) catch unreachable;
             lib.addFrameworkDir(frameworks_dir);
