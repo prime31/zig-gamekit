@@ -6,7 +6,7 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.buil
     exe.linkSystemLibrary("c");
     exe.linkSystemLibrary("SDL2");
 
-    if (target.isWindows()) {
+    if (std.builtin.os.tag == .windows) {
         // Windows include dirs for SDL2. This requires downloading SDL2 dev and extracting to c:\SDL2
         exe.addLibPath("c:\\SDL2\\lib\\x64");
 
