@@ -61,13 +61,20 @@ fn addImGuiGlImplementation(b: *Builder, exe: *std.build.LibExeObjStep, target: 
         lib.setBuildMode(b.standardReleaseOptions());
         lib.setTarget(target);
 
-        if (target.isDarwin()) {
+        if (target.isWindows()) {
+            lib.linkSystemLibrary("user32");
+            lib.linkSystemLibrary("gdi32");
+        } else if (target.isDarwin()) {
             const frameworks_dir = macosFrameworksDir(b) catch unreachable;
             lib.addFrameworkDir(frameworks_dir);
             // for some reason, only on some SDL installs this is required...
             // const x11_include_dir = std.mem.concat(b.allocator, u8, &[_][]const u8{ frameworks_dir, "/Tk.framework/Headers" }) catch unreachable;
             // lib.addIncludeDir(x11_include_dir);
+        } else {
+            lib.linkLibC();
+            lib.linkSystemLibrary("c++");
         }
+
         lib.addIncludeDir(base_path ++ "cimgui/imgui");
         lib.addIncludeDir(base_path ++ "cimgui/imgui/examples/libs/gl3w");
         lib.addIncludeDir("/usr/local/include/SDL2");
