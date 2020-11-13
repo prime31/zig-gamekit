@@ -1,6 +1,6 @@
 [submodule "renderkit"]
 	path = renderkit
-	url = git@github.com-p31:prime31/zig-renderkit.git
+url=https://github.com/prime31/zig-renderkit
 [submodule "gamekit/deps/imgui/cimgui"]
 	path = gamekit/deps/imgui/cimgui
 	url = https://github.com/cimgui/cimgui.git
