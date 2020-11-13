@@ -121,6 +121,7 @@ pub fn main() !void {
 }
 
 fn init() !void {
+    _ = @import("sdl").SDL_GL_SetSwapInterval(1);
     const drawable_size = gamekit.window.drawableSize();
     camera = Camera.init(@intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h));
 
@@ -155,43 +156,43 @@ fn shutdown() !void {
 fn update() !void {
     const move_speed = 140.0;
     if (gamekit.input.keyDown(.w)) {
-        camera.x += std.math.cos(camera.r) * move_speed * gamekit.time.dt();
-        camera.y += std.math.sin(camera.r) * move_speed * gamekit.time.dt();
+        camera.x += std.math.cos(camera.r) * move_speed * gamekit.time.rawDeltaTime();
+        camera.y += std.math.sin(camera.r) * move_speed * gamekit.time.rawDeltaTime();
     } else if (gamekit.input.keyDown(.s)) {
-        camera.x = camera.x - std.math.cos(camera.r) * move_speed * gamekit.time.dt();
-        camera.y = camera.y - std.math.sin(camera.r) * move_speed * gamekit.time.dt();
+        camera.x = camera.x - std.math.cos(camera.r) * move_speed * gamekit.time.rawDeltaTime();
+        camera.y = camera.y - std.math.sin(camera.r) * move_speed * gamekit.time.rawDeltaTime();
     }
 
     if (gamekit.input.keyDown(.a)) {
-        camera.x += std.math.cos(camera.r - std.math.pi / 2.0) * move_speed * gamekit.time.dt();
-        camera.y += std.math.sin(camera.r - std.math.pi / 2.0) * move_speed * gamekit.time.dt();
+        camera.x += std.math.cos(camera.r - std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
+        camera.y += std.math.sin(camera.r - std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
     } else if (gamekit.input.keyDown(.d)) {
-        camera.x += std.math.cos(camera.r + std.math.pi / 2.0) * move_speed * gamekit.time.dt();
-        camera.y += std.math.sin(camera.r + std.math.pi / 2.0) * move_speed * gamekit.time.dt();
+        camera.x += std.math.cos(camera.r + std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
+        camera.y += std.math.sin(camera.r + std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
     }
 
     if (gamekit.input.keyDown(.i)) {
-        camera.f += gamekit.time.dt();
+        camera.f += gamekit.time.rawDeltaTime();
     } else if (gamekit.input.keyDown(.o)) {
-        camera.f -= gamekit.time.dt();
+        camera.f -= gamekit.time.rawDeltaTime();
     }
 
     if (gamekit.input.keyDown(.k)) {
-        camera.o += gamekit.time.dt();
+        camera.o += gamekit.time.rawDeltaTime();
     } else if (gamekit.input.keyDown(.l)) {
-        camera.o -= gamekit.time.dt();
+        camera.o -= gamekit.time.rawDeltaTime();
     }
 
     if (gamekit.input.keyDown(.minus)) {
-        camera.z += gamekit.time.dt() * 10;
+        camera.z += gamekit.time.rawDeltaTime() * 10;
     } else if (gamekit.input.keyDown(.equals)) {
-        camera.z -= gamekit.time.dt() * 10;
+        camera.z -= gamekit.time.rawDeltaTime() * 10;
     }
 
     if (gamekit.input.keyDown(.q)) {
-        camera.setRotation(@mod(camera.r, std.math.tau) - gamekit.time.dt());
+        camera.setRotation(@mod(camera.r, std.math.tau) - gamekit.time.rawDeltaTime());
     } else if (gamekit.input.keyDown(.e)) {
-        camera.setRotation(@mod(camera.r, std.math.tau) + gamekit.time.dt());
+        camera.setRotation(@mod(camera.r, std.math.tau) + gamekit.time.rawDeltaTime());
     }
 
     if (gamekit.input.mousePressed(.left)) {
