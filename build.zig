@@ -61,7 +61,7 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
 
     // sdl
     const sdl_builder = @import(prefix_path ++ "gamekit/deps/sdl/build.zig");
-    sdl_builder.linkArtifact(exe, target, prefix_path);
+    sdl_builder.linkArtifact(b, exe, target, prefix_path);
     const sdl_pkg = sdl_builder.getPackage(prefix_path);
 
     // stb

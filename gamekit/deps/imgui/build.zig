@@ -73,7 +73,6 @@ fn addImGuiGlImplementation(b: *Builder, exe: *std.build.LibExeObjStep, target: 
             // const x11_include_dir = std.mem.concat(b.allocator, u8, &[_][]const u8{ frameworks_dir, "/Tk.framework/Headers" }) catch unreachable;
             // lib.addIncludeDir(x11_include_dir);
         } else {
-            lib.linkLibC();
             lib.linkSystemLibrary("c++");
         }
 
