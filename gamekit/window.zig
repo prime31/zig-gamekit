@@ -3,7 +3,7 @@ const sdl = @import("sdl");
 const renderkit = @import("renderkit");
 
 pub const WindowConfig = struct {
-    title: [:0]const u8 = "Zig RenderKit", // the window title as UTF-8 encoded string
+    title: [:0]const u8 = "Zig GameKit", // the window title as UTF-8 encoded string
     width: i32 = 800, // the preferred width of the window / canvas
     height: i32 = 600, // the preferred height of the window / canvas
     resizable: bool = true, // whether the window should be allowed to be resized

@@ -13,6 +13,7 @@ pub fn build(b: *Builder) !void {
 
     const examples = [_][2][]const u8{
         [_][]const u8{ "mode7", "examples/mode7.zig" },
+        [_][]const u8{ "primitives", "examples/primitives.zig" },
         [_][]const u8{ "offscreen", "examples/offscreen.zig" },
         [_][]const u8{ "tri_batcher", "examples/tri_batcher.zig" },
         [_][]const u8{ "batcher", "examples/batcher.zig" },
@@ -69,6 +70,11 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
     stb_builder.linkArtifact(b, exe, target, prefix_path);
     const stb_pkg = stb_builder.getPackage(prefix_path);
 
+    // fontstash
+    const fontstash_build = @import(prefix_path ++ "gamekit/deps/fontstash/build.zig");
+    fontstash_build.linkArtifact(b, exe, target, prefix_path);
+    const fontstash_pkg = fontstash_build.getPackage(prefix_path);
+
     // renderkit
     const renderkit_build = @import(prefix_path ++ "renderkit/build.zig");
     renderkit_build.addRenderKitToArtifact(b, exe, target, prefix_path ++ "renderkit/");
@@ -85,7 +91,7 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
     const gamekit_package = Pkg{
         .name = "gamekit",
         .path = prefix_path ++ "gamekit/gamekit.zig",
-        .dependencies = &[_]Pkg{ renderkit_pkg, sdl_pkg, stb_pkg, imgui_pkg, imgui_gl_pkg },
+        .dependencies = &[_]Pkg{ renderkit_pkg, sdl_pkg, stb_pkg, fontstash_pkg, imgui_pkg, imgui_gl_pkg },
     };
     exe.addPackage(gamekit_package);
 }

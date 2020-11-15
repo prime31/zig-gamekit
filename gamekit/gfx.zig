@@ -16,6 +16,8 @@ pub const Batcher = @import("graphics/batcher.zig").Batcher;
 pub const MultiBatcher = @import("graphics/multi_batcher.zig").MultiBatcher;
 pub const TriangleBatcher = @import("graphics/triangle_batcher.zig").TriangleBatcher;
 
+pub const FontBook = @import("graphics/fontbook.zig").FontBook;
+
 pub const Vertex = extern struct {
     pos: math.Vec2 = .{ .x = 0, .y = 0 },
     uv: math.Vec2 = .{ .x = 0, .y = 0 },
@@ -52,7 +54,7 @@ pub var state = struct {
 }{};
 
 pub fn init() void {
-    state.shader = Shader.init(@embedFile("shaders/default.vs"), @embedFile("shaders/default.fs")) catch unreachable;
+    state.shader = Shader.init(@embedFile("assets/default.vs"), @embedFile("assets/default.fs")) catch unreachable;
     state.shader.bind();
     state.shader.setUniformName(i32, "MainTex", 0);
     draw.init();
@@ -112,4 +114,4 @@ pub fn commitFrame() void {
 }
 
 // import all the drawing methods
-usingnamespace @import("draw.zig");
+pub usingnamespace @import("draw.zig");
