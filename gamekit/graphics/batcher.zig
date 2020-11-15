@@ -9,7 +9,7 @@ const Vertex = gk.gfx.Vertex;
 const Texture = gk.gfx.Texture;
 
 pub const Batcher = struct {
-    mesh: gk.gfx.DynamicMesh(Vertex, u16),
+    mesh: gk.gfx.DynamicMesh(u16, Vertex),
     vert_index: usize = 0, // current index into the vertex array
     current_image: renderkit.Image = std.math.maxInt(renderkit.Image),
 
@@ -29,7 +29,7 @@ pub const Batcher = struct {
         }
 
         return .{
-            .mesh = gk.gfx.DynamicMesh(Vertex, u16).init(allocator, max_sprites * 4, indices) catch unreachable,
+            .mesh = gk.gfx.DynamicMesh(u16, Vertex).init(allocator, max_sprites * 4, indices) catch unreachable,
         };
     }
 

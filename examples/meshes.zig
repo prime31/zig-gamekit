@@ -7,7 +7,7 @@ var shader: gfx.Shader = undefined;
 var tex: gfx.Texture = undefined;
 var colored_tex: gfx.Texture = undefined;
 var mesh: gfx.Mesh = undefined;
-var dyn_mesh: gfx.DynamicMesh(gfx.Vertex, u16) = undefined;
+var dyn_mesh: gfx.DynamicMesh(u16, gfx.Vertex) = undefined;
 
 pub fn main() !void {
     try gk.run(.{
@@ -35,7 +35,7 @@ fn init() !void {
         .{ .pos = .{ .x = 50, .y = 50 }, .uv = .{ .x = 0.5, .y = 0.5 } }, // c
     };
     var indices = [_]u16{ 0, 5, 4, 5, 3, 4, 5, 2, 3, 5, 1, 2, 5, 0, 1 };
-    mesh = gfx.Mesh.init(gfx.Vertex, vertices[0..], u16, indices[0..]);
+    mesh = gfx.Mesh.init(u16, indices[0..], gfx.Vertex, vertices[0..]);
 
     var dyn_vertices = [_]gfx.Vertex{
         .{ .pos = .{ .x = 10, .y = 10 }, .uv = .{ .x = 0, .y = 1 } }, // bl
@@ -44,7 +44,7 @@ fn init() !void {
         .{ .pos = .{ .x = 10, .y = 100 }, .uv = .{ .x = 0, .y = 0 } }, // tl
     };
     var dyn_indices = [_]u16{ 0, 1, 2, 2, 3, 0 };
-    dyn_mesh = try gfx.DynamicMesh(gfx.Vertex, u16).init(std.testing.allocator, vertices.len, &dyn_indices);
+    dyn_mesh = try gfx.DynamicMesh(u16, gfx.Vertex).init(std.testing.allocator, vertices.len, &dyn_indices);
     for (dyn_vertices) |*vert, i| {
         vert.pos.x += 200;
         vert.pos.y += 200;

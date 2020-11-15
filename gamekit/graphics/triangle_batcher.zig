@@ -7,7 +7,7 @@ const Vertex = gk.gfx.Vertex;
 const DynamicMesh = gk.gfx.DynamicMesh;
 
 pub const TriangleBatcher = struct {
-    mesh: DynamicMesh(Vertex, u16),
+    mesh: DynamicMesh(u16, Vertex),
     white_tex: gk.gfx.Texture = undefined,
 
     vert_index: usize = 0, // current index into the vertex array
@@ -23,7 +23,7 @@ pub const TriangleBatcher = struct {
         }
 
         var batcher = TriangleBatcher{
-            .mesh = try DynamicMesh(Vertex, u16).init(allocator, max_tris * 3, indices),
+            .mesh = try DynamicMesh(u16, Vertex).init(allocator, max_tris * 3, indices),
         };
         errdefer batcher.deinit();
 

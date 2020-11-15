@@ -6,15 +6,15 @@ pub const Mesh = struct {
     bindings: renderer.BufferBindings,
     element_count: c_int,
 
-    pub fn init(comptime VertT: type, verts: []VertT, comptime IndexT: type, indices: []IndexT) Mesh {
-        var vbuffer = renderer.createBuffer(VertT, .{
-            .content = verts,
-        });
+    pub fn init(comptime IndexT: type, indices: []IndexT, comptime VertT: type, verts: []VertT) Mesh {
         var ibuffer = renderer.createBuffer(IndexT, .{
             .type = .index,
             .content = indices,
         });
-        var bindings = renderer.createBufferBindings(ibuffer, vbuffer);
+        var vbuffer = renderer.createBuffer(VertT, .{
+            .content = verts,
+        });
+        var bindings = renderer.createBufferBindings(ibuffer, &[_]renderkit.Buffer{vbuffer});
 
         return .{
             .bindings = bindings,
@@ -36,7 +36,7 @@ pub const Mesh = struct {
 };
 
 /// Contains a dynamic vert buffer and a slice of verts
-pub fn DynamicMesh(comptime VertT: type, comptime IndexT: type) type {
+pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
     return struct {
         const Self = @This();
 
@@ -47,16 +47,16 @@ pub fn DynamicMesh(comptime VertT: type, comptime IndexT: type) type {
         allocator: *std.mem.Allocator,
 
         pub fn init(allocator: *std.mem.Allocator, vertex_count: usize, indices: []IndexT) !Self {
-            var vertex_buffer = renderer.createBuffer(VertT, .{
-                .usage = .stream,
-                .size = @intCast(c_long, vertex_count * @sizeOf(VertT)),
-            });
             var ibuffer = renderer.createBuffer(IndexT, .{
                 .type = .index,
                 .content = indices,
             });
-            var bindings = renderer.createBufferBindings(ibuffer, vertex_buffer);
+            var vertex_buffer = renderer.createBuffer(VertT, .{
+                .usage = .stream,
+                .size = @intCast(c_long, vertex_count * @sizeOf(VertT)),
+            });
 
+            var bindings = renderer.createBufferBindings(ibuffer, &[_]renderer.Buffer{vertex_buffer});
             return Self{
                 .bindings = bindings,
                 .vertex_buffer = vertex_buffer,

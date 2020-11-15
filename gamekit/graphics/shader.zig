@@ -16,7 +16,7 @@ pub const Shader = struct {
     }
 
     pub fn init(vert: [:0]const u8, frag: [:0]const u8) !Shader {
-        return Shader{ .shader = renderer.createShaderProgram(.{.vs = vert, .fs = frag}) };
+        return Shader{ .shader = renderer.createShaderProgram(void, .{.vs = vert, .fs = frag}) };
     }
 
     pub fn deinit(self: Shader) void {

@@ -14,7 +14,7 @@ pub const MultiVertex = extern struct {
 };
 
 pub const MultiBatcher = struct {
-    mesh: gk.gfx.DynamicMesh(MultiVertex, u16),
+    mesh: gk.gfx.DynamicMesh(u16, MultiVertex),
     vert_index: usize = 0, // current index into the vertex array
     textures: [8]rk.Image = undefined,
     last_texture: usize = 0,
@@ -34,7 +34,7 @@ pub const MultiBatcher = struct {
         }
 
         return .{
-            .mesh = gk.gfx.DynamicMesh(MultiVertex, u16).init(allocator, max_sprites * 4, indices) catch unreachable,
+            .mesh = gk.gfx.DynamicMesh(u16, MultiVertex).init(allocator, max_sprites * 4, indices) catch unreachable,
             .textures = [_]rk.Image{0} ** 8,
         };
     }
