@@ -60,29 +60,30 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
         enable_imgui = b.option(bool, "imgui", "enable imgui") orelse false;
     exe.addBuildOption(bool, "enable_imgui", enable_imgui.?);
 
+    var dependencies = std.ArrayList(Pkg).init(b.allocator);
+
     // sdl
-    const sdl_builder = @import(prefix_path ++ "gamekit/deps/sdl/build.zig");
+    const sdl_builder = @import("gamekit/deps/sdl/build.zig");
     sdl_builder.linkArtifact(b, exe, target, prefix_path);
     const sdl_pkg = sdl_builder.getPackage(prefix_path);
 
     // stb
-    const stb_builder = @import(prefix_path ++ "gamekit/deps/stb/build.zig");
+    const stb_builder = @import("gamekit/deps/stb/build.zig");
     stb_builder.linkArtifact(b, exe, target, prefix_path);
     const stb_pkg = stb_builder.getPackage(prefix_path);
 
     // fontstash
-    const fontstash_build = @import(prefix_path ++ "gamekit/deps/fontstash/build.zig");
+    const fontstash_build = @import("gamekit/deps/fontstash/build.zig");
     fontstash_build.linkArtifact(b, exe, target, prefix_path);
     const fontstash_pkg = fontstash_build.getPackage(prefix_path);
 
     // renderkit
-    const renderkit_build = @import(prefix_path ++ "renderkit/build.zig");
+    const renderkit_build = @import("renderkit/build.zig");
     renderkit_build.addRenderKitToArtifact(b, exe, target, prefix_path ++ "renderkit/");
     const renderkit_pkg = renderkit_build.getRenderKitPackage(prefix_path ++ "renderkit/");
 
     // imgui
-    // TODO: skip adding imgui altogether when enable_imgui is false
-    const imgui_builder = @import(prefix_path ++ "gamekit/deps/imgui/build.zig");
+    const imgui_builder = @import("gamekit/deps/imgui/build.zig");
     imgui_builder.linkArtifact(b, exe, target, prefix_path);
     const imgui_pkg = imgui_builder.getImGuiPackage(prefix_path);
     const imgui_gl_pkg = imgui_builder.getImGuiGlPackage(prefix_path);
