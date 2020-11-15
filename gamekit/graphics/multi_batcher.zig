@@ -94,23 +94,23 @@ pub const MultiBatcher = struct {
         const tid = self.submitTexture(texture.img);
 
         var verts = self.mesh.verts[self.vert_index .. self.vert_index + 4];
-        verts[0].pos = pos; // bl
-        verts[0].uv = .{ .x = 0, .y = 1 };
+        verts[0].pos = pos; // tl
+        verts[0].uv = .{ .x = 0, .y = 0 };
         verts[0].col = col;
         verts[0].tid = tid;
 
-        verts[1].pos = .{ .x = pos.x + texture.width, .y = pos.y }; // br
-        verts[1].uv = .{ .x = 1, .y = 1 };
+        verts[1].pos = .{ .x = pos.x + texture.width, .y = pos.y }; // tr
+        verts[1].uv = .{ .x = 1, .y = 0 };
         verts[1].col = col;
         verts[1].tid = tid;
 
-        verts[2].pos = .{ .x = pos.x + texture.width, .y = pos.y + texture.height }; // tr
-        verts[2].uv = .{ .x = 1, .y = 0 };
+        verts[2].pos = .{ .x = pos.x + texture.width, .y = pos.y + texture.height }; // br
+        verts[2].uv = .{ .x = 1, .y = 1 };
         verts[2].col = col;
         verts[2].tid = tid;
 
-        verts[3].pos = .{ .x = pos.x, .y = pos.y + texture.height }; // tl
-        verts[3].uv = .{ .x = 0, .y = 0 };
+        verts[3].pos = .{ .x = pos.x, .y = pos.y + texture.height }; // bl
+        verts[3].uv = .{ .x = 0, .y = 1 };
         verts[3].col = col;
         verts[3].tid = tid;
 

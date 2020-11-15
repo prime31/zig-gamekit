@@ -37,18 +37,18 @@ pub const Mat32 = struct {
     pub fn initOrthoInverted(width: f32, height: f32) Mat32 {
         var result = Mat32{};
         result.data[0] = 2 / width;
-        result.data[3] = -2 / height;
+        result.data[3] = 2 / height;
         result.data[4] = -1;
-        result.data[5] = 1;
+        result.data[5] = -1;
         return result;
     }
 
     pub fn initOrtho(width: f32, height: f32) Mat32 {
         var result = Mat32{};
         result.data[0] = 2 / width;
-        result.data[3] = 2 / height;
+        result.data[3] = -2 / height;
         result.data[4] = -1;
-        result.data[5] = -1;
+        result.data[5] = 1;
         return result;
     }
 

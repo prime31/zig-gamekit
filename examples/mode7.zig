@@ -30,9 +30,9 @@ const Camera = struct {
     sprites: std.ArrayList(Block) = undefined,
 
     pub fn init(sw: f32, sh: f32) Camera {
-        var new_cam = Camera{ .sw = sw, .sh = sh, .sprites = std.ArrayList(Block).init(std.testing.allocator) };
-        new_cam.setRotation(0);
-        return new_cam;
+        var cam = Camera{ .sw = sw, .sh = sh, .sprites = std.ArrayList(Block).init(std.testing.allocator) };
+        cam.setRotation(0);
+        return cam;
     }
 
     pub fn deinit(self: Camera) void {
@@ -47,7 +47,7 @@ const Camera = struct {
         self.y2 = std.math.sin(rot);
     }
 
-    pub fn toWorld(self: Camera, pos: math.Vec2) math.Vec2 {
+    pub fn toWorld(self: Camera, pos: gamekit.math.Vec2) gamekit.math.Vec2 {
         const sx = (self.sw / 2 - pos.x) * self.z / (self.sw / self.sh);
         const sy = (self.o * self.sh - pos.y) * (self.z / self.f);
 
@@ -57,7 +57,7 @@ const Camera = struct {
         return .{ .x = rot_x / pos.y + self.x, .y = rot_y / pos.y + self.y };
     }
 
-    pub fn toScreen(self: Camera, pos: math.Vec2) struct { x: f32, y: f32, size: f32 } {
+    pub fn toScreen(self: Camera, pos: gamekit.math.Vec2) struct { x: f32, y: f32, size: f32 } {
         const obj_x = -(self.x - pos.x) / self.z;
         const obj_y = (self.y - pos.y) / self.z;
 
@@ -71,10 +71,10 @@ const Camera = struct {
         // Should be approximately one pixel on the plane
         const size = ((1 / distance) / self.z * self.o) * self.sw;
 
-        return .{ .x = screen_x, .y = self.sh - screen_y, .size = size };
+        return .{ .x = screen_x, .y = screen_y, .size = size };
     }
 
-    pub fn placeSprite(self: *Camera, tex: Texture, pos: math.Vec2, scale: f32) void {
+    pub fn placeSprite(self: *Camera, tex: gamekit.gfx.Texture, pos: gamekit.math.Vec2, scale: f32) void {
         const dim = self.toScreen(pos);
         const sx2 = (dim.size * scale) / tex.width;
 
@@ -94,7 +94,7 @@ const Camera = struct {
         }
 
         for (self.sprites.items) |sprite| {
-            gfx.draw.texScaleOrigin(sprite.tex, sprite.pos.x, sprite.pos.y, sprite.scale, sprite.tex.width / 2, 0);
+            gfx.draw.texScaleOrigin(sprite.tex, sprite.pos.x, sprite.pos.y, sprite.scale, sprite.tex.width / 2, sprite.tex.height);
         }
         self.sprites.items.len = 0;
     }
@@ -206,7 +206,8 @@ fn render() !void {
     drawPlane();
 
     var pos = camera.toScreen(camera.toWorld(gamekit.input.mousePos()));
-    gfx.draw.texScaleOrigin(block, pos.x, pos.y, pos.size, block.width / 2, 0);
+    gfx.draw.circle(.{ .x = pos.x, .y = pos.y }, pos.size, 2, 8, gamekit.math.Color.white);
+    gfx.draw.texScaleOrigin(block, pos.x, pos.y, pos.size, block.width / 2, block.height);
 
     for (blocks.items) |b| {
         camera.placeSprite(block, b, 8);

@@ -153,7 +153,7 @@ pub const draw = struct {
 
         var i: usize = 0;
         while (i <= resolution) : (i += 1) {
-            const at = math.Vec2.angleToVec(@intToFloat(f32, i) * math.pi_over_2 / @intToFloat(f32, resolution), radius);
+            const at = math.Vec2.angleToVec(@intToFloat(f32, i) * std.math.pi * 0.5 / @intToFloat(f32, resolution), radius);
             const at_p = at.orthogonal();
 
             line(center.add(last), center.add(at), thickness, color);

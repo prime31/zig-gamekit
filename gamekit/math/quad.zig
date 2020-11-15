@@ -39,10 +39,10 @@ pub const Quad = struct {
         const inv_w = 1.0 / self.img_w;
         const inv_h = 1.0 / self.img_h;
 
-        self.uvs[0] = Vec2{ .x = x * inv_w + w_tol, .y = (y + height) * inv_h - h_tol };
-        self.uvs[1] = Vec2{ .x = (x + width) * inv_w - w_tol, .y = (y + height) * inv_h - h_tol };
-        self.uvs[2] = Vec2{ .x = (x + width) * inv_w - w_tol, .y = y * inv_h + h_tol };
-        self.uvs[3] = Vec2{ .x = x * inv_w + w_tol, .y = y * inv_h + h_tol };
+        self.uvs[0] = Vec2{ .x = x * inv_w + w_tol, .y = y * inv_h + h_tol };
+        self.uvs[1] = Vec2{ .x = (x + width) * inv_w - w_tol, .y = y * inv_h + h_tol };
+        self.uvs[2] = Vec2{ .x = (x + width) * inv_w - w_tol, .y = (y + height) * inv_h - h_tol };
+        self.uvs[3] = Vec2{ .x = x * inv_w + w_tol, .y = (y + height) * inv_h - h_tol };
     }
 
     /// sets the Quad to be the full size of the texture
