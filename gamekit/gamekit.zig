@@ -2,8 +2,8 @@ const std = @import("std");
 const sdl = @import("sdl");
 const imgui = @import("imgui");
 const imgui_gl = @import("imgui_gl");
-const renderkit = @import("renderkit");
 
+pub const renderkit = @import("renderkit");
 pub const utils = @import("utils/utils.zig");
 pub const math = @import("math/math.zig");
 
