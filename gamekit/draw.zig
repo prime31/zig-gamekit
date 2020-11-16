@@ -147,8 +147,7 @@ pub const draw = struct {
     pub fn circle(center: math.Vec2, radius: f32, thickness: f32, resolution: i32, color: math.Color) void {
         quad.setFill(white_tex.width, white_tex.height);
 
-        var last = math.Vec2.init(1, 0);
-        last.scale(radius);
+        var last = math.Vec2.init(1, 0).scale(radius);
         var last_p = last.orthogonal();
 
         var i: usize = 0;
@@ -156,10 +155,10 @@ pub const draw = struct {
             const at = math.Vec2.angleToVec(@intToFloat(f32, i) * std.math.pi * 0.5 / @intToFloat(f32, resolution), radius);
             const at_p = at.orthogonal();
 
-            line(center.add(last), center.add(at), thickness, color);
-            line(center.subtract(last), center.subtract(at), thickness, color);
-            line(center.add(last_p), center.add(at_p), thickness, color);
-            line(center.subtract(last_p), center.subtract(at_p), thickness, color);
+            line(center.addv(last), center.addv(at), thickness, color);
+            line(center.subv(last), center.subv(at), thickness, color);
+            line(center.addv(last_p), center.addv(at_p), thickness, color);
+            line(center.subv(last_p), center.subv(at_p), thickness, color);
 
             last = at;
             last_p = at_p;
