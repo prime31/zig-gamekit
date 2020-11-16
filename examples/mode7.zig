@@ -7,6 +7,21 @@ const math = gamekit.math;
 const Texture = gamekit.gfx.Texture;
 const Color = gamekit.math.Color;
 
+const Mode7Uniform = struct {
+    mapw: f32 = 0,
+    maph: f32 = 0,
+    x: f32 = 0,
+    y: f32 = 0,
+    zoom: f32 = 0,
+    fov: f32 = 0,
+    offset: f32 = 0,
+    wrap: f32 = 0,
+    x1: f32 = 0,
+    x2: f32 = 0,
+    y1: f32 = 0,
+    y2: f32 = 0,
+};
+
 const Block = struct {
     tex: Texture,
     pos: math.Vec2,
@@ -107,8 +122,10 @@ const Camera = struct {
 var map: Texture = undefined;
 var block: Texture = undefined;
 var mode7_shader: gfx.Shader = undefined;
+var uniform: Mode7Uniform = .{};
 var camera: Camera = undefined;
 var blocks: std.ArrayList(math.Vec2) = undefined;
+var wrap: f32 = 0;
 
 pub fn main() !void {
     try gamekit.run(.{
@@ -127,7 +144,7 @@ fn init() !void {
 
     map = Texture.initFromFile(std.testing.allocator, "examples/assets/mario_kart.png", .nearest) catch unreachable;
     block = Texture.initFromFile(std.testing.allocator, "examples/assets/block.png", .nearest) catch unreachable;
-    mode7_shader = try gfx.Shader.init(@embedFile("assets/shaders/vert.vs"), @embedFile("assets/shaders/mode7.fs"));
+    mode7_shader = try gfx.Shader.initWithFragUniform(Mode7Uniform, @embedFile("assets/shaders/vert.vs"), @embedFile("assets/shaders/mode7.fs"));
     mode7_shader.bind();
     mode7_shader.setUniformName(i32, "MainTex", 0);
     mode7_shader.setUniformName(i32, "map_tex", 1);
@@ -199,6 +216,10 @@ fn update() !void {
         var pos = camera.toWorld(gamekit.input.mousePos());
         _ = blocks.append(pos) catch unreachable;
     }
+
+    if (gamekit.input.mousePressed(.right)) {
+        wrap = if (wrap == 0) 1 else 0;
+    }
 }
 
 fn render() !void {
@@ -214,26 +235,34 @@ fn render() !void {
     }
     camera.renderSprites();
 
+    gfx.draw.text("WASD to move", 5, 20, null);
+    gfx.draw.text("i/o to change fov", 5, 40, null);
+    gfx.draw.text("k/l to change offset", 5, 60, null);
+    gfx.draw.text("-/= to change z pos", 5, 80, null);
+    gfx.draw.text("q/e to rotate cam", 5, 100, null);
+    gfx.draw.text("left click to place block", 5, 120, null);
+    gfx.draw.text("right click to toggle wrap", 5, 140, null);
+    gfx.draw.text("z to load zelda map", 5, 160, null);
+
     gfx.endPass();
 }
 
 fn drawPlane() void {
     gfx.setShader(mode7_shader);
 
-    mode7_shader.setUniformName(f32, "mapw", map.width);
-    mode7_shader.setUniformName(f32, "maph", map.height);
-
-    mode7_shader.setUniformName(f32, "x", camera.x);
-    mode7_shader.setUniformName(f32, "y", camera.y);
-    mode7_shader.setUniformName(f32, "zoom", camera.z);
-    mode7_shader.setUniformName(f32, "fov", camera.f);
-    mode7_shader.setUniformName(f32, "offset", camera.o);
-    mode7_shader.setUniformName(f32, "wrap", 0);
-
-    mode7_shader.setUniformName(f32, "x1", camera.x1);
-    mode7_shader.setUniformName(f32, "y1", camera.y1);
-    mode7_shader.setUniformName(f32, "x2", camera.x2);
-    mode7_shader.setUniformName(f32, "y2", camera.y2);
+    uniform.mapw = map.width;
+    uniform.maph = map.height;
+    uniform.x = camera.x;
+    uniform.y = camera.y;
+    uniform.zoom = camera.z;
+    uniform.fov = camera.f;
+    uniform.offset = camera.o;
+    uniform.wrap = wrap;
+    uniform.x1 = camera.x1;
+    uniform.y1 = camera.y1;
+    uniform.x2 = camera.x2;
+    uniform.y2 = camera.y2;
+    mode7_shader.setFragUniform(Mode7Uniform, uniform);
 
     // bind out map to the second texture slot and we need a full screen render for the shader so we just draw a full screen rect
     gfx.draw.bindTexture(map, 1);

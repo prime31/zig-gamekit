@@ -19,12 +19,20 @@ pub const Shader = struct {
         return Shader{ .shader = renderer.createShaderProgram(void, .{.vs = vert, .fs = frag}) };
     }
 
+    pub fn initWithFragUniform(comptime FragUniformT: type, vert: [:0]const u8, frag: [:0]const u8) !Shader {
+        return Shader{ .shader = renderer.createShaderProgram(FragUniformT, .{ .vs = vert, .fs = frag }) };
+    }
+
     pub fn deinit(self: Shader) void {
         renderer.destroyShaderProgram(self.shader);
     }
 
     pub fn bind(self: Shader) void {
         renderer.useShaderProgram(self.shader);
+    }
+
+    pub fn setFragUniform(self: Shader, comptime FragUniformT: type, value: FragUniformT) void {
+        renderer.setShaderProgramUniformBlock(FragUniformT, self.shader, .fs, value);
     }
 
     pub fn setUniformName(self: Shader, comptime T: type, name: [:0]const u8, value: T) void {
