@@ -25,6 +25,7 @@ pub const draw = struct {
     pub fn deinit() void {
         batcher.deinit();
         white_tex.deinit();
+        fontbook.deinit();
     }
 
     /// binds a Texture to the Bindings in the Batchers DynamicMesh

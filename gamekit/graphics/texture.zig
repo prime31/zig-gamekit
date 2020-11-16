@@ -13,8 +13,22 @@ pub const Texture = struct {
         return initWithOptions(width, height, .nearest, .clamp);
     }
 
-    pub fn initWithOptions(width: i32, height: i32, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
-        return initWithDataOptions(u8, width, height, &[_]u8{}, filter, wrap);
+    pub fn initDynamic(width: i32, height: i32, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
+        const img = renderer.createImage(.{
+            .width = width,
+            .height = height,
+            .usage = .dynamic,
+            .min_filter = filter,
+            .mag_filter = filter,
+            .wrap_u = wrap,
+            .wrap_v = wrap,
+            .content = null,
+        });
+        return .{
+            .img = img,
+            .width = @intToFloat(f32, width),
+            .height = @intToFloat(f32, height),
+        };
     }
 
     pub fn initFromFile(allocator: *std.mem.Allocator, file: []const u8, filter: renderkit.TextureFilter) !Texture {
@@ -43,7 +57,7 @@ pub const Texture = struct {
             .mag_filter = filter,
             .wrap_u = wrap,
             .wrap_v = wrap,
-            .content = std.mem.sliceAsBytes(pixels),
+            .content = std.mem.sliceAsBytes(pixels).ptr,
         });
         return .{
             .img = img,
