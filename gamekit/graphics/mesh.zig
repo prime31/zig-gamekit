@@ -14,24 +14,25 @@ pub const Mesh = struct {
         var vbuffer = renderer.createBuffer(VertT, .{
             .content = verts,
         });
-        var bindings = renderer.createBufferBindings(ibuffer, &[_]renderkit.Buffer{vbuffer});
 
         return .{
-            .bindings = bindings,
+            .bindings = renderer.BufferBindings.init(ibuffer, &[_]renderer.Buffer{vbuffer}),
             .element_count = @intCast(c_int, indices.len),
         };
     }
 
     pub fn deinit(self: Mesh) void {
-        renderer.destroyBufferBindings(self.bindings);
+        renderer.destroyBuffer(self.bindings.index_buffer);
+        renderer.destroyBuffer(self.bindings.vert_buffers[0]);
     }
 
-    pub fn bindImage(self: Mesh, image: renderkit.Image, slot: c_uint) void {
-        renderer.bindImageToBufferBindings(self.bindings, image, slot);
+    pub fn bindImage(self: *Mesh, image: renderkit.Image, slot: c_uint) void {
+        self.bindings.bindImage(image, slot);
     }
 
     pub fn draw(self: Mesh) void {
-        renderer.drawBufferBindings(self.bindings, 0, self.element_count, 0);
+        renderer.applyBindings(self.bindings);
+        renderer.draw(0, self.element_count, 0);
     }
 };
 
@@ -56,9 +57,8 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
                 .size = @intCast(c_long, vertex_count * @sizeOf(VertT)),
             });
 
-            var bindings = renderer.createBufferBindings(ibuffer, &[_]renderer.Buffer{vertex_buffer});
             return Self{
-                .bindings = bindings,
+                .bindings = renderer.BufferBindings.init(ibuffer, &[_]renderer.Buffer{vertex_buffer}),
                 .vertex_buffer = vertex_buffer,
                 .verts = try allocator.alloc(VertT, vertex_count),
                 .element_count = @intCast(c_int, indices.len),
@@ -67,8 +67,8 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         }
 
         pub fn deinit(self: *Self) void {
-            // vertex_buffer is owned by BufferBindings so we dont deinit it here
-            renderer.destroyBufferBindings(self.bindings);
+            renderer.destroyBuffer(self.bindings.index_buffer);
+            renderer.destroyBuffer(self.bindings.vert_buffers[0]);
             self.allocator.free(self.verts);
         }
 
@@ -83,12 +83,13 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
             renderer.updateBuffer(VertT, self.vertex_buffer, vert_slice);
         }
 
-        pub fn bindImage(self: Self, image: renderkit.Image, slot: c_uint) void {
-            renderer.bindImageToBufferBindings(self.bindings, image, slot);
+        pub fn bindImage(self: *Self, image: renderkit.Image, slot: c_uint) void {
+            self.bindings.bindImage(image, slot);
         }
 
         pub fn draw(self: Self, element_count: c_int) void {
-            renderer.drawBufferBindings(self.bindings, 0, element_count, 0);
+            renderer.applyBindings(self.bindings);
+            renderer.draw(0, element_count, 0);
         }
 
         pub fn drawAllVerts(self: Self) void {
