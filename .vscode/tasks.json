@@ -4,7 +4,12 @@
     "version": "2.0.0",
     "options": {
         "env": {
-            "ZIG_SYSTEM_LINKER_HACK": "1"
+            "ZIG_SYSTEM_LINKER_HACK": "1",
+            "MTL_SHADER_VALIDATION": "1",
+            "MTL_SHADER_VALIDATION_GLOBAL_MEMORY": "1",
+            "MTL_SHADER_VALIDATION_TEXTURE_USAGE": "1",
+            "MTL_DEBUG_LAYER": "1",
+            "METAL_DEVICE_WRAPPER_TYPE": "1",
         }
     },
     "tasks": [
