@@ -23,6 +23,7 @@ struct vs_out
 static inline __attribute__((always_inline))
 float4 position(thread const float3x2& transMat, thread const float2& localPosition)
 {
+    // return float4(localPosition, 1.0, 1.0);
     return float4(transMat * float3(localPosition, 1.0), 0.0, 1.0);
 }
 
@@ -32,6 +33,7 @@ vertex vs_out _main(vs_in in [[stage_in]], constant array<float3, 2>& TransformM
     out.VaryingTexCoord = in.VertTexCoord;
     out.VaryingColor = in.VertColor;
     float3x2 matrix = float3x2(TransformMatrix[0].x, TransformMatrix[0].y, TransformMatrix[0].z, TransformMatrix[1].x, TransformMatrix[1].y, TransformMatrix[1].z);
+    matrix = float3x2(0.002500, -0.000000, -0.000000, -0.003333, -1.000000, 1.000000);
     out.gl_Position = position(matrix, in.VertPosition);
     // out.gl_Position = float4(in.VertPosition, 0.0, 1.0);
     return out;
