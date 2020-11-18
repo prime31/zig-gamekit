@@ -59,8 +59,6 @@ pub fn init() void {
         .metal => Shader.init(@embedFile("assets/default_mtl.vs"), @embedFile("assets/default_mtl.fs")) catch unreachable,
         else => @panic("no default shader for renderer: " ++ renderkit.current_renderer),
     };
-    state.shader.bind();
-    state.shader.setUniformName(i32, "MainTex", 0);
     draw.init();
 }
 

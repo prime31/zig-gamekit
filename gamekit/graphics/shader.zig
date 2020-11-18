@@ -31,16 +31,15 @@ pub const Shader = struct {
         renderer.useShaderProgram(self.shader);
     }
 
+    pub fn setVertUniform(self: Shader, comptime VertUniformT: type, value: VertUniformT) void {
+        renderer.setShaderProgramUniformBlock(VertUniformT, self.shader, .vs, value);
+    }
+
     pub fn setFragUniform(self: Shader, comptime FragUniformT: type, value: FragUniformT) void {
         renderer.setShaderProgramUniformBlock(FragUniformT, self.shader, .fs, value);
     }
 
     pub fn setUniformName(self: Shader, comptime T: type, name: [:0]const u8, value: T) void {
         renderer.setShaderProgramUniform(T, self.shader, name, value);
-    }
-
-    pub fn setUniform(self: *Shader, comptime T: type, location: c_int, value: T) void {
-        // TODO: need a matching getUniformLocation before this is useful
-        unreachable;
     }
 };
