@@ -26,6 +26,11 @@ pub const Input = struct {
     mouse_rel_y: i32 = 0,
     window_scale: i32 = 0,
 
+    text_edit_buffer: [32]u8 = [_]u8{0} ** 32,
+    text_input_buffer: [32]u8 = [_]u8{0} ** 32,
+    text_edit: ?[]u8 = null,
+    text_input: ?[]u8 = null,
+
     pub fn init(win_scale: f32) Input {
         return .{
             .dirty_keys = FixedList(i32, 10).init(),
@@ -62,6 +67,8 @@ pub const Input = struct {
         self.mouse_wheel_y = 0;
         self.mouse_rel_x = 0;
         self.mouse_rel_y = 0;
+        self.text_edit = null;
+        self.text_input = null;
     }
 
     pub fn handleEvent(self: *Input, event: *sdl.SDL_Event) void {
@@ -77,6 +84,11 @@ pub const Input = struct {
             sdl.SDL_CONTROLLERBUTTONDOWN, sdl.SDL_CONTROLLERBUTTONUP => std.debug.warn("SDL_CONTROLLERBUTTONUP/DOWN\n", .{}),
             sdl.SDL_CONTROLLERDEVICEADDED, sdl.SDL_CONTROLLERDEVICEREMOVED => std.debug.warn("SDL_CONTROLLERDEVICEADDED/REMOVED\n", .{}),
             sdl.SDL_CONTROLLERDEVICEREMAPPED => std.debug.warn("SDL_CONTROLLERDEVICEREMAPPED\n", .{}),
+            sdl.SDL_TEXTEDITING,sdl.SDL_TEXTINPUT => {
+                self.text_input_buffer = event.text.text;
+                const end = std.mem.indexOfScalar(u8, &self.text_input_buffer, 0).?;
+                self.text_input = self.text_input_buffer[0..end];
+            },
             else => {},
         }
     }
@@ -118,6 +130,11 @@ pub const Input = struct {
     /// true only the frame the key is released
     pub fn keyUp(self: Input, key: Keys) bool {
         return self.keys[@intCast(usize, @enumToInt(key))] == released;
+    }
+
+    /// slice is only valid for the current frame
+    pub fn textInput(self: Input) []const u8 {
+        return &self.text_input;
     }
 
     /// only true if down this frame and not down the previous frame
