@@ -27,21 +27,21 @@ fn init() !void {
     colored_tex = gfx.Texture.initSingleColor(0xFFFF0000);
 
     var vertices = [_]gfx.Vertex{
-        .{ .pos = .{ .x = 10, .y = 10 }, .uv = .{ .x = 0, .y = 1 } }, // bl
-        .{ .pos = .{ .x = 100, .y = 10 }, .uv = .{ .x = 1, .y = 1 } }, // br
-        .{ .pos = .{ .x = 100, .y = 100 }, .uv = .{ .x = 1, .y = 0 } }, // tr
-        .{ .pos = .{ .x = 50, .y = 130 }, .uv = .{ .x = 0.5, .y = 0 } }, // tc
-        .{ .pos = .{ .x = 10, .y = 100 }, .uv = .{ .x = 0, .y = 0 } }, // tl
+        .{ .pos = .{ .x = 10, .y = 10 }, .uv = .{ .x = 0, .y = 1 } }, // tl
+        .{ .pos = .{ .x = 100, .y = 10 }, .uv = .{ .x = 1, .y = 1 } }, // tr
+        .{ .pos = .{ .x = 100, .y = 100 }, .uv = .{ .x = 1, .y = 0 } }, // br
+        .{ .pos = .{ .x = 50, .y = 130 }, .uv = .{ .x = 0.5, .y = 0 } }, // bc
+        .{ .pos = .{ .x = 10, .y = 100 }, .uv = .{ .x = 0, .y = 0 } }, // bl
         .{ .pos = .{ .x = 50, .y = 50 }, .uv = .{ .x = 0.5, .y = 0.5 } }, // c
     };
     var indices = [_]u16{ 0, 5, 4, 5, 3, 4, 5, 2, 3, 5, 1, 2, 5, 0, 1 };
     mesh = gfx.Mesh.init(u16, indices[0..], gfx.Vertex, vertices[0..]);
 
     var dyn_vertices = [_]gfx.Vertex{
-        .{ .pos = .{ .x = 10, .y = 10 }, .uv = .{ .x = 0, .y = 1 } }, // bl
-        .{ .pos = .{ .x = 100, .y = 10 }, .uv = .{ .x = 1, .y = 1 } }, // br
-        .{ .pos = .{ .x = 100, .y = 100 }, .uv = .{ .x = 1, .y = 0 } }, // tr
-        .{ .pos = .{ .x = 10, .y = 100 }, .uv = .{ .x = 0, .y = 0 } }, // tl
+        .{ .pos = .{ .x = 10, .y = 10 }, .uv = .{ .x = 0, .y = 1 } }, // tl
+        .{ .pos = .{ .x = 100, .y = 10 }, .uv = .{ .x = 1, .y = 1 } }, // tr
+        .{ .pos = .{ .x = 100, .y = 100 }, .uv = .{ .x = 1, .y = 0 } }, // br
+        .{ .pos = .{ .x = 10, .y = 100 }, .uv = .{ .x = 0, .y = 0 } }, // bl
     };
     var dyn_indices = [_]u16{ 0, 1, 2, 2, 3, 0 };
     dyn_mesh = try gfx.DynamicMesh(u16, gfx.Vertex).init(std.testing.allocator, vertices.len, &dyn_indices);

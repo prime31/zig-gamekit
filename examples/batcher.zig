@@ -10,7 +10,7 @@ const total_textures: usize = 8;
 const max_sprites_per_batch: usize = 5000;
 const total_objects = 10000;
 const draws_per_tex_swap = 250;
-const use_multi_texture_batcher = true;
+const use_multi_texture_batcher = false;
 
 pub fn range(comptime T: type, at_least: T, less_than: T) T {
     if (@typeInfo(T) == .Int) {
@@ -122,6 +122,7 @@ fn update() !void {
 
 fn render() !void {
     gfx.beginPass(.{ .color = math.Color.beige });
+    gfx.setShader(shader);
     batcher.begin();
 
     for (things) |thing| {
