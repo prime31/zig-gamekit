@@ -76,13 +76,15 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         }
 
         /// uploads to the GPU the slice from start_index with num_verts
-        pub fn updateVertSlice(self: *Self, start_index: usize, num_verts: usize) void {
-            std.debug.assert(start_index + num_verts <= self.verts.len);
-            const vert_slice = self.verts[start_index .. start_index + num_verts];
+        pub fn updateVertSlice(self: *Self, num_verts: usize) void {
+            std.debug.assert(num_verts <= self.verts.len);
+            const vert_slice = self.verts[0..num_verts];
             renderer.updateBuffer(VertT, self.bindings.vert_buffers[0], vert_slice);
         }
 
-        /// uploads to the GPU the slice from start with num_verts
+        /// uploads to the GPU the slice from start with num_verts. Records the offset in the BufferBindings allowing you
+        /// to interleave appendVertSlice and draw calls. When calling draw after appendVertSlice
+        /// the base_element is reset to the start of the newly updated data so you would pass in 0 for base_element.
         pub fn appendVertSlice(self: *Self, start_index: usize, num_verts: usize) void {
             std.debug.assert(start_index + num_verts <= self.verts.len);
             const vert_slice = self.verts[start_index..start_index + num_verts];
@@ -93,12 +95,7 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
             self.bindings.bindImage(image, slot);
         }
 
-        pub fn draw(self: Self, element_count: c_int) void {
-            renderer.applyBindings(self.bindings);
-            renderer.draw(0, element_count, 1);
-        }
-
-        pub fn drawPartialBuffer(self: Self, base_element: c_int, element_count: c_int) void {
+        pub fn draw(self: Self, base_element: c_int, element_count: c_int) void {
             renderer.applyBindings(self.bindings);
             renderer.draw(base_element, element_count, 1);
         }

@@ -71,13 +71,13 @@ fn render() !void {
         dyn_mesh.verts[j].pos = dyn_mesh.verts[j].pos.add(0.3, 0.3);
     }
     dyn_mesh.appendVertSlice(0, 4);
-    dyn_mesh.drawPartialBuffer(0, 6);
+    dyn_mesh.draw(0, 6);
 
     while (j < 8) : (j += 1) {
         dyn_mesh.verts[j].pos = dyn_mesh.verts[j].pos.add(0.1, 0);
     }
     dyn_mesh.appendVertSlice(4, 4);
-    dyn_mesh.drawPartialBuffer(0, 6);
+    dyn_mesh.draw(0, 6);
 
     gfx.endPass();
 }

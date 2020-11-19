@@ -55,7 +55,7 @@ pub const MultiBatcher = struct {
         if (self.vert_index == 0) return;
 
         // send data to gpu
-        self.mesh.updateVertSlice(0, self.vert_index);
+        self.mesh.updateVertSlice(self.vert_index);
 
         // bind textures
         for (self.textures) |tid, slot| {
@@ -65,7 +65,7 @@ pub const MultiBatcher = struct {
 
         // draw
         const quads = @divExact(self.vert_index, 4);
-        self.mesh.draw(@intCast(c_int, quads * 6));
+        self.mesh.draw(0, @intCast(c_int, quads * 6));
 
         // reset state
         for (self.textures) |*tid, slot| {

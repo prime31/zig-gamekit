@@ -51,12 +51,12 @@ pub const TriangleBatcher = struct {
     pub fn flush(self: *TriangleBatcher) void {
         if (self.vert_index == 0) return;
 
-        self.mesh.updateVertSlice(0, self.vert_index);
+        self.mesh.updateVertSlice(self.vert_index);
         self.mesh.bindImage(self.white_tex.img, 0);
 
         // draw
         const tris = self.vert_index / 3;
-        self.mesh.draw(@intCast(c_int, tris * 3));
+        self.mesh.draw(0, @intCast(c_int, tris * 3));
 
         self.vert_index = 0;
     }
