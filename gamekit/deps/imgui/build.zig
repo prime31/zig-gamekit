@@ -70,8 +70,8 @@ fn addImGuiGlImplementation(b: *Builder, exe: *std.build.LibExeObjStep, target: 
             const frameworks_dir = macosFrameworksDir(b) catch unreachable;
             lib.addFrameworkDir(frameworks_dir);
             // for some reason, only on some SDL installs this is required...
-            // const x11_include_dir = std.mem.concat(b.allocator, u8, &[_][]const u8{ frameworks_dir, "/Tk.framework/Headers" }) catch unreachable;
-            // lib.addIncludeDir(x11_include_dir);
+            const x11_include_dir = std.mem.concat(b.allocator, u8, &[_][]const u8{ frameworks_dir, "/Tk.framework/Headers" }) catch unreachable;
+            lib.addIncludeDir(x11_include_dir);
         } else {
             lib.linkSystemLibrary("c++");
         }
