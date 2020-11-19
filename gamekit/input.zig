@@ -133,8 +133,13 @@ pub const Input = struct {
     }
 
     /// slice is only valid for the current frame
-    pub fn textInput(self: Input) []const u8 {
-        return &self.text_input;
+    pub fn textEdit(self: Input) ?[]const u8 {
+        return self.text_edit orelse null;
+    }
+
+    /// slice is only valid for the current frame
+    pub fn textInput(self: Input) ?[]const u8 {
+        return self.text_input orelse null;
     }
 
     /// only true if down this frame and not down the previous frame
