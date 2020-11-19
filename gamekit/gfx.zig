@@ -78,6 +78,7 @@ pub fn setShader(shader: ?Shader) void {
 pub fn beginPass(config: PassConfig) void {
     var proj_mat: math.Mat32 = math.Mat32.init();
     var clear_command = config.asClearCommand();
+    draw.batcher.begin();
 
     if (config.pass) |pass| {
         renderkit.renderer.beginPass(pass.pass, clear_command);
@@ -105,14 +106,13 @@ pub fn beginPass(config: PassConfig) void {
 }
 
 pub fn endPass() void {
-    // setting the shader will flush the batch
     setShader(null);
+    draw.batcher.end();
     renderkit.renderer.endPass();
 }
 
 /// if we havent yet blitted to the screen do so now
 pub fn commitFrame() void {
-    draw.batcher.end();
     renderkit.renderer.commitFrame();
 }
 

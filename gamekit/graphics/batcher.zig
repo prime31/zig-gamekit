@@ -10,8 +10,18 @@ const Texture = gk.gfx.Texture;
 
 pub const Batcher = struct {
     mesh: gk.gfx.DynamicMesh(u16, Vertex),
+    draw_calls: std.ArrayList(DrawCall),
+
+    begin_called: bool = false,
+    frame: u32 = 0, // tracks when a batch is started in a new frame so that state can be reset
     vert_index: usize = 0, // current index into the vertex array
-    current_image: renderkit.Image = std.math.maxInt(renderkit.Image),
+    quad_count: usize = 0, // total quads that we have not yet rendered
+    buffer_offset: i32 = 0, // offset into the vertex buffer of the first non-rendered vert
+
+    const DrawCall = struct {
+        image: renderkit.Image,
+        quad_count: i32,
+    };
 
     pub fn init(allocator: *std.mem.Allocator, max_sprites: usize) Batcher {
         if (max_sprites * 6 > std.math.maxInt(u16)) @panic("max_sprites exceeds u16 index buffer size");
@@ -30,44 +40,78 @@ pub const Batcher = struct {
 
         return .{
             .mesh = gk.gfx.DynamicMesh(u16, Vertex).init(allocator, max_sprites * 4, indices) catch unreachable,
+            .draw_calls = std.ArrayList(DrawCall).initCapacity(allocator, 10) catch unreachable,
         };
     }
 
     pub fn deinit(self: *Batcher) void {
         self.mesh.deinit();
+        self.draw_calls.deinit();
     }
 
     pub fn begin(self: *Batcher) void {
-        self.vert_index = 0;
+        std.debug.assert(!self.begin_called);
+
+        // reset all state for new frame
+        if (self.frame != gk.time.frames()) {
+            self.frame = gk.time.frames();
+            self.vert_index = 0;
+            self.buffer_offset = 0;
+        }
+        self.begin_called = true;
     }
 
     pub fn end(self: *Batcher) void {
+        std.debug.assert(self.begin_called);
         self.flush();
+        self.begin_called = false;
     }
 
+    /// should be called when any graphics state change will occur such as setting a new shader or RenderState
     pub fn flush(self: *Batcher) void {
-        if (self.vert_index == 0) return;
+        if (self.quad_count == 0) return;
 
-        // send data
-        self.mesh.updateVertSlice(self.vert_index);
+        self.mesh.appendVertSlice(@intCast(usize, self.buffer_offset), @intCast(usize, self.quad_count * 4));
 
-        // bind texture
-        self.mesh.bindImage(self.current_image, 0);
+        // run through all our accumulated draw calls
+        var base_element: i32 = 0;
+        for (self.draw_calls.items) |*draw_call| {
+            self.mesh.bindImage(draw_call.image, 0);
+            self.mesh.draw(base_element, draw_call.quad_count * 6);
 
-        // draw
-        const quads = @divExact(self.vert_index, 4);
-        self.mesh.draw(0, @intCast(c_int, quads * 6));
+            self.buffer_offset += draw_call.quad_count * 4;
+            draw_call.image = renderkit.invalid_resource_id;
+            base_element += draw_call.quad_count * 6;
+        }
 
-        // reset
-        self.vert_index = 0;
+        self.quad_count = 0;
+        self.draw_calls.items.len = 0;
+    }
+
+    /// ensures the vert buffer has enough space and manages the draw call command buffer when textures change
+    fn ensureCapacity(self: *Batcher, texture: Texture) !void {
+        // if we run out of buffer we have to flush the batch and possibly discard and resize the whole buffer
+        if (self.vert_index + 4 > self.mesh.verts.len) {
+            self.flush();
+
+            self.vert_index = 0;
+            self.quad_count = 0;
+            self.buffer_offset = 0;
+            std.debug.print("--------- adios mother fucker\n", .{});
+            @panic("dead");
+        }
+
+        // start a new draw call if we dont already have one going or whenever the texture changes
+        if (self.draw_calls.items.len == 0 or self.draw_calls.items[self.draw_calls.items.len - 1].image != texture.img) {
+            try self.draw_calls.append(.{ .image = texture.img, .quad_count = 0 });
+        }
     }
 
     pub fn drawTex(self: *Batcher, pos: math.Vec2, col: u32, texture: Texture) void {
-        if (self.vert_index >= self.mesh.verts.len or self.current_image != texture.img) {
-            self.flush();
-        }
-
-        self.current_image = texture.img;
+        self.ensureCapacity(texture) catch |err| {
+            std.debug.warn("Batcher.draw failed to append a draw call with error: {}\n", .{err});
+            return;
+        };
 
         var verts = self.mesh.verts[self.vert_index .. self.vert_index + 4];
         verts[0].pos = pos; // tl
@@ -86,19 +130,22 @@ pub const Batcher = struct {
         verts[3].uv = .{ .x = 0, .y = 1 };
         verts[3].col = col;
 
+        self.draw_calls.items[self.draw_calls.items.len - 1].quad_count += 1;
+        self.quad_count += 1;
         self.vert_index += 4;
     }
 
     pub fn draw(self: *Batcher, texture: Texture, quad: math.Quad, mat: math.Mat32, color: math.Color) void {
-        if (self.vert_index >= self.mesh.verts.len or self.current_image != texture.img) {
-            self.flush();
-        }
-
-        self.current_image = texture.img;
+        self.ensureCapacity(texture) catch |err| {
+            std.debug.warn("Batcher.draw failed to append a draw call with error: {}\n", .{err});
+            return;
+        };
 
         // copy the quad positions, uvs and color into vertex array transforming them with the matrix as we do it
         mat.transformQuad(self.mesh.verts[self.vert_index .. self.vert_index + 4], quad, color);
 
+        self.draw_calls.items[self.draw_calls.items.len - 1].quad_count += 1;
+        self.quad_count += 1;
         self.vert_index += 4;
     }
 };
