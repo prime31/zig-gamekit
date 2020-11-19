@@ -61,23 +61,24 @@ fn render() !void {
 
     // render the offscreen texture to the backbuffer
     y += 0.3;
-    gfx.draw.tex(pass.color_texture, .{ .x = 400, .y = 0 + y });
+    gfx.draw.tex(pass.color_texture, .{ .x = 400, .y = y });
     gfx.endPass();
 
+    // draw the dynamic mesh in two parts, appending data before each draw
     gfx.beginPass(.{ .color_action = .dont_care });
+    {
+        var j: usize = 0;
+        while (j < 4) : (j += 1) {
+            dyn_mesh.verts[j].pos = dyn_mesh.verts[j].pos.add(0.3, 0.3);
+        }
+        dyn_mesh.appendVertSlice(0, 4);
+        dyn_mesh.draw(0, 6);
 
-    var j: usize = 0;
-    while (j < 4) : (j += 1) {
-        dyn_mesh.verts[j].pos = dyn_mesh.verts[j].pos.add(0.3, 0.3);
+        while (j < 8) : (j += 1) {
+            dyn_mesh.verts[j].pos = dyn_mesh.verts[j].pos.add(0.1, 0);
+        }
+        dyn_mesh.appendVertSlice(4, 4);
+        dyn_mesh.draw(0, 6);
     }
-    dyn_mesh.appendVertSlice(0, 4);
-    dyn_mesh.draw(0, 6);
-
-    while (j < 8) : (j += 1) {
-        dyn_mesh.verts[j].pos = dyn_mesh.verts[j].pos.add(0.1, 0);
-    }
-    dyn_mesh.appendVertSlice(4, 4);
-    dyn_mesh.draw(0, 6);
-
     gfx.endPass();
 }
