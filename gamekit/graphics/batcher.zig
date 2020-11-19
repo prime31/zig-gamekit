@@ -23,9 +23,7 @@ pub const Batcher = struct {
         quad_count: i32,
     };
 
-    pub fn init(allocator: *std.mem.Allocator, max_sprites: usize) Batcher {
-        if (max_sprites * 6 > std.math.maxInt(u16)) @panic("max_sprites exceeds u16 index buffer size");
-
+    fn createDynamicMesh(allocator: *std.mem.Allocator, max_sprites: u16) !gk.gfx.DynamicMesh(u16, Vertex) {
         var indices = allocator.alloc(u16, max_sprites * 6) catch unreachable;
         defer allocator.free(indices);
         var i: usize = 0;
@@ -38,8 +36,14 @@ pub const Batcher = struct {
             indices[i * 3 * 2 + 5] = @intCast(u16, i) * 4 + 3;
         }
 
+        return try gk.gfx.DynamicMesh(u16, Vertex).init(allocator, max_sprites * 4, indices);
+    }
+
+    pub fn init(allocator: *std.mem.Allocator, max_sprites: u16) Batcher {
+        if (max_sprites * 6 > std.math.maxInt(u16)) @panic("max_sprites exceeds u16 index buffer size");
+
         return .{
-            .mesh = gk.gfx.DynamicMesh(u16, Vertex).init(allocator, max_sprites * 4, indices) catch unreachable,
+            .mesh = createDynamicMesh(allocator, max_sprites) catch unreachable,
             .draw_calls = std.ArrayList(DrawCall).initCapacity(allocator, 10) catch unreachable,
         };
     }
@@ -91,14 +95,29 @@ pub const Batcher = struct {
     /// ensures the vert buffer has enough space and manages the draw call command buffer when textures change
     fn ensureCapacity(self: *Batcher, texture: Texture) !void {
         // if we run out of buffer we have to flush the batch and possibly discard and resize the whole buffer
-        if (self.vert_index + 4 > self.mesh.verts.len) {
+        if (self.vert_index + 4 > self.mesh.verts.len - 1) {
             self.flush();
 
             self.vert_index = 0;
-            self.quad_count = 0;
             self.buffer_offset = 0;
-            std.debug.print("--------- adios mother fucker\n", .{});
-            @panic("dead");
+
+            // with GL we can just orphan the buffer
+            if (renderkit.current_renderer == .opengl) {
+                self.mesh.updateAllVerts();
+                self.mesh.bindings.vertex_buffer_offsets[0] = 0;
+            } else if (renderkit.current_renderer == .metal) {
+                // we need a bigger Mesh since Metal has no concept of buffer orphaning
+                var new_max_sprites = self.mesh.verts.len / 4 * 2;
+                if (new_max_sprites * 6 > std.math.maxInt(u16))
+                    new_max_sprites = std.math.maxInt(u16) / 6;
+
+                const allocator = self.mesh.allocator;
+                self.mesh.deinit();
+                self.mesh = try createDynamicMesh(allocator, @intCast(u16, new_max_sprites));
+                std.debug.print("Metal buffer overflow. Batcher creating new buffer with max_sprites {}\n", .{new_max_sprites});
+            } else {
+                return error.OutOfSpace;
+            }
         }
 
         // start a new draw call if we dont already have one going or whenever the texture changes
