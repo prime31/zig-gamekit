@@ -144,7 +144,10 @@ fn init() !void {
 
     map = Texture.initFromFile(std.testing.allocator, "examples/assets/mario_kart.png", .nearest) catch unreachable;
     block = Texture.initFromFile(std.testing.allocator, "examples/assets/block.png", .nearest) catch unreachable;
-    mode7_shader = try gfx.Shader.initWithFragUniform(Mode7Uniform, @embedFile("assets/shaders/vert.vs"), @embedFile("assets/shaders/mode7.fs"));
+
+    const vert = if (gamekit.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/sprite.gl.vs") else @embedFile("assets/shaders/sprite.mtl.vs");
+    const frag = if (gamekit.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7.gl.fs") else @embedFile("assets/shaders/mode7.mtl.fs");
+    mode7_shader = try gfx.Shader.initWithFragUniform(Mode7Uniform, vert, frag);
     mode7_shader.bind();
     mode7_shader.setUniformName(i32, "MainTex", 0);
     mode7_shader.setUniformName(i32, "map_tex", 1);
@@ -260,7 +263,7 @@ fn drawPlane() void {
     uniform.y1 = camera.y1;
     uniform.x2 = camera.x2;
     uniform.y2 = camera.y2;
-    mode7_shader.setFragUniform(Mode7Uniform, uniform);
+    mode7_shader.setFragUniform(Mode7Uniform, &uniform);
 
     // bind out map to the second texture slot and we need a full screen render for the shader so we just draw a full screen rect
     gfx.draw.bindTexture(map, 1);

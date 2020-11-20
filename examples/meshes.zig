@@ -3,7 +3,6 @@ const gk = @import("gamekit");
 const math = gk.math;
 const gfx = gk.gfx;
 
-var shader: gfx.Shader = undefined;
 var tex: gfx.Texture = undefined;
 var colored_tex: gfx.Texture = undefined;
 var mesh: gfx.Mesh = undefined;
@@ -18,11 +17,6 @@ pub fn main() !void {
 }
 
 fn init() !void {
-    shader = try gfx.Shader.init(@embedFile("assets/shaders/vert.vs"), @embedFile("assets/shaders/frag.fs"));
-    shader.bind();
-    shader.setUniformName(i32, "MainTex", 0);
-    shader.setUniformName(math.Mat32, "TransformMatrix", math.Mat32.initOrtho(800, 600));
-
     tex = gfx.Texture.initCheckerTexture();
     colored_tex = gfx.Texture.initSingleColor(0xFFFF0000);
 
@@ -50,7 +44,6 @@ fn init() !void {
         vert.pos.y += 200;
         dyn_mesh.verts[i] = vert.*;
     }
-    dyn_mesh.updateAllVerts();
 }
 
 fn update() !void {

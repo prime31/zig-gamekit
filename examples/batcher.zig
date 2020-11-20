@@ -68,7 +68,7 @@ pub fn main() !void {
 fn init() !void {
     _ = sdl.SDL_GL_SetSwapInterval(0);
 
-    shader = if (use_multi_texture_batcher) try gfx.Shader.initFromFile(std.testing.allocator, "examples/assets/shaders/vert_multi.vs", "examples/assets/shaders/frag_multi.fs") else try gfx.Shader.initFromFile(std.testing.allocator, "examples/assets/shaders/vert.vs", "examples/assets/shaders/frag.fs");
+    shader = if (use_multi_texture_batcher) try gfx.Shader.initFromFile(std.testing.allocator, "examples/assets/shaders/multi_batcher.gl.vs", "examples/assets/shaders/multi_batcher.gl.fs") else try gfx.Shader.initFromFile(std.testing.allocator, "examples/assets/shaders/sprite.gl.vs", "examples/assets/shaders/sprite.gl.fs");
     shader.bind();
     shader.setUniformName(math.Mat32, "TransformMatrix", math.Mat32.initOrtho(800, 600));
 
