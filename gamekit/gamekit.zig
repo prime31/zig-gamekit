@@ -94,6 +94,7 @@ pub fn run(config: Config) !void {
     }
 
     if (enable_imgui) imgui_gl.shutdown();
+    if (config.shutdown) |shutdown| try shutdown();
     gfx.deinit();
     renderkit.renderer.shutdown();
     window.deinit();

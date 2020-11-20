@@ -31,11 +31,11 @@ pub const Shader = struct {
         renderer.useShaderProgram(self.shader);
     }
 
-    pub fn setVertUniform(self: Shader, comptime VertUniformT: type, value: VertUniformT) void {
+    pub fn setVertUniform(self: Shader, comptime VertUniformT: type, value: *VertUniformT) void {
         renderer.setShaderProgramUniformBlock(VertUniformT, self.shader, .vs, value);
     }
 
-    pub fn setFragUniform(self: Shader, comptime FragUniformT: type, value: FragUniformT) void {
+    pub fn setFragUniform(self: Shader, comptime FragUniformT: type, value: *FragUniformT) void {
         renderer.setShaderProgramUniformBlock(FragUniformT, self.shader, .fs, value);
     }
 
