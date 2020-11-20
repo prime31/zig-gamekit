@@ -3,7 +3,6 @@ const gk = @import("gamekit");
 const math = gk.math;
 const Color = math.Color;
 
-var shader: gk.gfx.Shader = undefined;
 var tri_batch: gk.gfx.TriangleBatcher = undefined;
 
 pub fn main() !void {
@@ -14,11 +13,6 @@ pub fn main() !void {
 }
 
 fn init() !void {
-    shader = try gk.gfx.Shader.initFromFile(std.testing.allocator, "examples/assets/shaders/vert.vs", "examples/assets/shaders/frag.fs");
-    shader.bind();
-    shader.setUniformName(i32, "MainTex", 0);
-    shader.setUniformName(math.Mat32, "TransformMatrix", math.Mat32.initOrtho(800, 600));
-
     tri_batch = try gk.gfx.TriangleBatcher.init(std.testing.allocator, 100);
 }
 

@@ -230,9 +230,7 @@ fn render() !void {
     gfx.draw.circle(.{ .x = pos.x, .y = pos.y }, pos.size, 2, 8, gamekit.math.Color.white);
     gfx.draw.texScaleOrigin(block, pos.x, pos.y, pos.size, block.width / 2, block.height);
 
-    for (blocks.items) |b| {
-        camera.placeSprite(block, b, 8);
-    }
+    for (blocks.items) |b| camera.placeSprite(block, b, 8);
     camera.renderSprites();
 
     gfx.draw.text("WASD to move", 5, 20, null);
@@ -266,7 +264,7 @@ fn drawPlane() void {
 
     // bind out map to the second texture slot and we need a full screen render for the shader so we just draw a full screen rect
     gfx.draw.bindTexture(map, 1);
-    const drawable_size = gamekit.window.drawableSize();
+    const drawable_size = gamekit.window.size();
     gfx.draw.rect(.{}, @intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h), math.Color.white);
     gfx.setShader(null);
     gfx.draw.unbindTexture(1);

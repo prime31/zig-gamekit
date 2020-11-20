@@ -101,7 +101,7 @@ pub fn beginPass(config: PassConfig) void {
 
     state.transform_mat = proj_mat;
 
-    // if we were given a Shader use it else set the default Pipeline
+    // if we were given a Shader use it else set the default Shader
     setShader(config.shader);
 }
 

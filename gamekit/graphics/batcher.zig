@@ -107,13 +107,10 @@ pub const Batcher = struct {
                 self.mesh.bindings.vertex_buffer_offsets[0] = 0;
             } else if (renderkit.current_renderer == .metal) {
                 // we need a bigger Mesh since Metal has no concept of buffer orphaning
-                var new_max_sprites = self.mesh.verts.len / 4 * 2;
-                if (new_max_sprites * 6 > std.math.maxInt(u16))
-                    new_max_sprites = std.math.maxInt(u16) / 6;
+                var new_max_sprites = std.math.clamp(self.mesh.verts.len / 4 * 2, 0, std.math.maxInt(u16) / 6);
 
-                const allocator = self.mesh.allocator;
                 self.mesh.deinit();
-                self.mesh = try createDynamicMesh(allocator, @intCast(u16, new_max_sprites));
+                self.mesh = try createDynamicMesh(self.mesh.allocator, @intCast(u16, new_max_sprites));
                 std.debug.print("Metal buffer overflow. Batcher creating new buffer with max_sprites {}\n", .{new_max_sprites});
             } else {
                 return error.OutOfSpace;
