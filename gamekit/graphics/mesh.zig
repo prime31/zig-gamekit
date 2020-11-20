@@ -101,7 +101,7 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         }
 
         pub fn drawAllVerts(self: Self) void {
-            self.draw(@intCast(c_int, self.element_count));
+            self.draw(0, @intCast(c_int, self.element_count));
         }
     };
 }
