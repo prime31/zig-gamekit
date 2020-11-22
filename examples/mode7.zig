@@ -7,7 +7,12 @@ const math = gamekit.math;
 const Texture = gamekit.gfx.Texture;
 const Color = gamekit.math.Color;
 
-const Mode7Uniform = struct {
+const Mode7Params = struct {
+    pub const metadata = .{
+        .uniforms = .{ .Mode7Params = .{ .type = .float4, .array_count = 3 } },
+        .images = .{ "main_tex", "map_tex" },
+    };
+
     mapw: f32 = 0,
     maph: f32 = 0,
     x: f32 = 0,
@@ -122,7 +127,7 @@ const Camera = struct {
 var map: Texture = undefined;
 var block: Texture = undefined;
 var mode7_shader: gfx.Shader = undefined;
-var uniform: Mode7Uniform = .{};
+var uniform: Mode7Params = .{};
 var camera: Camera = undefined;
 var blocks: std.ArrayList(math.Vec2) = undefined;
 var wrap: f32 = 0;
@@ -138,19 +143,15 @@ pub fn main() !void {
 }
 
 fn init() !void {
-    _ = @import("sdl").SDL_GL_SetSwapInterval(1);
     const drawable_size = gamekit.window.drawableSize();
     camera = Camera.init(@intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h));
 
-    map = Texture.initFromFile(std.testing.allocator, "examples/assets/mario_kart.png", .nearest) catch unreachable;
-    block = Texture.initFromFile(std.testing.allocator, "examples/assets/block.png", .nearest) catch unreachable;
+    map = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/mario_kart.png", .nearest) catch unreachable;
+    block = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/block.png", .nearest) catch unreachable;
 
-    const vert = if (gamekit.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/sprite.gl.vs") else @embedFile("assets/shaders/sprite.mtl.vs");
+    const vert = if (gamekit.renderkit.current_renderer == .opengl) @embedFile("../gamekit/assets/sprite_vs.glsl") else @embedFile("../gamekit/assets/sprite_vs.metal");
     const frag = if (gamekit.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7.gl.fs") else @embedFile("assets/shaders/mode7.mtl.fs");
-    mode7_shader = try gfx.Shader.initWithFragUniform(Mode7Uniform, vert, frag);
-    mode7_shader.bind();
-    mode7_shader.setUniformName(i32, "MainTex", 0);
-    mode7_shader.setUniformName(i32, "map_tex", 1);
+    mode7_shader = try gfx.Shader.initWithFragUniform(Mode7Params, vert, frag);
 
     blocks = std.ArrayList(math.Vec2).init(std.testing.allocator);
     _ = blocks.append(.{ .x = 0, .y = 0 }) catch unreachable;
@@ -243,7 +244,6 @@ fn render() !void {
     gfx.draw.text("q/e to rotate cam", 5, 100, null);
     gfx.draw.text("left click to place block", 5, 120, null);
     gfx.draw.text("right click to toggle wrap", 5, 140, null);
-    gfx.draw.text("z to load zelda map", 5, 160, null);
 
     gfx.endPass();
 }
@@ -263,7 +263,7 @@ fn drawPlane() void {
     uniform.y1 = camera.y1;
     uniform.x2 = camera.x2;
     uniform.y2 = camera.y2;
-    mode7_shader.setFragUniform(Mode7Uniform, &uniform);
+    mode7_shader.setFragUniform(Mode7Params, &uniform);
 
     // bind out map to the second texture slot and we need a full screen render for the shader so we just draw a full screen rect
     gfx.draw.bindTexture(map, 1);
