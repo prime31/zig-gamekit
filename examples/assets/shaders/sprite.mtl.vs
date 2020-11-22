@@ -31,7 +31,7 @@ float4 position(thread const float3x2& transMat, thread const float2& localPosit
     return float4(transMat * float3(localPosition, 1.0), 0.0, 1.0);
 }
 
-vertex vs_out _main(vs_in in [[stage_in]], constant vs_params& vs_uniforms [[buffer(1)]])
+vertex vs_out main0(vs_in in [[stage_in]], constant vs_params& vs_uniforms [[buffer(0)]])
 {
     vs_out out = {};
     out.VaryingTexCoord = in.VertTexCoord;

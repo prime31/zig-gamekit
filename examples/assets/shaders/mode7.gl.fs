@@ -10,18 +10,18 @@ uniform float offset;
 uniform float wrap;
 uniform float x1, x2, y1, y2;
 
-uniform sampler2D MainTex;
+uniform sampler2D main_tex;
 uniform sampler2D map_tex;
 
-in vec2 VaryingTexCoord;
-in vec4 VaryingColor;
+in vec2 uv_out;
+in vec4 color_out;
 
 vec4 effect(sampler2D tex, vec2 tex_coord, vec4 vert_color);
 
 layout (location=0) out vec4 frag_color;
 
 void main() {
-	frag_color = effect(MainTex, VaryingTexCoord.st, VaryingColor);
+	frag_color = effect(main_tex, uv_out.st, color_out);
 }
 
 vec4 effect(sampler2D tex, vec2 tex_coord, vec4 vert_color) {

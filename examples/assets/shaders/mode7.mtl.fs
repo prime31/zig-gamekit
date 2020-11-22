@@ -39,7 +39,7 @@ inline Tx mod(Tx x, Ty y)
     return x - y * floor(x / y);
 }
 
-fragment fs_out _main(fs_in in [[stage_in]], constant fs_params& uniform [[buffer(0)]], texture2d<float> MainTex [[texture(0)]], texture2d<float> map_tex [[texture(1)]], sampler MainTexSmplr [[sampler(0)]], sampler map_texSmplr [[sampler(1)]])
+fragment fs_out main0(fs_in in [[stage_in]], constant fs_params& uniform [[buffer(0)]], texture2d<float> MainTex [[texture(0)]], texture2d<float> map_tex [[texture(1)]], sampler MainTexSmplr [[sampler(0)]], sampler map_texSmplr [[sampler(1)]])
 {
 	float2x2 rotation = float2x2(uniform.x1, uniform.y1, uniform.x2, uniform.y2);
 	float2 uv = float2(
