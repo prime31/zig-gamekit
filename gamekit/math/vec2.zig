@@ -350,12 +350,6 @@ pub const vec3i = Vec3i.init;
 
 // For backwards compatibility
 pub const Vec2 = Vec2f;
-pub const Vec4 = extern struct {
-    x: f32 = 0,
-    y: f32 = 0,
-    z: f32 = 0,
-    w: f32 = 0,
-};
 
 test "vec2 tests" {
     const v = Vec2{ .x = 1, .y = 5 };

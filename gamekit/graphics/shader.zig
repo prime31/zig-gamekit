@@ -1,10 +1,13 @@
 const std = @import("std");
-const renderkit = @import("renderkit");
-const renderer = renderkit.renderer;
-const fs = @import("../gamekit.zig").utils.fs;
+const gk = @import("../gamekit.zig");
+const rk = gk.renderkit;
+const renderer = rk.renderer;
+const fs = gk.utils.fs;
 
 pub const Shader = struct {
-    shader: renderkit.ShaderProgram,
+    shader: rk.ShaderProgram,
+
+    const Empty = struct {};
 
     pub fn initFromFile(allocator: *std.mem.Allocator, vert_path: []const u8, frag_path: []const u8) !Shader {
         var vert = try fs.readZ(allocator, vert_path);
@@ -16,11 +19,11 @@ pub const Shader = struct {
     }
 
     pub fn init(vert: [:0]const u8, frag: [:0]const u8) !Shader {
-        return Shader{ .shader = renderer.createShaderProgram(void, .{.vs = vert, .fs = frag}) };
+        return Shader{ .shader = renderer.createShaderProgram(gk.gfx.VertexParams, Empty, .{.vs = vert, .fs = frag}) };
     }
 
     pub fn initWithFragUniform(comptime FragUniformT: type, vert: [:0]const u8, frag: [:0]const u8) !Shader {
-        return Shader{ .shader = renderer.createShaderProgram(FragUniformT, .{ .vs = vert, .fs = frag }) };
+        return Shader{ .shader = renderer.createShaderProgram(gk.gfx.VertexParams, FragUniformT, .{ .vs = vert, .fs = frag }) };
     }
 
     pub fn deinit(self: Shader) void {

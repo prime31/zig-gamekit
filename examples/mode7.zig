@@ -1,18 +1,15 @@
 const std = @import("std");
 const renderkit = @import("renderkit");
-const gamekit = @import("gamekit");
-const gfx = gamekit.gfx;
-const math = gamekit.math;
+const gk = @import("gamekit");
+const gfx = gk.gfx;
+const math = gk.math;
 
-const Texture = gamekit.gfx.Texture;
-const Color = gamekit.math.Color;
+const Texture = gk.gfx.Texture;
+const Color = gk.math.Color;
 
 const Mode7Params = struct {
     pub const metadata = .{
-        .uniforms = .{
-            .VertexParams = .{ .type = .float4, .array_count = 2 },
-            .Mode7Params = .{ .type = .float4, .array_count = 3 },
-        },
+        .uniforms = .{ .Mode7Params = .{ .type = .float4, .array_count = 3 }, },
         .images = .{ "main_tex", "map_tex" },
     };
 
@@ -70,7 +67,7 @@ const Camera = struct {
         self.y2 = std.math.sin(rot);
     }
 
-    pub fn toWorld(self: Camera, pos: gamekit.math.Vec2) gamekit.math.Vec2 {
+    pub fn toWorld(self: Camera, pos: gk.math.Vec2) gk.math.Vec2 {
         const sx = (self.sw / 2 - pos.x) * self.z / (self.sw / self.sh);
         const sy = (self.o * self.sh - pos.y) * (self.z / self.f);
 
@@ -80,7 +77,7 @@ const Camera = struct {
         return .{ .x = rot_x / pos.y + self.x, .y = rot_y / pos.y + self.y };
     }
 
-    pub fn toScreen(self: Camera, pos: gamekit.math.Vec2) struct { x: f32, y: f32, size: f32 } {
+    pub fn toScreen(self: Camera, pos: gk.math.Vec2) struct { x: f32, y: f32, size: f32 } {
         const obj_x = -(self.x - pos.x) / self.z;
         const obj_y = (self.y - pos.y) / self.z;
 
@@ -97,7 +94,7 @@ const Camera = struct {
         return .{ .x = screen_x, .y = screen_y, .size = size };
     }
 
-    pub fn placeSprite(self: *Camera, tex: gamekit.gfx.Texture, pos: gamekit.math.Vec2, scale: f32) void {
+    pub fn placeSprite(self: *Camera, tex: gk.gfx.Texture, pos: gk.math.Vec2, scale: f32) void {
         const dim = self.toScreen(pos);
         const sx2 = (dim.size * scale) / tex.width;
 
@@ -136,7 +133,7 @@ var blocks: std.ArrayList(math.Vec2) = undefined;
 var wrap: f32 = 0;
 
 pub fn main() !void {
-    try gamekit.run(.{
+    try gk.run(.{
         .init = init,
         .update = update,
         .render = render,
@@ -146,14 +143,14 @@ pub fn main() !void {
 }
 
 fn init() !void {
-    const drawable_size = gamekit.window.drawableSize();
+    const drawable_size = gk.window.drawableSize();
     camera = Camera.init(@intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h));
 
     map = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/mario_kart.png", .nearest) catch unreachable;
     block = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/block.png", .nearest) catch unreachable;
 
-    const vert = if (gamekit.renderkit.current_renderer == .opengl) @embedFile("../gamekit/assets/sprite_vs.glsl") else @embedFile("../gamekit/assets/sprite_vs.metal");
-    const frag = if (gamekit.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7.gl.fs") else @embedFile("assets/shaders/mode7.mtl.fs");
+    const vert = if (gk.renderkit.current_renderer == .opengl) @embedFile("../gamekit/assets/sprite_vs.glsl") else @embedFile("../gamekit/assets/sprite_vs.metal");
+    const frag = if (gk.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7_fs.glsl") else @embedFile("assets/shaders/mode7_fs.metal");
     mode7_shader = try gfx.Shader.initWithFragUniform(Mode7Params, vert, frag);
 
     blocks = std.ArrayList(math.Vec2).init(std.testing.allocator);
@@ -179,52 +176,52 @@ fn shutdown() !void {
 
 fn update() !void {
     const move_speed = 140.0;
-    if (gamekit.input.keyDown(.w)) {
-        camera.x += std.math.cos(camera.r) * move_speed * gamekit.time.rawDeltaTime();
-        camera.y += std.math.sin(camera.r) * move_speed * gamekit.time.rawDeltaTime();
-    } else if (gamekit.input.keyDown(.s)) {
-        camera.x = camera.x - std.math.cos(camera.r) * move_speed * gamekit.time.rawDeltaTime();
-        camera.y = camera.y - std.math.sin(camera.r) * move_speed * gamekit.time.rawDeltaTime();
+    if (gk.input.keyDown(.w)) {
+        camera.x += std.math.cos(camera.r) * move_speed * gk.time.rawDeltaTime();
+        camera.y += std.math.sin(camera.r) * move_speed * gk.time.rawDeltaTime();
+    } else if (gk.input.keyDown(.s)) {
+        camera.x = camera.x - std.math.cos(camera.r) * move_speed * gk.time.rawDeltaTime();
+        camera.y = camera.y - std.math.sin(camera.r) * move_speed * gk.time.rawDeltaTime();
     }
 
-    if (gamekit.input.keyDown(.a)) {
-        camera.x += std.math.cos(camera.r - std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
-        camera.y += std.math.sin(camera.r - std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
-    } else if (gamekit.input.keyDown(.d)) {
-        camera.x += std.math.cos(camera.r + std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
-        camera.y += std.math.sin(camera.r + std.math.pi / 2.0) * move_speed * gamekit.time.rawDeltaTime();
+    if (gk.input.keyDown(.a)) {
+        camera.x += std.math.cos(camera.r - std.math.pi / 2.0) * move_speed * gk.time.rawDeltaTime();
+        camera.y += std.math.sin(camera.r - std.math.pi / 2.0) * move_speed * gk.time.rawDeltaTime();
+    } else if (gk.input.keyDown(.d)) {
+        camera.x += std.math.cos(camera.r + std.math.pi / 2.0) * move_speed * gk.time.rawDeltaTime();
+        camera.y += std.math.sin(camera.r + std.math.pi / 2.0) * move_speed * gk.time.rawDeltaTime();
     }
 
-    if (gamekit.input.keyDown(.i)) {
-        camera.f += gamekit.time.rawDeltaTime();
-    } else if (gamekit.input.keyDown(.o)) {
-        camera.f -= gamekit.time.rawDeltaTime();
+    if (gk.input.keyDown(.i)) {
+        camera.f += gk.time.rawDeltaTime();
+    } else if (gk.input.keyDown(.o)) {
+        camera.f -= gk.time.rawDeltaTime();
     }
 
-    if (gamekit.input.keyDown(.k)) {
-        camera.o += gamekit.time.rawDeltaTime();
-    } else if (gamekit.input.keyDown(.l)) {
-        camera.o -= gamekit.time.rawDeltaTime();
+    if (gk.input.keyDown(.k)) {
+        camera.o += gk.time.rawDeltaTime();
+    } else if (gk.input.keyDown(.l)) {
+        camera.o -= gk.time.rawDeltaTime();
     }
 
-    if (gamekit.input.keyDown(.minus)) {
-        camera.z += gamekit.time.rawDeltaTime() * 10;
-    } else if (gamekit.input.keyDown(.equals)) {
-        camera.z -= gamekit.time.rawDeltaTime() * 10;
+    if (gk.input.keyDown(.minus)) {
+        camera.z += gk.time.rawDeltaTime() * 10;
+    } else if (gk.input.keyDown(.equals)) {
+        camera.z -= gk.time.rawDeltaTime() * 10;
     }
 
-    if (gamekit.input.keyDown(.q)) {
-        camera.setRotation(@mod(camera.r, std.math.tau) - gamekit.time.rawDeltaTime());
-    } else if (gamekit.input.keyDown(.e)) {
-        camera.setRotation(@mod(camera.r, std.math.tau) + gamekit.time.rawDeltaTime());
+    if (gk.input.keyDown(.q)) {
+        camera.setRotation(@mod(camera.r, std.math.tau) - gk.time.rawDeltaTime());
+    } else if (gk.input.keyDown(.e)) {
+        camera.setRotation(@mod(camera.r, std.math.tau) + gk.time.rawDeltaTime());
     }
 
-    if (gamekit.input.mousePressed(.left)) {
-        var pos = camera.toWorld(gamekit.input.mousePos());
+    if (gk.input.mousePressed(.left)) {
+        var pos = camera.toWorld(gk.input.mousePos());
         _ = blocks.append(pos) catch unreachable;
     }
 
-    if (gamekit.input.mousePressed(.right)) {
+    if (gk.input.mousePressed(.right)) {
         wrap = if (wrap == 0) 1 else 0;
     }
 }
@@ -234,8 +231,8 @@ fn render() !void {
     gfx.beginPass(.{ .shader = mode7_shader });
     drawPlane();
 
-    var pos = camera.toScreen(camera.toWorld(gamekit.input.mousePos()));
-    gfx.draw.circle(.{ .x = pos.x, .y = pos.y }, pos.size, 2, 8, gamekit.math.Color.white);
+    var pos = camera.toScreen(camera.toWorld(gk.input.mousePos()));
+    gfx.draw.circle(.{ .x = pos.x, .y = pos.y }, pos.size, 2, 8, gk.math.Color.white);
     gfx.draw.texScaleOrigin(block, pos.x, pos.y, pos.size, block.width / 2, block.height);
 
     for (blocks.items) |b| camera.placeSprite(block, b, 8);
@@ -269,7 +266,7 @@ fn drawPlane() void {
 
     // bind out map to the second texture slot and we need a full screen render for the shader so we just draw a full screen rect
     gfx.draw.bindTexture(map, 1);
-    const drawable_size = gamekit.window.size();
+    const drawable_size = gk.window.size();
     gfx.draw.rect(.{}, @intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h), math.Color.white);
     gfx.setShader(null);
     gfx.draw.unbindTexture(1);

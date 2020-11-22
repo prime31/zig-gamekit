@@ -24,7 +24,7 @@ pub const Vertex = extern struct {
     col: u32 = 0xFFFFFFFF,
 };
 
-/// default params for the sprite shader. Translate the Mat32 into 2 arrays of Vec4 for the shader uniform slot.
+/// default params for the sprite shader. Translates the Mat32 into 2 arrays of f32 for the shader uniform slot.
 pub const VertexParams = extern struct {
     pub const metadata = .{
         .uniforms = .{ .VertexParams = .{ .type = .float4, .array_count = 2 } },
@@ -71,8 +71,8 @@ pub var state = struct {
 
 pub fn init() void {
     state.shader = switch (renderkit.current_renderer) {
-        .opengl => Shader.initWithFragUniform(VertexParams, @embedFile("assets/sprite_vs.glsl"), @embedFile("assets/sprite_fs.glsl")) catch unreachable,
-        .metal => Shader.initWithFragUniform(VertexParams, @embedFile("assets/sprite_vs.metal"), @embedFile("assets/sprite_fs.metal")) catch unreachable,
+        .opengl => Shader.init(@embedFile("assets/sprite_vs.glsl"), @embedFile("assets/sprite_fs.glsl")) catch unreachable,
+        .metal => Shader.init(@embedFile("assets/sprite_vs.metal"), @embedFile("assets/sprite_fs.metal")) catch unreachable,
         else => @panic("no default shader for renderer: " ++ renderkit.current_renderer),
     };
     draw.init();

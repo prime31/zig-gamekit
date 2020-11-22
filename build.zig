@@ -34,9 +34,7 @@ pub fn build(b: *Builder) !void {
         examples_step.dependOn(&exe.step);
 
         // first element in the list is added as "run" so "zig build run" works
-        if (i == 0) {
-            _ = createExe(b, target, "run", source);
-        }
+        if (i == 0) _ = createExe(b, target, "run", source);
     }
 }
 
