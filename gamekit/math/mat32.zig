@@ -13,7 +13,7 @@ const math = std.math;
 //  0: scaleX    2: sin       4: transX
 //  1: cos       3: scaleY    5: transY
 //
-pub const Mat32 = struct {
+pub const Mat32 = extern struct {
     data: [6]f32 = undefined,
 
     pub const TransformParams = struct { x: f32 = 0, y: f32 = 0, angle: f32 = 0, sx: f32 = 1, sy: f32 = 1, ox: f32 = 0, oy: f32 = 0 };
