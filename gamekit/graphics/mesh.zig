@@ -73,6 +73,8 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
 
         pub fn updateAllVerts(self: *Self) void {
             renderer.updateBuffer(VertT, self.bindings.vert_buffers[0], self.verts);
+            // updateBuffer gives us a fresh buffer so make sure we reset our append offset
+            self.bindings.vertex_buffer_offsets[0] = 0;
         }
 
         /// uploads to the GPU the slice from start_index with num_verts
