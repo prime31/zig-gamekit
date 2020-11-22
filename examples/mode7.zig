@@ -9,7 +9,10 @@ const Color = gamekit.math.Color;
 
 const Mode7Params = struct {
     pub const metadata = .{
-        .uniforms = .{ .Mode7Params = .{ .type = .float4, .array_count = 3 } },
+        .uniforms = .{
+            .VertexParams = .{ .type = .float4, .array_count = 2 },
+            .Mode7Params = .{ .type = .float4, .array_count = 3 },
+        },
         .images = .{ "main_tex", "map_tex" },
     };
 
@@ -227,7 +230,8 @@ fn update() !void {
 }
 
 fn render() !void {
-    gfx.beginPass(.{});
+    // bind our mode7 shader, draw the plane which will then unset the shader for regular sprite drawing
+    gfx.beginPass(.{ .shader = mode7_shader });
     drawPlane();
 
     var pos = camera.toScreen(camera.toWorld(gamekit.input.mousePos()));
@@ -249,8 +253,6 @@ fn render() !void {
 }
 
 fn drawPlane() void {
-    gfx.setShader(mode7_shader);
-
     uniform.mapw = map.width;
     uniform.maph = map.height;
     uniform.x = camera.x;
@@ -272,3 +274,4 @@ fn drawPlane() void {
     gfx.setShader(null);
     gfx.draw.unbindTexture(1);
 }
+var o = true;

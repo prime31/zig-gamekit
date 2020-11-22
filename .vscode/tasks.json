@@ -96,5 +96,21 @@
                 "isDefault": true
             }
         },
+        {
+            "label": "apitrace run executable",
+            "type": "shell",
+            "command": "apitrace",
+            "args": ["trace", "--api", "gl", "${workspaceFolder}/zig-cache/bin/run"],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "presentation": {
+                "clear": true
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
     ]
 }

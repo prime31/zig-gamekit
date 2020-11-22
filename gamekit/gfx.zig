@@ -91,7 +91,6 @@ pub fn setShader(shader: ?Shader) void {
 
     var params = VertexParams.init(&state.transform_mat);
     new_shader.setVertUniform(VertexParams, &params);
-    // new_shader.setUniformName(math.Mat32, "TransformMatrix", state.transform_mat);
 }
 
 pub fn beginPass(config: PassConfig) void {
