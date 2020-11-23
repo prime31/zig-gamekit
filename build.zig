@@ -36,6 +36,17 @@ pub fn build(b: *Builder) !void {
         // first element in the list is added as "run" so "zig build run" works
         if (i == 0) _ = createExe(b, target, "run", source);
     }
+
+    // shader compiler
+    const ShaderCompileStep = @import("renderkit/shader_compiler/shader_compiler.zig").ShaderCompileStep;
+    const res = ShaderCompileStep.init(b, "renderkit/shader_compiler/", .{
+        .shader = "renderkit/shader_compiler/shd.glsl",
+        .additional_imports = &[_][]const u8{"usingnamespace @import(\"stuff\");"},
+    });
+
+    const comple_shaders_step = b.step("compile-shaders", "compiles all shaders");
+    b.default_step.dependOn(comple_shaders_step);
+    comple_shaders_step.dependOn(&res.step);
 }
 
 fn createExe(b: *Builder, target: std.build.Target, name: []const u8, source: []const u8) *std.build.LibExeObjStep {
