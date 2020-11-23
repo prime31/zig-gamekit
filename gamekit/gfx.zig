@@ -70,11 +70,7 @@ pub var state = struct {
 }{};
 
 pub fn init() void {
-    state.shader = switch (renderkit.current_renderer) {
-        .opengl => Shader.init(@embedFile("assets/sprite_vs.glsl"), @embedFile("assets/sprite_fs.glsl")) catch unreachable,
-        .metal => Shader.init(@embedFile("assets/sprite_vs.metal"), @embedFile("assets/sprite_fs.metal")) catch unreachable,
-        else => @panic("no default shader for renderer: " ++ renderkit.current_renderer),
-    };
+    state.shader = Shader.initDefaultSpriteShader() catch unreachable;
     draw.init();
 }
 

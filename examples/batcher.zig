@@ -4,6 +4,8 @@ const gk = @import("gamekit");
 const gfx = gk.gfx;
 const math = gk.math;
 
+pub const renderer: gk.renderkit.Renderer = .opengl;
+
 var rng = std.rand.DefaultPrng.init(0x12345678);
 
 const total_textures: usize = 8;
@@ -70,9 +72,17 @@ pub fn main() !void {
 }
 
 fn init() !void {
+    if (use_multi_texture_batcher and gk.renderkit.current_renderer != .opengl) @panic("only OpenGL is implemented for MultiBatcher shader");
+
     _ = sdl.SDL_GL_SetSwapInterval(0);
 
-    shader = if (use_multi_texture_batcher) try gfx.Shader.initWithFragUniform(MultiFragUniform, @embedFile("assets/shaders/multi_batcher.gl.vs"), @embedFile("assets/shaders/multi_batcher.gl.fs")) else null;
+    shader = if (use_multi_texture_batcher)
+        try gfx.Shader.initWithFrag(MultiFragUniform, .{
+            .vert = @embedFile("assets/shaders/multi_batcher.gl.vs"),
+            .frag = @embedFile("assets/shaders/multi_batcher.gl.fs"),
+        })
+    else
+        null;
 
     if (use_multi_texture_batcher) {
         var uniform = MultiFragUniform{};
@@ -96,23 +106,27 @@ fn shutdown() !void {
 }
 
 fn update() !void {
+    const size = gk.window.size();
+    const win_w = @intToFloat(f32, size.w) - 40;
+    const win_h = @intToFloat(f32, size.h) - 40;
+
     if (@mod(gk.time.frames(), 500) == 0) std.debug.print("fps: {d}\n", .{gk.time.fps()});
 
     for (things) |*thing| {
         thing.pos.x += thing.vel.x * gk.time.rawDeltaTime();
         thing.pos.y += thing.vel.y * gk.time.rawDeltaTime();
 
-        if (thing.pos.x > 780) {
+        if (thing.pos.x > win_w) {
             thing.vel.x *= -1;
-            thing.pos.x = 780;
+            thing.pos.x = win_w;
         }
         if (thing.pos.x < 0) {
             thing.vel.x *= -1;
             thing.pos.x = 0;
         }
-        if (thing.pos.y > 580) {
+        if (thing.pos.y > win_h) {
             thing.vel.y *= -1;
-            thing.pos.y = 580;
+            thing.pos.y = win_h;
         }
         if (thing.pos.y < 0) {
             thing.vel.y *= -1;

@@ -9,7 +9,7 @@ const Color = gk.math.Color;
 
 const Mode7Params = struct {
     pub const metadata = .{
-        .uniforms = .{ .Mode7Params = .{ .type = .float4, .array_count = 3 }, },
+        .uniforms = .{ .Mode7Params = .{ .type = .float4, .array_count = 3 } },
         .images = .{ "main_tex", "map_tex" },
     };
 
@@ -151,7 +151,7 @@ fn init() !void {
 
     const vert = if (gk.renderkit.current_renderer == .opengl) @embedFile("../gamekit/assets/sprite_vs.glsl") else @embedFile("../gamekit/assets/sprite_vs.metal");
     const frag = if (gk.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7_fs.glsl") else @embedFile("assets/shaders/mode7_fs.metal");
-    mode7_shader = try gfx.Shader.initWithFragUniform(Mode7Params, vert, frag);
+    mode7_shader = try gfx.Shader.initWithFrag(Mode7Params, .{ .vert = vert, .frag = frag });
 
     blocks = std.ArrayList(math.Vec2).init(std.testing.allocator);
     _ = blocks.append(.{ .x = 0, .y = 0 }) catch unreachable;
