@@ -137,7 +137,7 @@ fn update() !void {
 
 fn render() !void {
     gfx.beginPass(.{ .color = math.Color.beige });
-    gfx.setShader(shader);
+    if (shader) |*shdr| gfx.setShader(shdr);
     batcher.begin();
 
     for (things) |thing| {

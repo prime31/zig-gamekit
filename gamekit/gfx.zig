@@ -7,6 +7,7 @@ const math = gamekit.math;
 pub const Texture = @import("graphics/texture.zig").Texture;
 pub const OffscreenPass = @import("graphics/offscreen_pass.zig").OffscreenPass;
 pub const Shader = @import("graphics/shader.zig").Shader;
+pub const ShaderState = @import("graphics/shader.zig").ShaderState;
 
 // even higher level wrappers for 2D game dev
 pub const Mesh = @import("graphics/mesh.zig").Mesh;
@@ -24,22 +25,6 @@ pub const Vertex = extern struct {
     col: u32 = 0xFFFFFFFF,
 };
 
-/// default params for the sprite shader. Translates the Mat32 into 2 arrays of f32 for the shader uniform slot.
-pub const VertexParams = extern struct {
-    pub const metadata = .{
-        .uniforms = .{ .VertexParams = .{ .type = .float4, .array_count = 2 } },
-        .images = .{ "main_tex" },
-    };
-
-    transform_matrix: [8]f32 = [_]f32{0} ** 8,
-
-    pub fn init(mat: *math.Mat32) VertexParams {
-        var params = VertexParams{};
-        std.mem.copy(f32, &params.transform_matrix, &mat.data);
-        return params;
-    }
-};
-
 pub const PassConfig = struct {
     color_action: renderkit.ClearAction = .clear,
     color: math.Color = math.Color.aya,
@@ -49,7 +34,7 @@ pub const PassConfig = struct {
     depth: f64 = 0,
 
     trans_mat: ?math.Mat32 = null,
-    shader: ?Shader = null,
+    shader: ?*Shader = null,
     pass: ?OffscreenPass = null,
 
     pub fn asClearCommand(self: PassConfig) renderkit.ClearCommand {
@@ -79,14 +64,12 @@ pub fn deinit() void {
     state.shader.deinit();
 }
 
-pub fn setShader(shader: ?Shader) void {
-    const new_shader = shader orelse state.shader;
+pub fn setShader(shader: ?*Shader) void {
+    const new_shader = shader orelse &state.shader;
 
     draw.batcher.flush();
     new_shader.bind();
-
-    var params = VertexParams.init(&state.transform_mat);
-    new_shader.setVertUniform(VertexParams, &params);
+    new_shader.setTransformMatrix(&state.transform_mat);
 }
 
 pub fn beginPass(config: PassConfig) void {

@@ -4,6 +4,8 @@ const gk = @import("gamekit");
 const gfx = gk.gfx;
 const math = gk.math;
 
+pub const renderer: gk.renderkit.Renderer = .opengl;
+
 const Texture = gk.gfx.Texture;
 const Color = gk.math.Color;
 
@@ -26,6 +28,8 @@ const Mode7Params = struct {
     y1: f32 = 0,
     y2: f32 = 0,
 };
+
+const Mode7Shader = gfx.ShaderState(Mode7Params);
 
 const Block = struct {
     tex: Texture,
@@ -126,7 +130,7 @@ const Camera = struct {
 
 var map: Texture = undefined;
 var block: Texture = undefined;
-var mode7_shader: gfx.Shader = undefined;
+var mode7_shader: Mode7Shader = undefined;
 var uniform: Mode7Params = .{};
 var camera: Camera = undefined;
 var blocks: std.ArrayList(math.Vec2) = undefined;
@@ -151,7 +155,7 @@ fn init() !void {
 
     const vert = if (gk.renderkit.current_renderer == .opengl) @embedFile("../gamekit/assets/sprite_vs.glsl") else @embedFile("../gamekit/assets/sprite_vs.metal");
     const frag = if (gk.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7_fs.glsl") else @embedFile("assets/shaders/mode7_fs.metal");
-    mode7_shader = try gfx.Shader.initWithFrag(Mode7Params, .{ .vert = vert, .frag = frag });
+    mode7_shader = Mode7Shader.init(.{ .vert = vert, .frag = frag, .onPostBind = Mode7Shader.onPostBind });
 
     blocks = std.ArrayList(math.Vec2).init(std.testing.allocator);
     _ = blocks.append(.{ .x = 0, .y = 0 }) catch unreachable;
@@ -228,7 +232,8 @@ fn update() !void {
 
 fn render() !void {
     // bind our mode7 shader, draw the plane which will then unset the shader for regular sprite drawing
-    gfx.beginPass(.{ .shader = mode7_shader });
+    updateMode7Uniforms();
+    gfx.beginPass(.{ .shader = &mode7_shader.shader });
     drawPlane();
 
     var pos = camera.toScreen(camera.toWorld(gk.input.mousePos()));
@@ -249,26 +254,26 @@ fn render() !void {
     gfx.endPass();
 }
 
-fn drawPlane() void {
-    uniform.mapw = map.width;
-    uniform.maph = map.height;
-    uniform.x = camera.x;
-    uniform.y = camera.y;
-    uniform.zoom = camera.z;
-    uniform.fov = camera.f;
-    uniform.offset = camera.o;
-    uniform.wrap = wrap;
-    uniform.x1 = camera.x1;
-    uniform.y1 = camera.y1;
-    uniform.x2 = camera.x2;
-    uniform.y2 = camera.y2;
-    mode7_shader.setFragUniform(Mode7Params, &uniform);
+fn updateMode7Uniforms() void {
+    mode7_shader.frag_uniform.mapw = map.width;
+    mode7_shader.frag_uniform.maph = map.height;
+    mode7_shader.frag_uniform.x = camera.x;
+    mode7_shader.frag_uniform.y = camera.y;
+    mode7_shader.frag_uniform.zoom = camera.z;
+    mode7_shader.frag_uniform.fov = camera.f;
+    mode7_shader.frag_uniform.offset = camera.o;
+    mode7_shader.frag_uniform.wrap = wrap;
+    mode7_shader.frag_uniform.x1 = camera.x1;
+    mode7_shader.frag_uniform.y1 = camera.y1;
+    mode7_shader.frag_uniform.x2 = camera.x2;
+    mode7_shader.frag_uniform.y2 = camera.y2;
+}
 
+fn drawPlane() void {
     // bind out map to the second texture slot and we need a full screen render for the shader so we just draw a full screen rect
     gfx.draw.bindTexture(map, 1);
     const drawable_size = gk.window.size();
     gfx.draw.rect(.{}, @intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h), math.Color.white);
     gfx.setShader(null);
-    gfx.draw.unbindTexture(1);
 }
 var o = true;
