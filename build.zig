@@ -4,6 +4,7 @@ const LibExeObjStep = std.build.LibExeObjStep;
 const Builder = std.build.Builder;
 const Target = std.build.Target;
 const Pkg = std.build.Pkg;
+const ShaderCompileStep = @import("renderkit/shader_compiler/shader_compiler.zig").ShaderCompileStep;
 
 var enable_imgui: ?bool = null;
 
@@ -37,10 +38,10 @@ pub fn build(b: *Builder) !void {
         if (i == 0) _ = createExe(b, target, "run", source);
     }
 
-    // shader compiler
-    const ShaderCompileStep = @import("renderkit/shader_compiler/shader_compiler.zig").ShaderCompileStep;
+    // shader compiler, run with `zig build compile-shaders`
     const res = ShaderCompileStep.init(b, "renderkit/shader_compiler/", .{
         .shader = "renderkit/shader_compiler/shd.glsl",
+        .package_output_path = "examples/assets",
         .additional_imports = &[_][]const u8{"usingnamespace @import(\"stuff\");"},
     });
 

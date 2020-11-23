@@ -10,7 +10,7 @@
             "MTL_SHADER_VALIDATION_TEXTURE_USAGE": "1",
             "MTL_DEBUG_LAYER": "1",
             "METAL_DEVICE_WRAPPER_TYPE": "1",
-        }
+        },
     },
     "tasks": [
         {
@@ -97,10 +97,30 @@
             }
         },
         {
+            "label": "Compile Shaders",
+            "type": "shell",
+            "command": "zig build compile-shaders",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
             "label": "apitrace run executable",
             "type": "shell",
             "command": "apitrace",
-            "args": ["trace", "--api", "gl", "${workspaceFolder}/zig-cache/bin/run"],
+            "args": [
+                "trace",
+                "--api",
+                "gl",
+                "${workspaceFolder}/zig-cache/bin/run"
+            ],
             "problemMatcher": [
                 "$gcc"
             ],
