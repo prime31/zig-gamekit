@@ -131,7 +131,6 @@ const Camera = struct {
 var map: Texture = undefined;
 var block: Texture = undefined;
 var mode7_shader: Mode7Shader = undefined;
-var uniform: Mode7Params = .{};
 var camera: Camera = undefined;
 var blocks: std.ArrayList(math.Vec2) = undefined;
 var wrap: f32 = 0;
@@ -153,9 +152,8 @@ fn init() !void {
     map = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/mario_kart.png", .nearest) catch unreachable;
     block = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/block.png", .nearest) catch unreachable;
 
-    const vert = if (gk.renderkit.current_renderer == .opengl) @embedFile("../gamekit/assets/sprite_vs.glsl") else @embedFile("../gamekit/assets/sprite_vs.metal");
     const frag = if (gk.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7_fs.glsl") else @embedFile("assets/shaders/mode7_fs.metal");
-    mode7_shader = Mode7Shader.init(.{ .vert = vert, .frag = frag, .onPostBind = Mode7Shader.onPostBind });
+    mode7_shader = Mode7Shader.init(.{ .frag = frag, .onPostBind = Mode7Shader.onPostBind });
 
     blocks = std.ArrayList(math.Vec2).init(std.testing.allocator);
     _ = blocks.append(.{ .x = 0, .y = 0 }) catch unreachable;

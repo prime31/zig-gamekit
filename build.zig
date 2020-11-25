@@ -42,7 +42,12 @@ pub fn build(b: *Builder) !void {
     const res = ShaderCompileStep.init(b, "renderkit/shader_compiler/", .{
         .shader = "renderkit/shader_compiler/shd.glsl",
         .package_output_path = "examples/assets",
-        .additional_imports = &[_][]const u8{"usingnamespace @import(\"stuff\");"},
+        .additional_imports = &[_][]const u8{
+            "const gk = @import(\"gamekit\");",
+            "const gfx = gk.gfx;",
+            "const math = gk.math;",
+            "const renderkit = gk.renderkit;",
+        },
     });
 
     const comple_shaders_step = b.step("compile-shaders", "compiles all shaders");
