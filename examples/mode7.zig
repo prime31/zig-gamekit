@@ -252,4 +252,3 @@ fn drawPlane() void {
     gfx.draw.rect(.{}, @intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h), math.Color.white);
     gfx.setShader(null);
 }
-var o = true;

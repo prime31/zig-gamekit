@@ -44,7 +44,6 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         bindings: renderkit.BufferBindings,
         verts: []VertT,
         element_count: c_int,
-        verts_updated: bool = false,
         allocator: *std.mem.Allocator,
 
         pub fn init(allocator: *std.mem.Allocator, vertex_count: usize, indices: []IndexT) !Self {
@@ -77,7 +76,7 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
             self.bindings.vertex_buffer_offsets[0] = 0;
         }
 
-        /// uploads to the GPU the slice from start_index with num_verts
+        /// uploads to the GPU the slice up to num_verts
         pub fn updateVertSlice(self: *Self, num_verts: usize) void {
             std.debug.assert(num_verts <= self.verts.len);
             const vert_slice = self.verts[0..num_verts];
