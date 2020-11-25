@@ -4,7 +4,9 @@ const LibExeObjStep = std.build.LibExeObjStep;
 const Builder = std.build.Builder;
 const Target = std.build.Target;
 const Pkg = std.build.Pkg;
-const ShaderCompileStep = @import("renderkit/shader_compiler/shader_compiler.zig").ShaderCompileStep;
+
+const renderkit_build = @import("renderkit/build.zig");
+const ShaderCompileStep = renderkit_build.ShaderCompileStep;
 
 var enable_imgui: ?bool = null;
 
@@ -40,7 +42,8 @@ pub fn build(b: *Builder) !void {
 
     // shader compiler, run with `zig build compile-shaders`
     const res = ShaderCompileStep.init(b, "renderkit/shader_compiler/", .{
-        .shader = "renderkit/shader_compiler/shd.glsl",
+        .shader = "examples/assets/shaders/shader_src.glsl",
+        .shader_output_path = "examples/assets/shaders",
         .package_output_path = "examples/assets",
         .additional_imports = &[_][]const u8{
             "const gk = @import(\"gamekit\");",
@@ -94,7 +97,6 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
     const fontstash_pkg = fontstash_build.getPackage(prefix_path);
 
     // renderkit
-    const renderkit_build = @import("renderkit/build.zig");
     renderkit_build.addRenderKitToArtifact(b, exe, target, prefix_path ++ "renderkit/");
     const renderkit_pkg = renderkit_build.getRenderKitPackage(prefix_path ++ "renderkit/");
 

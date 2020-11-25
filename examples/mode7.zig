@@ -3,33 +3,12 @@ const renderkit = @import("renderkit");
 const gk = @import("gamekit");
 const gfx = gk.gfx;
 const math = gk.math;
+const shaders = @import("assets/shaders.zig");
 
 pub const renderer: gk.renderkit.Renderer = .opengl;
 
 const Texture = gk.gfx.Texture;
 const Color = gk.math.Color;
-
-const Mode7Params = struct {
-    pub const metadata = .{
-        .uniforms = .{ .Mode7Params = .{ .type = .float4, .array_count = 3 } },
-        .images = .{ "main_tex", "map_tex" },
-    };
-
-    mapw: f32 = 0,
-    maph: f32 = 0,
-    x: f32 = 0,
-    y: f32 = 0,
-    zoom: f32 = 0,
-    fov: f32 = 0,
-    offset: f32 = 0,
-    wrap: f32 = 0,
-    x1: f32 = 0,
-    x2: f32 = 0,
-    y1: f32 = 0,
-    y2: f32 = 0,
-};
-
-const Mode7Shader = gfx.ShaderState(Mode7Params);
 
 const Block = struct {
     tex: Texture,
@@ -130,7 +109,7 @@ const Camera = struct {
 
 var map: Texture = undefined;
 var block: Texture = undefined;
-var mode7_shader: Mode7Shader = undefined;
+var mode7_shader: shaders.Mode7Shader = undefined;
 var camera: Camera = undefined;
 var blocks: std.ArrayList(math.Vec2) = undefined;
 var wrap: f32 = 0;
@@ -152,8 +131,7 @@ fn init() !void {
     map = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/mario_kart.png", .nearest) catch unreachable;
     block = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/block.png", .nearest) catch unreachable;
 
-    const frag = if (gk.renderkit.current_renderer == .opengl) @embedFile("assets/shaders/mode7_fs.glsl") else @embedFile("assets/shaders/mode7_fs.metal");
-    mode7_shader = Mode7Shader.init(.{ .frag = frag, .onPostBind = Mode7Shader.onPostBind });
+    mode7_shader = shaders.createMode7Shader();
 
     blocks = std.ArrayList(math.Vec2).init(std.testing.allocator);
     _ = blocks.append(.{ .x = 0, .y = 0 }) catch unreachable;

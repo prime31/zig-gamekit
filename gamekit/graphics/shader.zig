@@ -47,11 +47,16 @@ pub const Shader = struct {
     pub const ShaderOptions = struct {
         /// if vert and frag are file paths an Allocator is required. If they are the shader code then no Allocator should be provided
         allocator: ?*std.mem.Allocator = null,
-        /// optional vertex shader file path or shader code. If null, the default sprite shader vertex shader is used
+
+        /// optional vertex shader file path (without extension) or shader code. If null, the default sprite shader vertex shader is used
         vert: ?[:0]const u8 = null,
+
+        /// required frag shader file path (without extension) or shader code.
         frag: [:0]const u8,
+
         /// optional function that will be called immediately after bind is called allowing you to auto-update uniforms
         onPostBind: ?fn (*Shader) void = null,
+
         /// optional function that lets you override the behavior when the transform matrix is set. This is used when there is a
         /// custom vertex shader and isnt necessary if the standard sprite vertex shader is used.
         onSetTransformMatrix: ?fn (*math.Mat32) void = null,
@@ -71,7 +76,9 @@ pub const Shader = struct {
             if (options.vert) |vert| {
                 // if we were provided an allocator that means this is a file
                 if (options.allocator) |allocator| {
-                    break :blk try fs.readZ(allocator, vert);
+                    const vert_path = try std.mem.concat(allocator, u8, &[_][]const u8{ vert, rk.shaderFileExtension(), "\x00" });
+                    defer allocator.free(vert_path);
+                    break :blk try fs.readZ(allocator, vert_path);
                 }
                 break :blk vert;
             } else {
@@ -80,7 +87,9 @@ pub const Shader = struct {
         };
         const frag = blk: {
             if (options.allocator) |allocator| {
-                break :blk try fs.readZ(allocator, options.frag);
+                const frag_path = try std.mem.concat(allocator, u8, &[_][]const u8{ options.frag, rk.shaderFileExtension() });
+                defer allocator.free(frag_path);
+                break :blk try fs.readZ(allocator, frag_path);
             }
             break :blk options.frag;
         };
