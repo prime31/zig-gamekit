@@ -25,3 +25,11 @@ CIMGUI_API void _ogColoredText(float r, float g, float b, const char* text) {
     tint_col.w = 1;
     ImGui::TextColored(tint_col, text);
 }
+
+// M1 needs this for some reason...
+CIMGUI_API bool _ogButton(const char* label, const float x, const float y) {
+    ImVec2 size;
+    size.x = x;
+    size.y = y;
+    return ImGui::Button(label, size);
+}

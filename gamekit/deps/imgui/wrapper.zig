@@ -5,6 +5,7 @@ pub const icons = @import("font_awesome.zig");
 extern fn _ogImage(user_texture_id: ImTextureID, size: ImVec2, uv0: ImVec2, uv1: ImVec2) void;
 extern fn _ogImageButton(user_texture_id: ImTextureID, size: ImVec2, uv0: ImVec2, uv1: ImVec2, frame_padding: c_int) bool;
 extern fn _ogColoredText(r: f32, g: f32, b: f32, text: [*c]const u8) void;
+extern fn  _ogButton(label: [*c]const u8, x: f32, y: f32) bool;
 
 pub fn ogOpenPopup(str_id: [*c]const u8) void {
     igOpenPopup(str_id, ImGuiPopupFlags_None);
@@ -59,7 +60,11 @@ pub fn ogKeyUp(key: usize) bool {
 }
 
 pub fn ogButton(label: [*c]const u8) bool {
-    return igButton(label, .{});
+    return _ogButton(label, 0, 0);
+}
+
+pub fn ogButtonEx(label: [*c]const u8, size: ImVec2) bool {
+    return _ogButton(label, size.x, size.y);
 }
 
 pub fn ogImage(texture: ImTextureID, width: i32, height: i32) void {
