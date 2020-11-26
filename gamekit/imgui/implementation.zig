@@ -12,9 +12,8 @@ var state = struct {
 }{};
 
 // public methods
-pub fn init(window: *sdl.SDL_Window, docking: bool, viewports: bool) void {
-    _ = imgui.igCreateContext(null); // TODO: move to renderer
-    state.renderer = Renderer.init(docking, viewports);
+pub fn init(window: *sdl.SDL_Window, docking: bool, viewports: bool, icon_font: bool) void {
+    state.renderer = Renderer.init(docking, viewports, icon_font);
     state.events = Events.init();
 }
 

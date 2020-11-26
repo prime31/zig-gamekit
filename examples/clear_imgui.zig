@@ -41,7 +41,7 @@ fn update() !void {
 fn render() !void {
     gfx.beginPass(.{ .color = clear_color, .trans_mat = camera.transMat() });
 
-    igText("WASD moves camera");
+    igText("WASD moves camera " ++ icons.camera);
 
     var color = clear_color.asArray();
     if (igColorEdit4("Clear Color", &color[0], ImGuiColorEditFlags_NoInputs)) {

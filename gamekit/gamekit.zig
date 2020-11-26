@@ -22,6 +22,7 @@ pub const Config = struct {
     window: WindowConfig = WindowConfig{},
 
     update_rate: f64 = 60, // desired fps
+    imgui_icon_font: bool = true,
     imgui_viewports: bool = false, // whether imgui viewports should be enabled
     imgui_docking: bool = true, // whether imgui docking should be enabled
 };
@@ -61,7 +62,7 @@ pub fn run(config: Config) !void {
     time = Time.init(config.update_rate);
     input = Input.init(window.scale());
 
-    if (enable_imgui) imgui_impl.init(window.sdl_window, config.imgui_docking, config.imgui_viewports);
+    if (enable_imgui) imgui_impl.init(window.sdl_window, config.imgui_docking, config.imgui_viewports, config.imgui_icon_font);
 
     try config.init();
 

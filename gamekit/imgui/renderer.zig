@@ -13,7 +13,7 @@ pub const Renderer = struct {
 
     const font_awesome_range: [3]imgui.ImWchar = [_]imgui.ImWchar{ imgui.icons.icon_range_min, imgui.icons.icon_range_max, 0 };
 
-    pub fn init(docking: bool, viewports: bool) Renderer {
+    pub fn init(docking: bool, viewports: bool, icon_font: bool) Renderer {
         const max_verts = 16384;
         const index_buffer_size = @intCast(c_long, max_verts * 3 * @sizeOf(u16));
         var ibuffer = renderer.createBuffer(u16, .{
@@ -40,7 +40,6 @@ pub const Renderer = struct {
         _ = imgui.ImFontAtlas_AddFontDefault(io.Fonts, null);
 
         // add FontAwesome optionally
-        const icon_font = false;
         if (icon_font) {
             var icons_config = imgui.ImFontConfig_ImFontConfig();
             icons_config[0].MergeMode = true;
@@ -48,7 +47,7 @@ pub const Renderer = struct {
             icons_config[0].FontDataOwnedByAtlas = false;
 
             var data = @embedFile("assets/" ++ imgui.icons.font_icon_filename_fas);
-            _ = imgui.ImFontAtlas_AddFontFromMemoryTTF(io.Fonts, data, data.len, 14, icons_config, &font_awesome_range[0]);
+            _ = imgui.ImFontAtlas_AddFontFromMemoryTTF(io.Fonts, data, data.len, 13, icons_config, &font_awesome_range[0]);
         }
 
         var w: i32 = undefined;
@@ -121,7 +120,7 @@ pub const Renderer = struct {
                     const clip_w = @floatToInt(i32, cmd.ClipRect.z - cmd.ClipRect.x);
                     const clip_h = @floatToInt(i32, cmd.ClipRect.w - cmd.ClipRect.y);
 
-                    renderer.scissor(clip_x, clip_y, clip_w, clip_h);
+                    // renderer.scissor(clip_x, clip_y, clip_w, clip_h);
 
                     if (tex_id != cmd.TextureId or vtx_offset != cmd.VtxOffset) {
                         tex_id = cmd.TextureId;
