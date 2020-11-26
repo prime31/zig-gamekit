@@ -14,15 +14,18 @@ pub fn build(b: *Builder) !void {
     const target = b.standardTargetOptions(.{});
     const mode = b.standardReleaseOptions();
 
+    // use a different cache folder for macos arm builds
+    b.cache_root = if (std.builtin.os.tag == .macos and std.builtin.arch == std.builtin.Arch.aarch64) "zig-arm-cache/bin" else "zig-cache/bin";
+
     const examples = [_][2][]const u8{
-        [_][]const u8{ "mode7", "examples/mode7.zig" },
-        [_][]const u8{ "primitives", "examples/primitives.zig" },
-        [_][]const u8{ "offscreen", "examples/offscreen.zig" },
-        [_][]const u8{ "tri_batcher", "examples/tri_batcher.zig" },
-        [_][]const u8{ "batcher", "examples/batcher.zig" },
-        [_][]const u8{ "meshes", "examples/meshes.zig" },
-        [_][]const u8{ "clear", "examples/clear.zig" },
-        [_][]const u8{ "clear_mtl", "examples/clear_mtl.zig" },
+        // [_][]const u8{ "mode7", "examples/mode7.zig" },
+        // [_][]const u8{ "primitives", "examples/primitives.zig" },
+        // [_][]const u8{ "offscreen", "examples/offscreen.zig" },
+        // [_][]const u8{ "tri_batcher", "examples/tri_batcher.zig" },
+        // [_][]const u8{ "batcher", "examples/batcher.zig" },
+        // [_][]const u8{ "meshes", "examples/meshes.zig" },
+        // [_][]const u8{ "clear", "examples/clear.zig" },
+        // [_][]const u8{ "clear_mtl", "examples/clear_mtl.zig" },
         [_][]const u8{ "clear_imgui", "examples/clear_imgui.zig" },
     };
 
