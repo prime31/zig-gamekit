@@ -654,7 +654,7 @@ pub const struct_ImGuiIO = extern struct {
     KeyRepeatDelay: f32,
     KeyRepeatRate: f32,
     UserData: ?*c_void,
-    Fonts: [*c]ImFontAtlas,
+    Fonts: *ImFontAtlas,
     FontGlobalScale: f32,
     FontAllowUserScaling: bool,
     FontDefault: [*c]ImFont,
@@ -2780,7 +2780,7 @@ pub extern fn igGetStyle() *ImGuiStyle;
 pub extern fn igNewFrame() void;
 pub extern fn igEndFrame() void;
 pub extern fn igRender() void;
-pub extern fn igGetDrawData() [*c]ImDrawData;
+pub extern fn igGetDrawData() *ImDrawData;
 pub extern fn igShowDemoWindow(p_open: [*c]bool) void;
 pub extern fn igShowAboutWindow(p_open: [*c]bool) void;
 pub extern fn igShowMetricsWindow(p_open: [*c]bool) void;
@@ -3136,7 +3136,7 @@ pub extern fn igUpdatePlatformWindows() void;
 pub extern fn igRenderPlatformWindowsDefault(platform_render_arg: ?*c_void, renderer_render_arg: ?*c_void) void;
 pub extern fn igDestroyPlatformWindows() void;
 pub extern fn igFindViewportByID(id: ImGuiID) [*c]ImGuiViewport;
-pub extern fn igFindViewportByPlatformHandle(platform_handle: ?*c_void) [*c]ImGuiViewport;
+pub extern fn igFindViewportByPlatformHandle(platform_handle: ?*c_void) ?*ImGuiViewport;
 pub extern fn ImGuiStyle_ImGuiStyle() [*c]ImGuiStyle;
 pub extern fn ImGuiStyle_destroy(self: [*c]ImGuiStyle) void;
 pub extern fn ImGuiStyle_ScaleAllSizes(self: [*c]ImGuiStyle, scale_factor: f32) void;

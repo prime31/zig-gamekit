@@ -1,8 +1,10 @@
 const std = @import("std");
 const stb_image = @import("stb");
+const gk = @import("../gamekit.zig");
+const imgui = @import("imgui");
 const renderkit = @import("renderkit");
 const renderer = renderkit.renderer;
-const fs = @import("../gamekit.zig").utils.fs;
+const fs = gk.utils.fs;
 
 pub const Texture = struct {
     img: renderkit.Image,
@@ -124,5 +126,9 @@ pub const Texture = struct {
 
     pub fn setData(self: *Texture, comptime T: type, data: []T) void {
         renderer.updateImage(T, self.img, data);
+    }
+
+    pub fn imTextureID(self: Texture) imgui.ImTextureID {
+        return @intToPtr(*c_void, self.img);
     }
 };

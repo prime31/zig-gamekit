@@ -3,6 +3,7 @@ const gk = @import("gamekit");
 const gfx = gk.gfx;
 usingnamespace @import("imgui");
 
+pub const renderer: gk.renderkit.Renderer = .opengl;
 pub const enable_imgui = true;
 
 var clear_color = gk.math.Color.aya;
@@ -23,6 +24,8 @@ fn init() !void {
 }
 
 fn update() !void {
+    igShowDemoWindow(null);
+
     if (gk.input.keyDown(.a)) {
         camera.pos.x += 100 * gk.time.dt();
     } else if (gk.input.keyDown(.d)) {
@@ -46,7 +49,7 @@ fn render() !void {
     }
 
     var buf: [255]u8 = undefined;
-    var str = try std.fmt.bufPrintZ(&buf, "Camera Pos: {d:.2}, {d:.2}", .{camera.pos.x, camera.pos.y});
+    var str = try std.fmt.bufPrintZ(&buf, "Camera Pos: {d:.2}, {d:.2}", .{ camera.pos.x, camera.pos.y });
     igText(str);
 
     var mouse = gk.input.mousePos();
