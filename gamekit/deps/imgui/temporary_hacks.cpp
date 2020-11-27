@@ -2,6 +2,13 @@
 #include "cimgui/imgui/imgui_internal.h"
 #include "cimgui/cimgui.h"
 
+CIMGUI_API void _ogImDrawData_ScaleClipRects(ImDrawData* self, const float fb_scale) {
+    ImVec2 fb_scale_vec;
+    fb_scale_vec.x = fb_scale;
+    fb_scale_vec.y = fb_scale;
+    self->ScaleClipRects(fb_scale_vec);
+}
+
 // workaround for Windows not functioning with ImVec4s
 CIMGUI_API void _ogImage(ImTextureID user_texture_id, const ImVec2 size, const ImVec2 uv0, const ImVec2 uv1) {
     ImVec4 tint_col;

@@ -58,7 +58,8 @@ pub const Shader = struct {
         onPostBind: ?fn (*Shader) void = null,
 
         /// optional function that lets you override the behavior when the transform matrix is set. This is used when there is a
-        /// custom vertex shader and isnt necessary if the standard sprite vertex shader is used.
+        /// custom vertex shader and isnt necessary if the standard sprite vertex shader is used. Note that the shader is already
+        /// bound when this is called if `gfx.setShader` is used so send your uniform immediately!
         onSetTransformMatrix: ?fn (*math.Mat32) void = null,
     };
 

@@ -87,9 +87,10 @@ pub const Renderer = struct {
         var tex_id = imgui.igGetIO().Fonts.TexID;
         self.bindings.images[0] = @intCast(rk.Image, @ptrToInt(tex_id));
 
-        imgui.ImDrawData_ScaleClipRects(draw_data, io.DisplayFramebufferScale);
-        const width = @floatToInt(i32, draw_data.DisplaySize.x * io.DisplayFramebufferScale.x);
-        const height = @floatToInt(i32, draw_data.DisplaySize.y * io.DisplayFramebufferScale.y);
+        var fb_scale = draw_data.FramebufferScale;
+        imgui.ogImDrawData_ScaleClipRects(draw_data, fb_scale);
+        const width = @floatToInt(i32, draw_data.DisplaySize.x * fb_scale.x);
+        const height = @floatToInt(i32, draw_data.DisplaySize.y * fb_scale.y);
         renderer.viewport(0, 0, width, height);
 
         gfx.setShader(null);
@@ -98,7 +99,7 @@ pub const Renderer = struct {
 
         var vb_offset: u32 = 0;
         for (draw_data.CmdLists[0..@intCast(usize, draw_data.CmdListsCount)]) |list, i| {
-            // append vertices and indices to buffers, record start offsets in draw state
+            // append vertices and indices to buffers
             const indices = @ptrCast([*]u16, list.IdxBuffer.Data)[0..@intCast(usize, list.IdxBuffer.Size)];
             self.bindings.index_buffer_offset = renderer.appendBuffer(u16, self.bindings.index_buffer, indices);
 
@@ -114,13 +115,13 @@ pub const Renderer = struct {
                 if (cmd.UserCallback) |cb| {
                     cb(list, &cmd);
                 } else {
-                    // std.debug.print("{d}\n", .{cmd.ClipRect});
-                    const clip_x = @floatToInt(i32, cmd.ClipRect.x - draw_data.DisplayPos.x);
-                    const clip_y = @floatToInt(i32, cmd.ClipRect.y - draw_data.DisplayPos.y);
-                    const clip_w = @floatToInt(i32, cmd.ClipRect.z - cmd.ClipRect.x);
-                    const clip_h = @floatToInt(i32, cmd.ClipRect.w - cmd.ClipRect.y);
+                    // DisplayPos is 0,0 unless viewports is enabled
+                    const clip_x = @floatToInt(i32, (cmd.ClipRect.x - draw_data.DisplayPos.x) * fb_scale.x);
+                    const clip_y = @floatToInt(i32, (cmd.ClipRect.y - draw_data.DisplayPos.y) * fb_scale.y);
+                    const clip_w = @floatToInt(i32, (cmd.ClipRect.z - draw_data.DisplayPos.x) * fb_scale.x);
+                    const clip_h = @floatToInt(i32, (cmd.ClipRect.w - draw_data.DisplayPos.y) * fb_scale.y);
 
-                    // renderer.scissor(clip_x, clip_y, clip_w, clip_h);
+                    renderer.scissor(clip_x, clip_y, clip_w - clip_x, clip_h - clip_y);
 
                     if (tex_id != cmd.TextureId or vtx_offset != cmd.VtxOffset) {
                         tex_id = cmd.TextureId;
@@ -131,9 +132,6 @@ pub const Renderer = struct {
                         renderer.applyBindings(self.bindings);
                     }
 
-                    // gfx.device.applyVertexBufferBindings(&vert_buffer_binding, 1, bindings_updated, @intCast(i32, cmd.VtxOffset));
-                    // gfx.device.drawIndexedPrimitives(.triangle_list, @intCast(i32, cmd.VtxOffset), 0, list.VtxBuffer.Size, @intCast(i32, cmd.IdxOffset), @intCast(i32, cmd.ElemCount / 3), self.index_buffer.buffer, .sixteen_bit);
-                    // bindings_updated = false;
                     renderer.draw(base_element, @intCast(c_int, cmd.ElemCount), 1);
                 }
                 base_element += @intCast(c_int, cmd.ElemCount);
