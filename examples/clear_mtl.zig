@@ -65,7 +65,7 @@ fn render() !void {
     gfx.endPass();
 
     // draw the dynamic mesh in two parts, appending data before each draw
-    gfx.beginPass(.{ .color_action = .dont_care });
+    gfx.beginPass(.{ .color_action = .load });
     {
         var j: usize = 0;
         while (j < 4) : (j += 1) {

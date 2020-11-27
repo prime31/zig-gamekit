@@ -20,7 +20,6 @@ pub fn main() !void {
 
 fn init() !void {
     camera = gk.utils.Camera.init();
-    tex = gfx.Texture.initSingleColor(0xFFFF00FF);
 }
 
 fn update() !void {

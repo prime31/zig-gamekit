@@ -73,7 +73,7 @@ pub fn run(config: Config) !void {
 
         if (enable_imgui) {
             // gfx.blitToScreen();
-            gfx.beginPass(.{ .color_action = .dont_care });
+            gfx.beginPass(.{ .color_action = .load });
             imgui_impl.render();
             gfx.endPass();
             if (renderkit.current_renderer == .opengl) _ = sdl.SDL_GL_MakeCurrent(window.sdl_window, window.gl_ctx);
