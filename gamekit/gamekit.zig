@@ -73,7 +73,6 @@ pub fn run(config: Config) !void {
         try config.render();
 
         if (enable_imgui) {
-            // gfx.blitToScreen();
             gfx.beginPass(.{ .color_action = .load });
             imgui_impl.render();
             gfx.endPass();
