@@ -72,6 +72,11 @@ pub fn setShader(shader: ?*Shader) void {
     new_shader.setTransformMatrix(&state.transform_mat);
 }
 
+pub fn setRenderState(state: renderkit.RenderState) void {
+    draw.batcher.flush();
+    renderkit.renderer.setRenderState(state);
+}
+
 pub fn beginPass(config: PassConfig) void {
     var proj_mat: math.Mat32 = math.Mat32.init();
     var clear_command = config.asClearCommand();

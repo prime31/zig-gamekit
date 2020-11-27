@@ -68,13 +68,12 @@ pub fn main() !void {
         .update = update,
         .render = render,
         .shutdown = shutdown,
+        .window = .{ .disable_vsync = true }
     });
 }
 
 fn init() !void {
     if (use_multi_texture_batcher and gk.renderkit.current_renderer != .opengl) @panic("only OpenGL is implemented for MultiBatcher shader");
-
-    _ = sdl.SDL_GL_SetSwapInterval(0);
 
     shader = if (use_multi_texture_batcher)
         try gfx.Shader.initWithFrag(MultiFragUniform, .{

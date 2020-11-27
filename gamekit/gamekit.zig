@@ -55,6 +55,7 @@ pub fn run(config: Config) !void {
     renderkit.renderer.setup(.{
         .allocator = std.testing.allocator,
         .gl_loader = sdl.SDL_GL_GetProcAddress,
+        .disable_vsync = config.window.disable_vsync,
         .metal = metal_setup,
     });
 

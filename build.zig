@@ -25,7 +25,6 @@ pub fn build(b: *Builder) !void {
         [_][]const u8{ "batcher", "examples/batcher.zig" },
         [_][]const u8{ "meshes", "examples/meshes.zig" },
         [_][]const u8{ "clear", "examples/clear.zig" },
-        [_][]const u8{ "clear_mtl", "examples/clear_mtl.zig" },
         [_][]const u8{ "clear_imgui", "examples/clear_imgui.zig" },
     };
 
