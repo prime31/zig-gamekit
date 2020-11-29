@@ -6,6 +6,10 @@ Companion repo and example implementation for [zig-renderkit](https://github.com
 Some basic utilities and a small math lib with just the types required for the renderer (`Vec2`, `Vec3`, `Color`, `3x2 Matrix`, `Quad`) are also included.
 
 
+## Dependencies
+GameKit has just one external dependency: SDL. You can install SDL with the package manager of your choice. On macOS if you intend to use the Metal renderer you will need to build from source until the next SDL release drops.
+
+
 ### Usage
 - clone the repository recursively: `git clone --recursive https://github.com/prime31/zig-gamekit`
 - `zig build help` to see what examples are availble
