@@ -65,7 +65,8 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         }
 
         pub fn deinit(self: *Self) void {
-            renderer.destroyBuffer(self.bindings.index_buffer);
+            if (IndexT != void)
+                renderer.destroyBuffer(self.bindings.index_buffer);
             renderer.destroyBuffer(self.bindings.vert_buffers[0]);
             self.allocator.free(self.verts);
         }
