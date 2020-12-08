@@ -7,7 +7,7 @@ const Vertex = gk.gfx.Vertex;
 const DynamicMesh = gk.gfx.DynamicMesh;
 
 pub const TriangleBatcher = struct {
-    mesh: DynamicMesh(u16, Vertex),
+    mesh: DynamicMesh(void, Vertex),
     draw_calls: std.ArrayList(i32),
     white_tex: gk.gfx.Texture = undefined,
 
@@ -17,17 +17,8 @@ pub const TriangleBatcher = struct {
     vert_count: i32 = 0, // total verts that we have not yet rendered
     buffer_offset: i32 = 0, // offset into the vertex buffer of the first non-rendered vert
 
-    fn createDynamicMesh(allocator: *std.mem.Allocator, max_tris: u16) !DynamicMesh(u16, Vertex) {
-        var indices = try allocator.alloc(u16, @intCast(usize, max_tris * 3));
-        defer allocator.free(indices);
-        var i: usize = 0;
-        while (i < max_tris) : (i += 1) {
-            indices[i * 3 + 0] = @intCast(u16, i) * 3 + 0;
-            indices[i * 3 + 1] = @intCast(u16, i) * 3 + 1;
-            indices[i * 3 + 2] = @intCast(u16, i) * 3 + 2;
-        }
-
-        return try DynamicMesh(u16, Vertex).init(allocator, max_tris * 3, indices);
+    fn createDynamicMesh(allocator: *std.mem.Allocator, max_tris: u16) !DynamicMesh(void, Vertex) {
+        return try DynamicMesh(void, Vertex).init(allocator, max_tris * 3, &[_]void{});
     }
 
     pub fn init(allocator: *std.mem.Allocator, max_tris: u16) !TriangleBatcher {

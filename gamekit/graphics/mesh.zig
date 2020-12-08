@@ -47,7 +47,7 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         allocator: *std.mem.Allocator,
 
         pub fn init(allocator: *std.mem.Allocator, vertex_count: usize, indices: []IndexT) !Self {
-            var ibuffer = renderer.createBuffer(IndexT, .{
+            var ibuffer = if (IndexT == void) @as(renderer.Buffer, 0) else renderer.createBuffer(IndexT, .{
                 .type = .index,
                 .content = indices,
             });
@@ -88,7 +88,7 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         /// the base_element is reset to the start of the newly updated data so you would pass in 0 for base_element.
         pub fn appendVertSlice(self: *Self, start_index: usize, num_verts: usize) void {
             std.debug.assert(start_index + num_verts <= self.verts.len);
-            const vert_slice = self.verts[start_index..start_index + num_verts];
+            const vert_slice = self.verts[start_index .. start_index + num_verts];
             self.bindings.vertex_buffer_offsets[0] = renderer.appendBuffer(VertT, self.bindings.vert_buffers[0], vert_slice);
         }
 
