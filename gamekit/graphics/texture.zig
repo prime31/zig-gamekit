@@ -36,14 +36,16 @@ pub const Texture = struct {
     pub fn initFromFile(allocator: *std.mem.Allocator, file: []const u8, filter: renderkit.TextureFilter) !Texture {
         const image_contents = try fs.read(allocator, file);
         errdefer allocator.free(image_contents);
+        return initFromFileSlice(image_contents, filter);
+    }
 
+    pub fn initFromFileSlice(data: []const u8, filter: renderkit.TextureFilter) !Texture {
         var w: c_int = undefined;
         var h: c_int = undefined;
         var channels: c_int = undefined;
-        const load_res = stb_image.stbi_load_from_memory(image_contents.ptr, @intCast(c_int, image_contents.len), &w, &h, &channels, 4);
+        const load_res = stb_image.stbi_load_from_memory(data.ptr, @intCast(c_int, data.len), &w, &h, &channels, 4);
         if (load_res == null) return error.ImageLoadFailed;
         defer stb_image.stbi_image_free(load_res);
-
         return initWithDataOptions(u8, w, h, load_res[0..@intCast(usize, w * h * channels)], filter, .clamp);
     }
 
