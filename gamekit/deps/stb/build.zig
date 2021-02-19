@@ -2,6 +2,8 @@ const builtin = @import("builtin");
 const std = @import("std");
 const Builder = std.build.Builder;
 
+pub fn build(b: *std.build.Builder) !void {}
+
 pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.build.Target, comptime prefix_path: []const u8) void {
     exe.linkLibC();
     exe.addIncludeDir(prefix_path ++ "gamekit/deps/stb/src");

@@ -5,7 +5,7 @@ const Builder = std.build.Builder;
 var framework_dir: ?[]u8 = null;
 const build_impl_type: enum { exe, static_lib, object_files } = .static_lib;
 
-pub fn build(b: *std.build.Builder) anyerror!void {
+pub fn build(b: *std.build.Builder) !void {
     const exe = b.addStaticLibrary("JunkLib", null);
     linkArtifact(b, exe, b.standardTargetOptions(.{}), .static, "");
     exe.install();
