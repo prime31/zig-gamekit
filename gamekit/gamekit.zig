@@ -52,8 +52,10 @@ pub fn run(config: Config) !void {
         metal_setup.ca_layer = sdl.SDL_Metal_GetLayer(metal_view);
     }
 
+    var allocator = std.testing.allocator;
+
     renderkit.renderer.setup(.{
-        .allocator = std.testing.allocator,
+        .allocator = &allocator,
         .gl_loader = sdl.SDL_GL_GetProcAddress,
         .disable_vsync = config.window.disable_vsync,
         .metal = metal_setup,

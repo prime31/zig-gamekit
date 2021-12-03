@@ -21,7 +21,9 @@ pub const Mat32 = extern struct {
     pub const identity = Mat32{ .data = .{ 1, 0, 0, 1, 0, 0 } };
 
     pub fn format(self: Mat32, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {
-        return writer.print("{d:0.6}, {d:0.6}, {d:0.6}, {d:0.6}, {d:0.6}, {d:0.6}", .{self.data[0], self.data[1], self.data[2], self.data[3], self.data[4], self.data[5]});
+        _ = fmt;
+        _ = options;
+        return writer.print("{d:0.6}, {d:0.6}, {d:0.6}, {d:0.6}, {d:0.6}, {d:0.6}", .{ self.data[0], self.data[1], self.data[2], self.data[3], self.data[4], self.data[5] });
     }
 
     pub fn init() Mat32 {
@@ -140,7 +142,7 @@ pub const Mat32 = extern struct {
     }
 
     pub fn transformVec2Slice(self: Mat32, comptime T: type, dst: []T, src: []Vec2) void {
-        for (src) |item, i| {
+        for (src) |_, i| {
             const x = src[i].x * self.data[0] + src[i].y * self.data[2] + self.data[4];
             const y = src[i].x * self.data[1] + src[i].y * self.data[3] + self.data[5];
             dst[i].x = x;
@@ -160,7 +162,7 @@ pub const Mat32 = extern struct {
     }
 
     pub fn transformVertexSlice(self: Mat32, dst: []Vertex) void {
-        for (dst) |item, i| {
+        for (dst) |_, i| {
             const x = dst[i].pos.x * self.data[0] + dst[i].pos.y * self.data[2] + self.data[4];
             const y = dst[i].pos.x * self.data[1] + dst[i].pos.y * self.data[3] + self.data[5];
 
@@ -173,6 +175,7 @@ pub const Mat32 = extern struct {
 
 test "mat32 tests" {
     const i = Mat32.identity;
+    _ = i;
     const mat1 = Mat32.initTransform(.{ .x = 10, .y = 10 });
     var mat2 = Mat32{};
     mat2.setTransform(.{ .x = 10, .y = 10 });
@@ -183,7 +186,9 @@ test "mat32 tests" {
     std.testing.expectEqual(mat3, mat1);
 
     const mat4 = Mat32.initOrtho(640, 480);
+    _ = mat4;
     const mat5 = Mat32.initOrthoOffCenter(640, 480);
+    _ = mat5;
 
     var mat6 = Mat32.init();
     mat6.translate(10, 20);
@@ -205,6 +210,7 @@ test "mat32 transform tests" {
         .{ .pos = .{ .x = 0.5, .y = 0.5 }, .uv = .{ .x = 1, .y = 1 }, .col = 0xFFFFFFFF },
     };
     const quad = Quad.init(0, 0, 50, 50, 600, 400);
+    _ = quad;
     // i.transformQuad(verts[0..], quad, Color.red); // triggers Zig bug
 
     i.transformVertexSlice(verts[0..]);

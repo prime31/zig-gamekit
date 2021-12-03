@@ -72,9 +72,9 @@ pub fn setShader(shader: ?*Shader) void {
     new_shader.setTransformMatrix(&state.transform_mat);
 }
 
-pub fn setRenderState(state: renderkit.RenderState) void {
+pub fn setRenderState(renderstate: renderkit.RenderState) void {
     draw.batcher.flush();
-    renderkit.renderer.setRenderState(state);
+    renderkit.renderer.setRenderState(renderstate);
 }
 
 pub fn beginPass(config: PassConfig) void {
@@ -119,4 +119,5 @@ pub fn commitFrame() void {
 }
 
 // import all the drawing methods
-pub usingnamespace @import("draw.zig");
+pub const draw = @import("draw.zig").draw;
+// pub usingnamespace draw;

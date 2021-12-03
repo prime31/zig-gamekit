@@ -20,9 +20,9 @@ const MultiFragUniform = struct {
 
 pub fn range(comptime T: type, at_least: T, less_than: T) T {
     if (@typeInfo(T) == .Int) {
-        return rng.random.intRangeLessThanBiased(T, at_least, less_than);
+        return rng.random().intRangeLessThanBiased(T, at_least, less_than);
     } else if (@typeInfo(T) == .Float) {
-        return at_least + rng.random.float(T) * (less_than - at_least);
+        return at_least + rng.random().float(T) * (less_than - at_least);
     }
     unreachable;
 }
@@ -63,13 +63,7 @@ var things: []Thing = undefined;
 
 pub fn main() !void {
     rng.seed(@intCast(u64, std.time.milliTimestamp()));
-    try gk.run(.{
-        .init = init,
-        .update = update,
-        .render = render,
-        .shutdown = shutdown,
-        .window = .{ .disable_vsync = true }
-    });
+    try gk.run(.{ .init = init, .update = update, .render = render, .shutdown = shutdown, .window = .{ .disable_vsync = true } });
 }
 
 fn init() !void {
@@ -150,12 +144,12 @@ fn render() !void {
 fn loadTextures() void {
     textures = std.testing.allocator.alloc(gfx.Texture, total_textures) catch unreachable;
 
-    var width: c_int = undefined;
-    var height: c_int = undefined;
-    var channels: c_int = undefined;
+    //    var width: c_int = undefined;
+    //    var height: c_int = undefined;
+    //    var channels: c_int = undefined;
 
     var buf: [512]u8 = undefined;
-    for (textures) |tex, i| {
+    for (textures) |_, i| {
         var name = std.fmt.bufPrintZ(&buf, "examples/assets/textures/bee-{}.png", .{i + 1}) catch unreachable;
         textures[i] = gfx.Texture.initFromFile(std.testing.allocator, name, .nearest) catch unreachable;
     }
@@ -167,7 +161,7 @@ fn makeThings(n: usize) void {
     var count: usize = 0;
     var tid = range(usize, 0, total_textures);
 
-    for (things) |*thing, i| {
+    for (things) |*thing| {
         count += 1;
         if (@mod(count, draws_per_tex_swap) == 0) {
             count = 0;

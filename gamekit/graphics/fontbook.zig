@@ -11,11 +11,11 @@ pub const FontBook = struct {
     height: i32 = 0,
     tex_dirty: bool = false,
     last_update: u32 = 0,
-    allocator: *std.mem.Allocator,
+    allocator: std.mem.Allocator,
 
     pub const Align = fons.Align;
 
-    pub fn init(allocator: *std.mem.Allocator, width: i32, height: i32, filter: rk.TextureFilter) !*FontBook {
+    pub fn init(allocator: std.mem.Allocator, width: i32, height: i32, filter: rk.TextureFilter) !*FontBook {
         var book = try allocator.create(FontBook);
         errdefer allocator.destroy(book);
 
@@ -118,7 +118,7 @@ pub const FontBook = struct {
     pub fn getTextIterator(self: *FontBook, str: []const u8) fons.TextIter {
         var iter = std.mem.zeroes(fons.TextIter);
         const res = fons.fonsTextIterInit(self.stash, &iter, 0, 0, str.ptr, @intCast(c_int, str.len));
-        if (res == 0) std.debug.warn("getTextIterator failed! Make sure you have added a font.\n", .{});
+        if (res == 0) std.log.warn("getTextIterator failed! Make sure you have added a font.\n", .{});
         return iter;
     }
 
@@ -127,6 +127,7 @@ pub const FontBook = struct {
     }
 
     pub fn getQuad(self: FontBook) fons.Quad {
+        _ = self;
         return std.mem.zeroes(fons.Quad);
     }
 
@@ -153,6 +154,8 @@ pub const FontBook = struct {
 
     fn renderUpdate(ctx: ?*c_void, rect: [*c]c_int, data: [*c]const u8) callconv(.C) c_int {
         // TODO: only update the rect that changed
+        _ = rect;
+
         var self = @ptrCast(*FontBook, @alignCast(@alignOf(FontBook), ctx));
         if (!self.tex_dirty or self.last_update == gk.time.frames()) {
             self.tex_dirty = true;
@@ -161,7 +164,7 @@ pub const FontBook = struct {
 
         const tex_area = @intCast(usize, self.width * self.height);
         var pixels = self.allocator.alloc(u8, tex_area * 4) catch |err| {
-            std.debug.warn("failed to allocate texture data: {}\n", .{err});
+            std.log.warn("failed to allocate texture data: {}\n", .{err});
             return 0;
         };
         defer self.allocator.free(pixels);

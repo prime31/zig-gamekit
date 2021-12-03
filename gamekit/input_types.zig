@@ -1,5 +1,4 @@
-
-pub const Keys = extern enum(c_int) {
+pub const Keys = enum(c_int) {
     unknown = 0,
     a = 4,
     b = 5,

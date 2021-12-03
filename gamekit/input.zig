@@ -2,7 +2,8 @@ const std = @import("std");
 const sdl = @import("sdl");
 const gk = @import("gamekit.zig");
 const math = gk.math;
-pub usingnamespace @import("input_types.zig");
+const input_types = @import("input_types.zig");
+pub usingnamespace input_types;
 
 const FixedList = gk.utils.FixedList;
 
@@ -17,7 +18,7 @@ pub const MouseButton = enum(usize) {
 };
 
 pub const Input = struct {
-    keys: [@intCast(usize, @enumToInt(Keys.num_keys))]u2 = [_]u2{0} ** @intCast(usize, @enumToInt(Keys.num_keys)),
+    keys: [@intCast(usize, @enumToInt(input_types.Keys.num_keys))]u2 = [_]u2{0} ** @intCast(usize, @enumToInt(input_types.Keys.num_keys)),
     dirty_keys: FixedList(i32, 10),
     mouse_buttons: [4]u2 = [_]u2{0} ** 4,
     dirty_mouse_buttons: FixedList(u2, 3),
@@ -80,11 +81,11 @@ pub const Input = struct {
                 self.mouse_rel_x = event.motion.xrel;
                 self.mouse_rel_y = event.motion.yrel;
             },
-            sdl.SDL_CONTROLLERAXISMOTION => std.debug.warn("SDL_CONTROLLERAXISMOTION\n", .{}),
-            sdl.SDL_CONTROLLERBUTTONDOWN, sdl.SDL_CONTROLLERBUTTONUP => std.debug.warn("SDL_CONTROLLERBUTTONUP/DOWN\n", .{}),
-            sdl.SDL_CONTROLLERDEVICEADDED, sdl.SDL_CONTROLLERDEVICEREMOVED => std.debug.warn("SDL_CONTROLLERDEVICEADDED/REMOVED\n", .{}),
-            sdl.SDL_CONTROLLERDEVICEREMAPPED => std.debug.warn("SDL_CONTROLLERDEVICEREMAPPED\n", .{}),
-            sdl.SDL_TEXTEDITING,sdl.SDL_TEXTINPUT => {
+            sdl.SDL_CONTROLLERAXISMOTION => std.log.warn("SDL_CONTROLLERAXISMOTION\n", .{}),
+            sdl.SDL_CONTROLLERBUTTONDOWN, sdl.SDL_CONTROLLERBUTTONUP => std.log.warn("SDL_CONTROLLERBUTTONUP/DOWN\n", .{}),
+            sdl.SDL_CONTROLLERDEVICEADDED, sdl.SDL_CONTROLLERDEVICEREMOVED => std.log.warn("SDL_CONTROLLERDEVICEADDED/REMOVED\n", .{}),
+            sdl.SDL_CONTROLLERDEVICEREMAPPED => std.log.warn("SDL_CONTROLLERDEVICEREMAPPED\n", .{}),
+            sdl.SDL_TEXTEDITING, sdl.SDL_TEXTINPUT => {
                 self.text_input_buffer = event.text.text;
                 const end = std.mem.indexOfScalar(u8, &self.text_input_buffer, 0).?;
                 self.text_input = self.text_input_buffer[0..end];
@@ -118,17 +119,17 @@ pub const Input = struct {
     }
 
     /// only true if down this frame and not down the previous frame
-    pub fn keyPressed(self: Input, key: Keys) bool {
+    pub fn keyPressed(self: Input, key: input_types.Keys) bool {
         return self.keys[@intCast(usize, @enumToInt(key))] == pressed;
     }
 
     /// true the entire time the key is down
-    pub fn keyDown(self: Input, key: Keys) bool {
+    pub fn keyDown(self: Input, key: input_types.Keys) bool {
         return self.keys[@intCast(usize, @enumToInt(key))] > released;
     }
 
     /// true only the frame the key is released
-    pub fn keyUp(self: Input, key: Keys) bool {
+    pub fn keyUp(self: Input, key: input_types.Keys) bool {
         return self.keys[@intCast(usize, @enumToInt(key))] == released;
     }
 
@@ -171,10 +172,10 @@ pub const Input = struct {
     // gets the scaled mouse position based on the currently bound render texture scale and offset
     // as calcuated in OffscreenPass. scale should be scale and offset_n is the calculated x, y value.
     pub fn mousePosScaled(self: Input) math.Vec2 {
-        self.mousePos(x, y);
+        const p = self.mousePos();
 
-        const xf = @intToFloat(f32, x.*) - @intToFloat(f32, self.res_scaler.x);
-        const yf = @intToFloat(f32, y.*) - @intToFloat(f32, self.res_scaler.y);
+        const xf = p.x - @intToFloat(f32, self.res_scaler.x);
+        const yf = p.y - @intToFloat(f32, self.res_scaler.y);
         return .{ .x = xf / self.res_scaler.scale, .y = yf / self.res_scaler.scale };
     }
 

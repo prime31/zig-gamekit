@@ -1,8 +1,9 @@
 const std = @import("std");
+const builtin = @import("builtin");
 
 const LibExeObjStep = std.build.LibExeObjStep;
 const Builder = std.build.Builder;
-const Target = std.build.Target;
+const CrossTarget = std.zig.CrossTarget;
 const Pkg = std.build.Pkg;
 
 const renderkit_build = @import("renderkit/build.zig");
@@ -12,10 +13,10 @@ var enable_imgui: ?bool = null;
 
 pub fn build(b: *Builder) !void {
     const target = b.standardTargetOptions(.{});
-    const mode = b.standardReleaseOptions();
+    // const mode = b.standardReleaseOptions();
 
     // use a different cache folder for macos arm builds
-    b.cache_root = if (std.builtin.os.tag == .macos and std.builtin.arch == std.builtin.Arch.aarch64) "zig-arm-cache" else "zig-cache";
+    b.cache_root = if (builtin.os.tag == .macos and builtin.arch == builtin.Arch.aarch64) "zig-arm-cache" else "zig-cache";
 
     const examples = [_][2][]const u8{
         [_][]const u8{ "mode7", "examples/mode7.zig" },
@@ -60,7 +61,7 @@ pub fn build(b: *Builder) !void {
     comple_shaders_step.dependOn(&res.step);
 }
 
-fn createExe(b: *Builder, target: std.build.Target, name: []const u8, source: []const u8) *std.build.LibExeObjStep {
+fn createExe(b: *Builder, target: CrossTarget, name: []const u8, source: []const u8) *std.build.LibExeObjStep {
     var exe = b.addExecutable(name, source);
     exe.setBuildMode(b.standardReleaseOptions());
     exe.setOutputDir(std.fs.path.join(b.allocator, &[_][]const u8{ b.cache_root, "bin" }) catch unreachable);
@@ -75,15 +76,18 @@ fn createExe(b: *Builder, target: std.build.Target, name: []const u8, source: []
 }
 
 /// adds gamekit, renderkit, stb and sdl packages to the LibExeObjStep
-pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.build.Target, comptime prefix_path: []const u8) void {
+pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: CrossTarget, comptime prefix_path: []const u8) void {
     if (prefix_path.len > 0 and !std.mem.endsWith(u8, prefix_path, "/")) @panic("prefix-path must end with '/' if it is not empty");
 
     // only add the build option once!
     if (enable_imgui == null)
         enable_imgui = b.option(bool, "imgui", "enable imgui") orelse false;
-    exe.addBuildOption(bool, "enable_imgui", enable_imgui.?);
 
-    var dependencies = std.ArrayList(Pkg).init(b.allocator);
+    const exe_options = b.addOptions();
+    exe.addOptions("gamekit_build_options", exe_options);
+    exe_options.addOption(bool, "enable_imgui", enable_imgui.?);
+
+    // var dependencies = std.ArrayList(Pkg).init(b.allocator);
 
     // sdl
     const sdl_builder = @import("gamekit/deps/sdl/build.zig");
@@ -112,7 +116,7 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
     // gamekit
     const gamekit_package = Pkg{
         .name = "gamekit",
-        .path = prefix_path ++ "gamekit/gamekit.zig",
+        .path = .{ .path = prefix_path ++ "gamekit/gamekit.zig" },
         .dependencies = &[_]Pkg{ renderkit_pkg, sdl_pkg, stb_pkg, fontstash_pkg, imgui_pkg },
     };
     exe.addPackage(gamekit_package);

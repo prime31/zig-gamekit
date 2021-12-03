@@ -12,7 +12,7 @@ pub const Texture = struct {
     height: f32 = 0,
 
     pub fn init(width: i32, height: i32) Texture {
-        return initWithOptions(width, height, .nearest, .clamp);
+        return initDynamic(width, height, .nearest, .clamp);
     }
 
     pub fn initDynamic(width: i32, height: i32, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
@@ -33,7 +33,7 @@ pub const Texture = struct {
         };
     }
 
-    pub fn initFromFile(allocator: *std.mem.Allocator, file: []const u8, filter: renderkit.TextureFilter) !Texture {
+    pub fn initFromFile(allocator: std.mem.Allocator, file: []const u8, filter: renderkit.TextureFilter) !Texture {
         const image_contents = try fs.read(allocator, file);
         errdefer allocator.free(image_contents);
 

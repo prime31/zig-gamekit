@@ -7,6 +7,7 @@ pub fn Vec(comptime S: usize, comptime T: type) type {
             x: T = 0,
             y: T = 0,
 
+            const Self = @This();
             pub usingnamespace VecCommonFns(S, T, @This());
 
             pub fn init(x: T, y: T) @This() {
@@ -55,6 +56,8 @@ pub fn Vec(comptime S: usize, comptime T: type) type {
             y: T = 0,
             z: T = 0,
 
+            const Self = @This();
+
             pub usingnamespace VecCommonFns(S, T, @This());
 
             pub fn init(x: T, y: T, z: T) @This() {
@@ -89,10 +92,11 @@ pub fn Vec(comptime S: usize, comptime T: type) type {
             z: T = 0,
             w: T = 0,
 
+            const Self = @This();
             pub usingnamespace VecCommonFns(S, T, @This());
 
             pub fn init(xv: T, yv: T, zv: T, wv: T) @This() {
-                return @This(){ .v = .{ .x = x, .y = y, .z = z, .w = w } };
+                return @This(){ .v = .{ .x = xv, .y = yv, .z = zv, .w = wv } };
             }
 
             pub fn sub(self: @This(), x: T, y: T, z: T, w: T) @This() {
@@ -278,7 +282,7 @@ fn VecCommonFns(comptime S: usize, comptime T: type, comptime This: type) type {
 
             comptime var i = 0;
             inline while (i < S) : (i += 1) {
-                res.getField(i) = @floor(self.getField(i));
+                res.getFieldMut(i).* = @floor(self.getField(i));
             }
 
             return res;
@@ -329,6 +333,8 @@ fn VecCommonFns(comptime S: usize, comptime T: type, comptime This: type) type {
         }
 
         pub fn format(self: This, comptime fmt: []const u8, opt: std.fmt.FormatOptions, out: anytype) !void {
+            _ = opt;
+            _ = fmt;
             return switch (S) {
                 2 => std.fmt.format(out, "<{d}, {d}>", .{ self.x, self.y }),
                 3 => std.fmt.format(out, "<{d}, {d}, {d}>", .{ self.x, self.y, self.z }),
