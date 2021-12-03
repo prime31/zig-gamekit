@@ -83,7 +83,7 @@ pub const Window = struct {
     pub fn handleEvent(self: *Window, event: *sdl.SDL_WindowEvent) void {
         switch (event.event) {
             sdl.SDL_WINDOWEVENT_SIZE_CHANGED => {
-                std.debug.warn("resize: {}x{}\n", .{ event.data1, event.data2 });
+                std.log.warn("resize: {}x{}\n", .{ event.data1, event.data2 });
                 // TODO: make a resized event
             },
             sdl.SDL_WINDOWEVENT_FOCUS_GAINED => self.focused = true,
@@ -153,7 +153,7 @@ pub const Window = struct {
         return (sdl.SDL_GetWindowFlags(self.sdl_window) & @intCast(u32, @enumToInt(sdl.SDL_WindowFlags.SDL_WINDOW_RESIZABLE))) != 0;
     }
 
-    pub fn setResizable(self: Window, resizable: bool) void {
-        sdl.SDL_SetWindowResizable(self.sdl_window, resizable);
+    pub fn setResizable(self: Window, new_resizable: bool) void {
+        sdl.SDL_SetWindowResizable(self.sdl_window, new_resizable);
     }
 };

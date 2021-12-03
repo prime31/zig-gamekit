@@ -1,15 +1,171 @@
-pub extern fn SDL_GetPlatform() [*c]const u8;
-
-pub const struct_exception = extern struct {
-    type: c_int,
-    name: [*c]u8,
-    arg1: f64,
-    arg2: f64,
-    retval: f64,
+const wchar_t = c_int;
+const __off_t = c_long;
+const __off64_t = c_long;
+const _IO_lock_t = c_void;
+const union_unnamed_5 = extern union {
+    __wch: c_uint,
+    __wchb: [4]u8,
 };
+const __mbstate_t = extern struct {
+    __count: c_int,
+    __value: union_unnamed_5,
+};
+const struct___va_list_tag = extern struct {
+    gp_offset: c_uint,
+    fp_offset: c_uint,
+    overflow_arg_area: ?*c_void,
+    reg_save_area: ?*c_void,
+};
+const __builtin_va_list = [1]struct___va_list_tag;
+const va_list = __builtin_va_list;
+const NULL = @import("std").zig.c_translation.cast(?*c_void, @as(c_int, 0));
+const __builtin_bswap16 = @import("std").zig.c_builtins.__builtin_bswap16;
+const __builtin_bswap32 = @import("std").zig.c_builtins.__builtin_bswap32;
+const __builtin_bswap64 = @import("std").zig.c_builtins.__builtin_bswap64;
+const __LITTLE_ENDIAN = @as(c_int, 1234);
+const __BIG_ENDIAN = @as(c_int, 4321);
+const __PDP_ENDIAN = @as(c_int, 3412);
+const __BYTE_ORDER = __LITTLE_ENDIAN;
+const __OPTIMIZE__ = @as(c_int, 1);
+const __ORDER_LITTLE_ENDIAN__ = @as(c_int, 1234);
+const __ORDER_BIG_ENDIAN__ = @as(c_int, 4321);
+const __ORDER_PDP_ENDIAN__ = @as(c_int, 3412);
+const __PRI64_PREFIX = "l";
+const __PRIPTR_PREFIX = "l";
+const PRId8 = "d";
+const PRId16 = "d";
+const PRId32 = "d";
+const PRId64 = __PRI64_PREFIX ++ "d";
+const PRIdLEAST8 = "d";
+const PRIdLEAST16 = "d";
+const PRIdLEAST32 = "d";
+const PRIdLEAST64 = __PRI64_PREFIX ++ "d";
+const PRIdFAST8 = "d";
+const PRIdFAST16 = __PRIPTR_PREFIX ++ "d";
+const PRIdFAST32 = __PRIPTR_PREFIX ++ "d";
+const PRIdFAST64 = __PRI64_PREFIX ++ "d";
+const PRIi8 = "i";
+const PRIi16 = "i";
+const PRIi32 = "i";
+const PRIi64 = __PRI64_PREFIX ++ "i";
+const PRIiLEAST8 = "i";
+const PRIiLEAST16 = "i";
+const PRIiLEAST32 = "i";
+const PRIiLEAST64 = __PRI64_PREFIX ++ "i";
+const PRIiFAST8 = "i";
+const PRIiFAST16 = __PRIPTR_PREFIX ++ "i";
+const PRIiFAST32 = __PRIPTR_PREFIX ++ "i";
+const PRIiFAST64 = __PRI64_PREFIX ++ "i";
+const PRIo8 = "o";
+const PRIo16 = "o";
+const PRIo32 = "o";
+const PRIo64 = __PRI64_PREFIX ++ "o";
+const PRIoLEAST8 = "o";
+const PRIoLEAST16 = "o";
+const PRIoLEAST32 = "o";
+const PRIoLEAST64 = __PRI64_PREFIX ++ "o";
+const PRIoFAST8 = "o";
+const PRIoFAST16 = __PRIPTR_PREFIX ++ "o";
+const PRIoFAST32 = __PRIPTR_PREFIX ++ "o";
+const PRIoFAST64 = __PRI64_PREFIX ++ "o";
+const PRIu8 = "u";
+const PRIu16 = "u";
+const PRIu32 = "u";
+const PRIu64 = __PRI64_PREFIX ++ "u";
+const PRIuLEAST8 = "u";
+const PRIuLEAST16 = "u";
+const PRIuLEAST32 = "u";
+const PRIuLEAST64 = __PRI64_PREFIX ++ "u";
+const PRIuFAST8 = "u";
+const PRIuFAST16 = __PRIPTR_PREFIX ++ "u";
+const PRIuFAST32 = __PRIPTR_PREFIX ++ "u";
+const PRIuFAST64 = __PRI64_PREFIX ++ "u";
+const PRIx8 = "x";
+const PRIx16 = "x";
+const PRIx32 = "x";
+const PRIx64 = __PRI64_PREFIX ++ "x";
+const PRIxLEAST8 = "x";
+const PRIxLEAST16 = "x";
+const PRIxLEAST32 = "x";
+const PRIxLEAST64 = __PRI64_PREFIX ++ "x";
+const PRIxFAST8 = "x";
+const PRIxFAST16 = __PRIPTR_PREFIX ++ "x";
+const PRIxFAST32 = __PRIPTR_PREFIX ++ "x";
+const PRIxFAST64 = __PRI64_PREFIX ++ "x";
+const PRIX8 = "X";
+const PRIX16 = "X";
+const PRIX32 = "X";
+const PRIX64 = __PRI64_PREFIX ++ "X";
+const PRIXLEAST8 = "X";
+const PRIXLEAST16 = "X";
+const PRIXLEAST32 = "X";
+const PRIXLEAST64 = __PRI64_PREFIX ++ "X";
+const PRIXFAST8 = "X";
+const PRIXFAST16 = __PRIPTR_PREFIX ++ "X";
+const PRIXFAST32 = __PRIPTR_PREFIX ++ "X";
+const PRIXFAST64 = __PRI64_PREFIX ++ "X";
+const PRIdMAX = __PRI64_PREFIX ++ "d";
+const PRIiMAX = __PRI64_PREFIX ++ "i";
+const PRIoMAX = __PRI64_PREFIX ++ "o";
+const PRIuMAX = __PRI64_PREFIX ++ "u";
+const PRIxMAX = __PRI64_PREFIX ++ "x";
+const PRIXMAX = __PRI64_PREFIX ++ "X";
+const PRIdPTR = __PRIPTR_PREFIX ++ "d";
+const PRIiPTR = __PRIPTR_PREFIX ++ "i";
+const PRIoPTR = __PRIPTR_PREFIX ++ "o";
+const PRIuPTR = __PRIPTR_PREFIX ++ "u";
+const struct__IO_FILE = extern struct {
+    _flags: c_int,
+    _IO_read_ptr: [*c]u8,
+    _IO_read_end: [*c]u8,
+    _IO_read_base: [*c]u8,
+    _IO_write_base: [*c]u8,
+    _IO_write_ptr: [*c]u8,
+    _IO_write_end: [*c]u8,
+    _IO_buf_base: [*c]u8,
+    _IO_buf_end: [*c]u8,
+    _IO_save_base: [*c]u8,
+    _IO_backup_base: [*c]u8,
+    _IO_save_end: [*c]u8,
+    _markers: ?*struct__IO_marker,
+    _chain: [*c]struct__IO_FILE,
+    _fileno: c_int,
+    _flags2: c_int,
+    _old_offset: __off_t,
+    _cur_column: c_ushort,
+    _vtable_offset: i8,
+    _shortbuf: [1]u8,
+    _lock: ?*_IO_lock_t,
+    _offset: __off64_t,
+    _codecvt: ?*struct__IO_codecvt,
+    _wide_data: ?*struct__IO_wide_data,
+    _freeres_list: [*c]struct__IO_FILE,
+    _freeres_buf: ?*c_void,
+    __pad5: usize,
+    _mode: c_int,
+    _unused2: [20]u8,
+};
+const __FILE = struct__IO_FILE;
+const FILE = struct__IO_FILE;
+const fpos_t = __fpos_t;
+const struct__G_fpos_t = extern struct {
+    __pos: __off_t,
+    __state: __mbstate_t,
+};
+const __fpos_t = struct__G_fpos_t;
+const struct__G_fpos64_t = extern struct {
+    __pos: __off64_t,
+    __state: __mbstate_t,
+};
+const __fpos64_t = struct__G_fpos64_t;
+const struct__IO_marker = opaque {};
+const struct__IO_codecvt = opaque {};
+const struct__IO_wide_data = opaque {};
+
+pub extern fn SDL_GetPlatform() [*c]const u8;
 pub const SDL_FALSE = @enumToInt(enum_unnamed_14.SDL_FALSE);
 pub const SDL_TRUE = @enumToInt(enum_unnamed_14.SDL_TRUE);
-const enum_unnamed_14 = extern enum(c_int) {
+const enum_unnamed_14 = enum(c_int) {
     SDL_FALSE = 0,
     SDL_TRUE = 1,
     _,
@@ -32,11 +188,10 @@ pub const SDL_compile_time_assert_sint32 = [1]c_int;
 pub const SDL_compile_time_assert_uint64 = [1]c_int;
 pub const SDL_compile_time_assert_sint64 = [1]c_int;
 pub const DUMMY_ENUM_VALUE = @enumToInt(enum_unnamed_15.DUMMY_ENUM_VALUE);
-const enum_unnamed_15 = extern enum(c_int) {
+const enum_unnamed_15 = enum(c_int) {
     DUMMY_ENUM_VALUE,
     _,
 };
-pub const SDL_DUMMY_ENUM = enum_unnamed_15;
 pub const SDL_compile_time_assert_enum = [1]c_int;
 pub extern fn SDL_malloc(size: usize) ?*c_void;
 pub extern fn SDL_calloc(nmemb: usize, size: usize) ?*c_void;
@@ -53,19 +208,24 @@ pub extern fn SDL_getenv(name: [*c]const u8) [*c]u8;
 pub extern fn SDL_setenv(name: [*c]const u8, value: [*c]const u8, overwrite: c_int) c_int;
 pub extern fn SDL_qsort(base: ?*c_void, nmemb: usize, size: usize, compare: ?fn (?*const c_void, ?*const c_void) callconv(.C) c_int) void;
 pub extern fn SDL_abs(x: c_int) c_int;
+pub extern fn SDL_isalpha(x: c_int) c_int;
+pub extern fn SDL_isalnum(x: c_int) c_int;
+pub extern fn SDL_isblank(x: c_int) c_int;
+pub extern fn SDL_iscntrl(x: c_int) c_int;
 pub extern fn SDL_isdigit(x: c_int) c_int;
+pub extern fn SDL_isxdigit(x: c_int) c_int;
+pub extern fn SDL_ispunct(x: c_int) c_int;
 pub extern fn SDL_isspace(x: c_int) c_int;
 pub extern fn SDL_isupper(x: c_int) c_int;
 pub extern fn SDL_islower(x: c_int) c_int;
+pub extern fn SDL_isprint(x: c_int) c_int;
+pub extern fn SDL_isgraph(x: c_int) c_int;
 pub extern fn SDL_toupper(x: c_int) c_int;
 pub extern fn SDL_tolower(x: c_int) c_int;
-pub extern fn SDL_memset(dst: ?*c_void, c: c_int, len: usize) ?*c_void;
-pub fn SDL_memset4(arg_dst: ?*c_void, arg_val: Uint32, arg_dwords: usize) callconv(.C) void {
-    var dst = arg_dst;
-    var val = arg_val;
-    var dwords = arg_dwords;
-    memset_pattern4(dst, @ptrCast(?*const c_void, &val), (dwords *% @bitCast(c_ulong, @as(c_long, @as(c_int, 4)))));
-}
+pub extern fn SDL_crc32(crc: Uint32, data: ?*const c_void, len: usize) Uint32;
+pub extern fn SDL_memset(dst: ?*c_void, c: c_int, len: usize) ?*c_void; // /usr/include/SDL2/SDL_stdinc.h:491:9: warning: TODO complex switch
+// /usr/include/SDL2/SDL_stdinc.h:462:23: warning: unable to translate function, demoted to extern
+pub extern fn SDL_memset4(arg_dst: ?*c_void, arg_val: Uint32, arg_dwords: usize) void;
 pub extern fn SDL_memcpy(dst: ?*c_void, src: ?*const c_void, len: usize) ?*c_void;
 pub extern fn SDL_memmove(dst: ?*c_void, src: ?*const c_void, len: usize) ?*c_void;
 pub extern fn SDL_memcmp(s1: ?*const c_void, s2: ?*const c_void, len: usize) c_int;
@@ -76,6 +236,8 @@ pub extern fn SDL_wcsdup(wstr: [*c]const wchar_t) [*c]wchar_t;
 pub extern fn SDL_wcsstr(haystack: [*c]const wchar_t, needle: [*c]const wchar_t) [*c]wchar_t;
 pub extern fn SDL_wcscmp(str1: [*c]const wchar_t, str2: [*c]const wchar_t) c_int;
 pub extern fn SDL_wcsncmp(str1: [*c]const wchar_t, str2: [*c]const wchar_t, maxlen: usize) c_int;
+pub extern fn SDL_wcscasecmp(str1: [*c]const wchar_t, str2: [*c]const wchar_t) c_int;
+pub extern fn SDL_wcsncasecmp(str1: [*c]const wchar_t, str2: [*c]const wchar_t, len: usize) c_int;
 pub extern fn SDL_strlen(str: [*c]const u8) usize;
 pub extern fn SDL_strlcpy(dst: [*c]u8, src: [*c]const u8, maxlen: usize) usize;
 pub extern fn SDL_utf8strlcpy(dst: [*c]u8, src: [*c]const u8, dst_bytes: usize) usize;
@@ -140,6 +302,10 @@ pub extern fn SDL_log10(x: f64) f64;
 pub extern fn SDL_log10f(x: f32) f32;
 pub extern fn SDL_pow(x: f64, y: f64) f64;
 pub extern fn SDL_powf(x: f32, y: f32) f32;
+pub extern fn SDL_round(x: f64) f64;
+pub extern fn SDL_roundf(x: f32) f32;
+pub extern fn SDL_lround(x: f64) c_long;
+pub extern fn SDL_lroundf(x: f32) c_long;
 pub extern fn SDL_scalbn(x: f64, n: c_int) f64;
 pub extern fn SDL_scalbnf(x: f32, n: c_int) f32;
 pub extern fn SDL_sin(x: f64) f64;
@@ -154,11 +320,11 @@ pub extern fn SDL_iconv_open(tocode: [*c]const u8, fromcode: [*c]const u8) SDL_i
 pub extern fn SDL_iconv_close(cd: SDL_iconv_t) c_int;
 pub extern fn SDL_iconv(cd: SDL_iconv_t, inbuf: [*c][*c]const u8, inbytesleft: [*c]usize, outbuf: [*c][*c]u8, outbytesleft: [*c]usize) usize;
 pub extern fn SDL_iconv_string(tocode: [*c]const u8, fromcode: [*c]const u8, inbuf: [*c]const u8, inbytesleft: usize) [*c]u8;
-pub fn SDL_memcpy4(arg_dst: ?*c_void, arg_src: ?*const c_void, arg_dwords: usize) callconv(.C) ?*c_void {
+pub inline fn SDL_memcpy4(arg_dst: ?*c_void, arg_src: ?*const c_void, arg_dwords: usize) ?*c_void {
     var dst = arg_dst;
     var src = arg_src;
     var dwords = arg_dwords;
-    return SDL_memcpy(dst, src, (dwords *% @bitCast(c_ulong, @as(c_long, @as(c_int, 4)))));
+    return SDL_memcpy(dst, src, dwords *% @bitCast(c_ulong, @as(c_long, @as(c_int, 4))));
 }
 pub const SDL_main_func = ?fn (c_int, [*c][*c]u8) callconv(.C) c_int;
 pub extern fn SDL_main(argc: c_int, argv: [*c][*c]u8) c_int;
@@ -168,7 +334,7 @@ pub const SDL_ASSERTION_BREAK = @enumToInt(enum_unnamed_16.SDL_ASSERTION_BREAK);
 pub const SDL_ASSERTION_ABORT = @enumToInt(enum_unnamed_16.SDL_ASSERTION_ABORT);
 pub const SDL_ASSERTION_IGNORE = @enumToInt(enum_unnamed_16.SDL_ASSERTION_IGNORE);
 pub const SDL_ASSERTION_ALWAYS_IGNORE = @enumToInt(enum_unnamed_16.SDL_ASSERTION_ALWAYS_IGNORE);
-const enum_unnamed_16 = extern enum(c_int) {
+const enum_unnamed_16 = enum(c_int) {
     SDL_ASSERTION_RETRY,
     SDL_ASSERTION_BREAK,
     SDL_ASSERTION_ABORT,
@@ -200,10 +366,9 @@ pub extern fn SDL_AtomicLock(lock: [*c]SDL_SpinLock) void;
 pub extern fn SDL_AtomicUnlock(lock: [*c]SDL_SpinLock) void;
 pub extern fn SDL_MemoryBarrierReleaseFunction() void;
 pub extern fn SDL_MemoryBarrierAcquireFunction() void;
-const struct_unnamed_17 = extern struct {
+pub const SDL_atomic_t = extern struct {
     value: c_int,
 };
-pub const SDL_atomic_t = struct_unnamed_17;
 pub extern fn SDL_AtomicCAS(a: [*c]SDL_atomic_t, oldval: c_int, newval: c_int) SDL_bool;
 pub extern fn SDL_AtomicSet(a: [*c]SDL_atomic_t, v: c_int) c_int;
 pub extern fn SDL_AtomicGet(a: [*c]SDL_atomic_t) c_int;
@@ -221,7 +386,7 @@ pub const SDL_EFWRITE = @enumToInt(enum_unnamed_18.SDL_EFWRITE);
 pub const SDL_EFSEEK = @enumToInt(enum_unnamed_18.SDL_EFSEEK);
 pub const SDL_UNSUPPORTED = @enumToInt(enum_unnamed_18.SDL_UNSUPPORTED);
 pub const SDL_LASTERROR = @enumToInt(enum_unnamed_18.SDL_LASTERROR);
-const enum_unnamed_18 = extern enum(c_int) {
+const enum_unnamed_18 = enum(c_int) {
     SDL_ENOMEM,
     SDL_EFREAD,
     SDL_EFWRITE,
@@ -231,14 +396,19 @@ const enum_unnamed_18 = extern enum(c_int) {
     _,
 };
 pub const SDL_errorcode = enum_unnamed_18;
-pub extern fn SDL_Error(code: SDL_errorcode) c_int; // /usr/local/include/SDL2/SDL_endian.h:83:3: warning: TODO implement translation of stmt class GCCAsmStmtClass
-pub const SDL_Swap16 = @compileError("unable to translate function"); // /usr/local/include/SDL2/SDL_endian.h:81:1
-// /usr/local/include/SDL2/SDL_endian.h:127:3: warning: TODO implement translation of stmt class GCCAsmStmtClass
-pub const SDL_Swap32 = @compileError("unable to translate function"); // /usr/local/include/SDL2/SDL_endian.h:125:1
-// /usr/local/include/SDL2/SDL_endian.h:194:3: warning: TODO implement translation of stmt class GCCAsmStmtClass
-pub const SDL_Swap64 = @compileError("unable to translate function"); // /usr/local/include/SDL2/SDL_endian.h:192:1
-// /usr/local/include/SDL2/SDL_endian.h:218:5: warning: TODO implement translation of DeclStmt kind Record
-pub const SDL_SwapFloat = @compileError("unable to translate function"); // /usr/local/include/SDL2/SDL_endian.h:216:1
+pub extern fn SDL_Error(code: SDL_errorcode) c_int;
+pub inline fn SDL_SwapFloat(arg_x: f32) f32 {
+    var x = arg_x;
+    const union_unnamed_8 = extern union {
+        f: f32,
+        ui32: Uint32,
+    };
+    _ = union_unnamed_8;
+    var swapper: union_unnamed_8 = undefined;
+    swapper.f = x;
+    swapper.ui32 = __builtin_bswap32(swapper.ui32);
+    return swapper.f;
+}
 pub const struct_SDL_mutex = opaque {};
 pub const SDL_mutex = struct_SDL_mutex;
 pub extern fn SDL_CreateMutex() ?*SDL_mutex;
@@ -271,7 +441,7 @@ pub const SDL_THREAD_PRIORITY_LOW = @enumToInt(enum_unnamed_19.SDL_THREAD_PRIORI
 pub const SDL_THREAD_PRIORITY_NORMAL = @enumToInt(enum_unnamed_19.SDL_THREAD_PRIORITY_NORMAL);
 pub const SDL_THREAD_PRIORITY_HIGH = @enumToInt(enum_unnamed_19.SDL_THREAD_PRIORITY_HIGH);
 pub const SDL_THREAD_PRIORITY_TIME_CRITICAL = @enumToInt(enum_unnamed_19.SDL_THREAD_PRIORITY_TIME_CRITICAL);
-const enum_unnamed_19 = extern enum(c_int) {
+const enum_unnamed_19 = enum(c_int) {
     SDL_THREAD_PRIORITY_LOW,
     SDL_THREAD_PRIORITY_NORMAL,
     SDL_THREAD_PRIORITY_HIGH,
@@ -291,23 +461,24 @@ pub extern fn SDL_DetachThread(thread: ?*SDL_Thread) void;
 pub extern fn SDL_TLSCreate() SDL_TLSID;
 pub extern fn SDL_TLSGet(id: SDL_TLSID) ?*c_void;
 pub extern fn SDL_TLSSet(id: SDL_TLSID, value: ?*const c_void, destructor: ?fn (?*c_void) callconv(.C) void) c_int;
-const struct_unnamed_21 = extern struct {
+pub extern fn SDL_TLSCleanup() void;
+const struct_unnamed_10 = extern struct {
     autoclose: SDL_bool,
     fp: [*c]FILE,
 };
-const struct_unnamed_22 = extern struct {
+const struct_unnamed_11 = extern struct {
     base: [*c]Uint8,
     here: [*c]Uint8,
     stop: [*c]Uint8,
 };
-const struct_unnamed_23 = extern struct {
+const struct_unnamed_12 = extern struct {
     data1: ?*c_void,
     data2: ?*c_void,
 };
-const union_unnamed_20 = extern union {
-    stdio: struct_unnamed_21,
-    mem: struct_unnamed_22,
-    unknown: struct_unnamed_23,
+const union_unnamed_9 = extern union {
+    stdio: struct_unnamed_10,
+    mem: struct_unnamed_11,
+    unknown: struct_unnamed_12,
 };
 pub const struct_SDL_RWops = extern struct {
     size: ?fn ([*c]struct_SDL_RWops) callconv(.C) Sint64,
@@ -316,7 +487,7 @@ pub const struct_SDL_RWops = extern struct {
     write: ?fn ([*c]struct_SDL_RWops, ?*const c_void, usize, usize) callconv(.C) usize,
     close: ?fn ([*c]struct_SDL_RWops) callconv(.C) c_int,
     type: Uint32,
-    hidden: union_unnamed_20,
+    hidden: union_unnamed_9,
 };
 pub const SDL_RWops = struct_SDL_RWops;
 pub extern fn SDL_RWFromFile(file: [*c]const u8, mode: [*c]const u8) [*c]SDL_RWops;
@@ -361,6 +532,7 @@ pub const struct_SDL_AudioSpec = extern struct {
     userdata: ?*c_void,
 };
 pub const SDL_AudioSpec = struct_SDL_AudioSpec;
+pub const SDL_AudioFilter = ?fn ([*c]struct_SDL_AudioCVT, SDL_AudioFormat) callconv(.C) void;
 pub const struct_SDL_AudioCVT = extern struct {
     needed: c_int,
     src_format: SDL_AudioFormat,
@@ -374,7 +546,6 @@ pub const struct_SDL_AudioCVT = extern struct {
     filters: [10]SDL_AudioFilter,
     filter_index: c_int,
 };
-pub const SDL_AudioFilter = ?fn ([*c]struct_SDL_AudioCVT, SDL_AudioFormat) callconv(.C) void;
 pub const SDL_AudioCVT = struct_SDL_AudioCVT;
 pub extern fn SDL_GetNumAudioDrivers() c_int;
 pub extern fn SDL_GetAudioDriver(index: c_int) [*c]const u8;
@@ -385,11 +556,12 @@ pub extern fn SDL_OpenAudio(desired: [*c]SDL_AudioSpec, obtained: [*c]SDL_AudioS
 pub const SDL_AudioDeviceID = Uint32;
 pub extern fn SDL_GetNumAudioDevices(iscapture: c_int) c_int;
 pub extern fn SDL_GetAudioDeviceName(index: c_int, iscapture: c_int) [*c]const u8;
+pub extern fn SDL_GetAudioDeviceSpec(index: c_int, iscapture: c_int, spec: [*c]SDL_AudioSpec) c_int;
 pub extern fn SDL_OpenAudioDevice(device: [*c]const u8, iscapture: c_int, desired: [*c]const SDL_AudioSpec, obtained: [*c]SDL_AudioSpec, allowed_changes: c_int) SDL_AudioDeviceID;
 pub const SDL_AUDIO_STOPPED = @enumToInt(enum_unnamed_24.SDL_AUDIO_STOPPED);
 pub const SDL_AUDIO_PLAYING = @enumToInt(enum_unnamed_24.SDL_AUDIO_PLAYING);
 pub const SDL_AUDIO_PAUSED = @enumToInt(enum_unnamed_24.SDL_AUDIO_PAUSED);
-const enum_unnamed_24 = extern enum(c_int) {
+const enum_unnamed_24 = enum(c_int) {
     SDL_AUDIO_STOPPED = 0,
     SDL_AUDIO_PLAYING = 1,
     SDL_AUDIO_PAUSED = 2,
@@ -427,7 +599,7 @@ pub extern fn SDL_CloseAudio() void;
 pub extern fn SDL_CloseAudioDevice(dev: SDL_AudioDeviceID) void;
 pub extern fn SDL_SetClipboardText(text: [*c]const u8) c_int;
 pub extern fn SDL_GetClipboardText() [*c]u8;
-pub extern fn SDL_HasClipboardText() SDL_bool; // /Users/desaro/zig/lib/zig/include/mmintrin.h:13:19: warning: unsupported type: 'Vector'
+pub extern fn SDL_HasClipboardText() SDL_bool;
 pub extern fn SDL_GetCPUCount() c_int;
 pub extern fn SDL_GetCPUCacheLineSize() c_int;
 pub extern fn SDL_HasRDTSC() SDL_bool;
@@ -461,7 +633,7 @@ pub const SDL_PIXELTYPE_ARRAYU16 = @enumToInt(enum_unnamed_29.SDL_PIXELTYPE_ARRA
 pub const SDL_PIXELTYPE_ARRAYU32 = @enumToInt(enum_unnamed_29.SDL_PIXELTYPE_ARRAYU32);
 pub const SDL_PIXELTYPE_ARRAYF16 = @enumToInt(enum_unnamed_29.SDL_PIXELTYPE_ARRAYF16);
 pub const SDL_PIXELTYPE_ARRAYF32 = @enumToInt(enum_unnamed_29.SDL_PIXELTYPE_ARRAYF32);
-const enum_unnamed_29 = extern enum(c_int) {
+const enum_unnamed_29 = enum(c_int) {
     SDL_PIXELTYPE_UNKNOWN,
     SDL_PIXELTYPE_INDEX1,
     SDL_PIXELTYPE_INDEX4,
@@ -480,7 +652,7 @@ pub const SDL_PixelType = enum_unnamed_29;
 pub const SDL_BITMAPORDER_NONE = @enumToInt(enum_unnamed_30.SDL_BITMAPORDER_NONE);
 pub const SDL_BITMAPORDER_4321 = @enumToInt(enum_unnamed_30.SDL_BITMAPORDER_4321);
 pub const SDL_BITMAPORDER_1234 = @enumToInt(enum_unnamed_30.SDL_BITMAPORDER_1234);
-const enum_unnamed_30 = extern enum(c_int) {
+const enum_unnamed_30 = enum(c_int) {
     SDL_BITMAPORDER_NONE,
     SDL_BITMAPORDER_4321,
     SDL_BITMAPORDER_1234,
@@ -496,7 +668,7 @@ pub const SDL_PACKEDORDER_XBGR = @enumToInt(enum_unnamed_31.SDL_PACKEDORDER_XBGR
 pub const SDL_PACKEDORDER_BGRX = @enumToInt(enum_unnamed_31.SDL_PACKEDORDER_BGRX);
 pub const SDL_PACKEDORDER_ABGR = @enumToInt(enum_unnamed_31.SDL_PACKEDORDER_ABGR);
 pub const SDL_PACKEDORDER_BGRA = @enumToInt(enum_unnamed_31.SDL_PACKEDORDER_BGRA);
-const enum_unnamed_31 = extern enum(c_int) {
+const enum_unnamed_31 = enum(c_int) {
     SDL_PACKEDORDER_NONE,
     SDL_PACKEDORDER_XRGB,
     SDL_PACKEDORDER_RGBX,
@@ -516,7 +688,7 @@ pub const SDL_ARRAYORDER_ARGB = @enumToInt(enum_unnamed_32.SDL_ARRAYORDER_ARGB);
 pub const SDL_ARRAYORDER_BGR = @enumToInt(enum_unnamed_32.SDL_ARRAYORDER_BGR);
 pub const SDL_ARRAYORDER_BGRA = @enumToInt(enum_unnamed_32.SDL_ARRAYORDER_BGRA);
 pub const SDL_ARRAYORDER_ABGR = @enumToInt(enum_unnamed_32.SDL_ARRAYORDER_ABGR);
-const enum_unnamed_32 = extern enum(c_int) {
+const enum_unnamed_32 = enum(c_int) {
     SDL_ARRAYORDER_NONE,
     SDL_ARRAYORDER_RGB,
     SDL_ARRAYORDER_RGBA,
@@ -536,7 +708,7 @@ pub const SDL_PACKEDLAYOUT_565 = @enumToInt(enum_unnamed_33.SDL_PACKEDLAYOUT_565
 pub const SDL_PACKEDLAYOUT_8888 = @enumToInt(enum_unnamed_33.SDL_PACKEDLAYOUT_8888);
 pub const SDL_PACKEDLAYOUT_2101010 = @enumToInt(enum_unnamed_33.SDL_PACKEDLAYOUT_2101010);
 pub const SDL_PACKEDLAYOUT_1010102 = @enumToInt(enum_unnamed_33.SDL_PACKEDLAYOUT_1010102);
-const enum_unnamed_33 = extern enum(c_int) {
+const enum_unnamed_33 = enum(c_int) {
     SDL_PACKEDLAYOUT_NONE,
     SDL_PACKEDLAYOUT_332,
     SDL_PACKEDLAYOUT_4444,
@@ -599,7 +771,7 @@ pub const SDL_PIXELFORMAT_YVYU = @enumToInt(enum_unnamed_34.SDL_PIXELFORMAT_YVYU
 pub const SDL_PIXELFORMAT_NV12 = @enumToInt(enum_unnamed_34.SDL_PIXELFORMAT_NV12);
 pub const SDL_PIXELFORMAT_NV21 = @enumToInt(enum_unnamed_34.SDL_PIXELFORMAT_NV21);
 pub const SDL_PIXELFORMAT_EXTERNAL_OES = @enumToInt(enum_unnamed_34.SDL_PIXELFORMAT_EXTERNAL_OES);
-const enum_unnamed_34 = extern enum(c_int) {
+const enum_unnamed_34 = enum(c_int) {
     SDL_PIXELFORMAT_UNKNOWN = 0,
     SDL_PIXELFORMAT_INDEX1LSB = 286261504,
     SDL_PIXELFORMAT_INDEX1MSB = 287310080,
@@ -727,19 +899,19 @@ pub const struct_SDL_FRect = extern struct {
     h: f32,
 };
 pub const SDL_FRect = struct_SDL_FRect;
-pub fn SDL_PointInRect(arg_p: [*c]const SDL_Point, arg_r: [*c]const SDL_Rect) callconv(.C) SDL_bool {
+pub inline fn SDL_PointInRect(arg_p: [*c]const SDL_Point, arg_r: [*c]const SDL_Rect) SDL_bool {
     var p = arg_p;
     var r = arg_r;
-    return @intToEnum(SDL_bool, if ((((p.*.x >= r.*.x) and (p.*.x < (r.*.x + r.*.w))) and (p.*.y >= r.*.y)) and (p.*.y < (r.*.y + r.*.h))) SDL_TRUE else SDL_FALSE);
+    return @bitCast(c_uint, if ((((p.*.x >= r.*.x) and (p.*.x < (r.*.x + r.*.w))) and (p.*.y >= r.*.y)) and (p.*.y < (r.*.y + r.*.h))) SDL_TRUE else SDL_FALSE);
 }
-pub fn SDL_RectEmpty(arg_r: [*c]const SDL_Rect) callconv(.C) SDL_bool {
+pub inline fn SDL_RectEmpty(arg_r: [*c]const SDL_Rect) SDL_bool {
     var r = arg_r;
-    return @intToEnum(SDL_bool, if (((!(r != null)) or (r.*.w <= @as(c_int, 0))) or (r.*.h <= @as(c_int, 0))) SDL_TRUE else SDL_FALSE);
+    return @bitCast(c_uint, if ((!(r != null) or (r.*.w <= @as(c_int, 0))) or (r.*.h <= @as(c_int, 0))) SDL_TRUE else SDL_FALSE);
 }
-pub fn SDL_RectEquals(arg_a: [*c]const SDL_Rect, arg_b: [*c]const SDL_Rect) callconv(.C) SDL_bool {
+pub inline fn SDL_RectEquals(arg_a: [*c]const SDL_Rect, arg_b: [*c]const SDL_Rect) SDL_bool {
     var a = arg_a;
     var b = arg_b;
-    return @intToEnum(SDL_bool, if ((((((a != null) and (b != null)) and (a.*.x == b.*.x)) and (a.*.y == b.*.y)) and (a.*.w == b.*.w)) and (a.*.h == b.*.h)) SDL_TRUE else SDL_FALSE);
+    return @bitCast(c_uint, if ((((((a != null) and (b != null)) and (a.*.x == b.*.x)) and (a.*.y == b.*.y)) and (a.*.w == b.*.w)) and (a.*.h == b.*.h)) SDL_TRUE else SDL_FALSE);
 }
 pub extern fn SDL_HasIntersection(A: [*c]const SDL_Rect, B: [*c]const SDL_Rect) SDL_bool;
 pub extern fn SDL_IntersectRect(A: [*c]const SDL_Rect, B: [*c]const SDL_Rect, result: [*c]SDL_Rect) SDL_bool;
@@ -752,7 +924,7 @@ pub const SDL_BLENDMODE_ADD = @enumToInt(enum_unnamed_35.SDL_BLENDMODE_ADD);
 pub const SDL_BLENDMODE_MOD = @enumToInt(enum_unnamed_35.SDL_BLENDMODE_MOD);
 pub const SDL_BLENDMODE_MUL = @enumToInt(enum_unnamed_35.SDL_BLENDMODE_MUL);
 pub const SDL_BLENDMODE_INVALID = @enumToInt(enum_unnamed_35.SDL_BLENDMODE_INVALID);
-const enum_unnamed_35 = extern enum(c_int) {
+const enum_unnamed_35 = enum(c_int) {
     SDL_BLENDMODE_NONE = 0,
     SDL_BLENDMODE_BLEND = 1,
     SDL_BLENDMODE_ADD = 2,
@@ -767,7 +939,7 @@ pub const SDL_BLENDOPERATION_SUBTRACT = @enumToInt(enum_unnamed_36.SDL_BLENDOPER
 pub const SDL_BLENDOPERATION_REV_SUBTRACT = @enumToInt(enum_unnamed_36.SDL_BLENDOPERATION_REV_SUBTRACT);
 pub const SDL_BLENDOPERATION_MINIMUM = @enumToInt(enum_unnamed_36.SDL_BLENDOPERATION_MINIMUM);
 pub const SDL_BLENDOPERATION_MAXIMUM = @enumToInt(enum_unnamed_36.SDL_BLENDOPERATION_MAXIMUM);
-const enum_unnamed_36 = extern enum(c_int) {
+const enum_unnamed_36 = enum(c_int) {
     SDL_BLENDOPERATION_ADD = 1,
     SDL_BLENDOPERATION_SUBTRACT = 2,
     SDL_BLENDOPERATION_REV_SUBTRACT = 3,
@@ -786,7 +958,7 @@ pub const SDL_BLENDFACTOR_DST_COLOR = @enumToInt(enum_unnamed_37.SDL_BLENDFACTOR
 pub const SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR = @enumToInt(enum_unnamed_37.SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR);
 pub const SDL_BLENDFACTOR_DST_ALPHA = @enumToInt(enum_unnamed_37.SDL_BLENDFACTOR_DST_ALPHA);
 pub const SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA = @enumToInt(enum_unnamed_37.SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA);
-const enum_unnamed_37 = extern enum(c_int) {
+const enum_unnamed_37 = enum(c_int) {
     SDL_BLENDFACTOR_ZERO = 1,
     SDL_BLENDFACTOR_ONE = 2,
     SDL_BLENDFACTOR_SRC_COLOR = 3,
@@ -822,7 +994,7 @@ pub const SDL_YUV_CONVERSION_JPEG = @enumToInt(enum_unnamed_38.SDL_YUV_CONVERSIO
 pub const SDL_YUV_CONVERSION_BT601 = @enumToInt(enum_unnamed_38.SDL_YUV_CONVERSION_BT601);
 pub const SDL_YUV_CONVERSION_BT709 = @enumToInt(enum_unnamed_38.SDL_YUV_CONVERSION_BT709);
 pub const SDL_YUV_CONVERSION_AUTOMATIC = @enumToInt(enum_unnamed_38.SDL_YUV_CONVERSION_AUTOMATIC);
-const enum_unnamed_38 = extern enum(c_int) {
+const enum_unnamed_38 = enum(c_int) {
     SDL_YUV_CONVERSION_JPEG,
     SDL_YUV_CONVERSION_BT601,
     SDL_YUV_CONVERSION_BT709,
@@ -862,19 +1034,19 @@ pub extern fn SDL_FillRects(dst: [*c]SDL_Surface, rects: [*c]const SDL_Rect, cou
 pub extern fn SDL_UpperBlit(src: [*c]SDL_Surface, srcrect: [*c]const SDL_Rect, dst: [*c]SDL_Surface, dstrect: [*c]SDL_Rect) c_int;
 pub extern fn SDL_LowerBlit(src: [*c]SDL_Surface, srcrect: [*c]SDL_Rect, dst: [*c]SDL_Surface, dstrect: [*c]SDL_Rect) c_int;
 pub extern fn SDL_SoftStretch(src: [*c]SDL_Surface, srcrect: [*c]const SDL_Rect, dst: [*c]SDL_Surface, dstrect: [*c]const SDL_Rect) c_int;
+pub extern fn SDL_SoftStretchLinear(src: [*c]SDL_Surface, srcrect: [*c]const SDL_Rect, dst: [*c]SDL_Surface, dstrect: [*c]const SDL_Rect) c_int;
 pub extern fn SDL_UpperBlitScaled(src: [*c]SDL_Surface, srcrect: [*c]const SDL_Rect, dst: [*c]SDL_Surface, dstrect: [*c]SDL_Rect) c_int;
 pub extern fn SDL_LowerBlitScaled(src: [*c]SDL_Surface, srcrect: [*c]SDL_Rect, dst: [*c]SDL_Surface, dstrect: [*c]SDL_Rect) c_int;
 pub extern fn SDL_SetYUVConversionMode(mode: SDL_YUV_CONVERSION_MODE) void;
 pub extern fn SDL_GetYUVConversionMode() SDL_YUV_CONVERSION_MODE;
 pub extern fn SDL_GetYUVConversionModeForResolution(width: c_int, height: c_int) SDL_YUV_CONVERSION_MODE;
-const struct_unnamed_39 = extern struct {
+pub const SDL_DisplayMode = extern struct {
     format: Uint32,
     w: c_int,
     h: c_int,
     refresh_rate: c_int,
     driverdata: ?*c_void,
 };
-pub const SDL_DisplayMode = struct_unnamed_39;
 pub const struct_SDL_Window = opaque {};
 pub const SDL_Window = struct_SDL_Window;
 pub const SDL_WINDOW_FULLSCREEN = @enumToInt(enum_unnamed_40.SDL_WINDOW_FULLSCREEN);
@@ -899,7 +1071,7 @@ pub const SDL_WINDOW_TOOLTIP = @enumToInt(enum_unnamed_40.SDL_WINDOW_TOOLTIP);
 pub const SDL_WINDOW_POPUP_MENU = @enumToInt(enum_unnamed_40.SDL_WINDOW_POPUP_MENU);
 pub const SDL_WINDOW_VULKAN = @enumToInt(enum_unnamed_40.SDL_WINDOW_VULKAN);
 pub const SDL_WINDOW_METAL = @enumToInt(enum_unnamed_40.SDL_WINDOW_METAL);
-const enum_unnamed_40 = extern enum(c_int) {
+const enum_unnamed_40 = enum(c_int) {
     SDL_WINDOW_FULLSCREEN = 1,
     SDL_WINDOW_OPENGL = 2,
     SDL_WINDOW_SHOWN = 4,
@@ -942,7 +1114,7 @@ pub const SDL_WINDOWEVENT_FOCUS_LOST = @enumToInt(enum_unnamed_41.SDL_WINDOWEVEN
 pub const SDL_WINDOWEVENT_CLOSE = @enumToInt(enum_unnamed_41.SDL_WINDOWEVENT_CLOSE);
 pub const SDL_WINDOWEVENT_TAKE_FOCUS = @enumToInt(enum_unnamed_41.SDL_WINDOWEVENT_TAKE_FOCUS);
 pub const SDL_WINDOWEVENT_HIT_TEST = @enumToInt(enum_unnamed_41.SDL_WINDOWEVENT_HIT_TEST);
-const enum_unnamed_41 = extern enum(c_int) {
+const enum_unnamed_41 = enum(c_int) {
     SDL_WINDOWEVENT_NONE,
     SDL_WINDOWEVENT_SHOWN,
     SDL_WINDOWEVENT_HIDDEN,
@@ -967,7 +1139,7 @@ pub const SDL_DISPLAYEVENT_NONE = @enumToInt(enum_unnamed_42.SDL_DISPLAYEVENT_NO
 pub const SDL_DISPLAYEVENT_ORIENTATION = @enumToInt(enum_unnamed_42.SDL_DISPLAYEVENT_ORIENTATION);
 pub const SDL_DISPLAYEVENT_CONNECTED = @enumToInt(enum_unnamed_42.SDL_DISPLAYEVENT_CONNECTED);
 pub const SDL_DISPLAYEVENT_DISCONNECTED = @enumToInt(enum_unnamed_42.SDL_DISPLAYEVENT_DISCONNECTED);
-const enum_unnamed_42 = extern enum(c_int) {
+const enum_unnamed_42 = enum(c_int) {
     SDL_DISPLAYEVENT_NONE,
     SDL_DISPLAYEVENT_ORIENTATION,
     SDL_DISPLAYEVENT_CONNECTED,
@@ -980,7 +1152,7 @@ pub const SDL_ORIENTATION_LANDSCAPE = @enumToInt(enum_unnamed_43.SDL_ORIENTATION
 pub const SDL_ORIENTATION_LANDSCAPE_FLIPPED = @enumToInt(enum_unnamed_43.SDL_ORIENTATION_LANDSCAPE_FLIPPED);
 pub const SDL_ORIENTATION_PORTRAIT = @enumToInt(enum_unnamed_43.SDL_ORIENTATION_PORTRAIT);
 pub const SDL_ORIENTATION_PORTRAIT_FLIPPED = @enumToInt(enum_unnamed_43.SDL_ORIENTATION_PORTRAIT_FLIPPED);
-const enum_unnamed_43 = extern enum(c_int) {
+const enum_unnamed_43 = enum(c_int) {
     SDL_ORIENTATION_UNKNOWN,
     SDL_ORIENTATION_LANDSCAPE,
     SDL_ORIENTATION_LANDSCAPE_FLIPPED,
@@ -1017,7 +1189,7 @@ pub const SDL_GL_FRAMEBUFFER_SRGB_CAPABLE = @enumToInt(enum_unnamed_44.SDL_GL_FR
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR = @enumToInt(enum_unnamed_44.SDL_GL_CONTEXT_RELEASE_BEHAVIOR);
 pub const SDL_GL_CONTEXT_RESET_NOTIFICATION = @enumToInt(enum_unnamed_44.SDL_GL_CONTEXT_RESET_NOTIFICATION);
 pub const SDL_GL_CONTEXT_NO_ERROR = @enumToInt(enum_unnamed_44.SDL_GL_CONTEXT_NO_ERROR);
-const enum_unnamed_44 = extern enum(c_int) {
+const enum_unnamed_44 = enum(c_int) {
     SDL_GL_RED_SIZE,
     SDL_GL_GREEN_SIZE,
     SDL_GL_BLUE_SIZE,
@@ -1047,11 +1219,12 @@ const enum_unnamed_44 = extern enum(c_int) {
     SDL_GL_CONTEXT_NO_ERROR,
     _,
 };
+
 pub const SDL_GLattr = enum_unnamed_44;
 pub const SDL_GL_CONTEXT_PROFILE_CORE = @enumToInt(enum_unnamed_45.SDL_GL_CONTEXT_PROFILE_CORE);
 pub const SDL_GL_CONTEXT_PROFILE_COMPATIBILITY = @enumToInt(enum_unnamed_45.SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 pub const SDL_GL_CONTEXT_PROFILE_ES = @enumToInt(enum_unnamed_45.SDL_GL_CONTEXT_PROFILE_ES);
-const enum_unnamed_45 = extern enum(c_int) {
+const enum_unnamed_45 = enum(c_int) {
     SDL_GL_CONTEXT_PROFILE_CORE = 1,
     SDL_GL_CONTEXT_PROFILE_COMPATIBILITY = 2,
     SDL_GL_CONTEXT_PROFILE_ES = 4,
@@ -1062,7 +1235,7 @@ pub const SDL_GL_CONTEXT_DEBUG_FLAG = @enumToInt(enum_unnamed_46.SDL_GL_CONTEXT_
 pub const SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG = @enumToInt(enum_unnamed_46.SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG);
 pub const SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG = @enumToInt(enum_unnamed_46.SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG);
 pub const SDL_GL_CONTEXT_RESET_ISOLATION_FLAG = @enumToInt(enum_unnamed_46.SDL_GL_CONTEXT_RESET_ISOLATION_FLAG);
-const enum_unnamed_46 = extern enum(c_int) {
+const enum_unnamed_46 = enum(c_int) {
     SDL_GL_CONTEXT_DEBUG_FLAG = 1,
     SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG = 2,
     SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG = 4,
@@ -1072,7 +1245,7 @@ const enum_unnamed_46 = extern enum(c_int) {
 pub const SDL_GLcontextFlag = enum_unnamed_46;
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE = @enumToInt(enum_unnamed_47.SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE);
 pub const SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = @enumToInt(enum_unnamed_47.SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH);
-const enum_unnamed_47 = extern enum(c_int) {
+const enum_unnamed_47 = enum(c_int) {
     SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE = 0,
     SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 1,
     _,
@@ -1080,7 +1253,7 @@ const enum_unnamed_47 = extern enum(c_int) {
 pub const SDL_GLcontextReleaseFlag = enum_unnamed_47;
 pub const SDL_GL_CONTEXT_RESET_NO_NOTIFICATION = @enumToInt(enum_unnamed_48.SDL_GL_CONTEXT_RESET_NO_NOTIFICATION);
 pub const SDL_GL_CONTEXT_RESET_LOSE_CONTEXT = @enumToInt(enum_unnamed_48.SDL_GL_CONTEXT_RESET_LOSE_CONTEXT);
-const enum_unnamed_48 = extern enum(c_int) {
+const enum_unnamed_48 = enum(c_int) {
     SDL_GL_CONTEXT_RESET_NO_NOTIFICATION = 0,
     SDL_GL_CONTEXT_RESET_LOSE_CONTEXT = 1,
     _,
@@ -1127,6 +1300,7 @@ pub extern fn SDL_SetWindowMaximumSize(window: ?*SDL_Window, max_w: c_int, max_h
 pub extern fn SDL_GetWindowMaximumSize(window: ?*SDL_Window, w: [*c]c_int, h: [*c]c_int) void;
 pub extern fn SDL_SetWindowBordered(window: ?*SDL_Window, bordered: SDL_bool) void;
 pub extern fn SDL_SetWindowResizable(window: ?*SDL_Window, resizable: SDL_bool) void;
+pub extern fn SDL_SetWindowAlwaysOnTop(window: ?*SDL_Window, on_top: SDL_bool) void;
 pub extern fn SDL_ShowWindow(window: ?*SDL_Window) void;
 pub extern fn SDL_HideWindow(window: ?*SDL_Window) void;
 pub extern fn SDL_RaiseWindow(window: ?*SDL_Window) void;
@@ -1138,7 +1312,11 @@ pub extern fn SDL_GetWindowSurface(window: ?*SDL_Window) [*c]SDL_Surface;
 pub extern fn SDL_UpdateWindowSurface(window: ?*SDL_Window) c_int;
 pub extern fn SDL_UpdateWindowSurfaceRects(window: ?*SDL_Window, rects: [*c]const SDL_Rect, numrects: c_int) c_int;
 pub extern fn SDL_SetWindowGrab(window: ?*SDL_Window, grabbed: SDL_bool) void;
+pub extern fn SDL_SetWindowKeyboardGrab(window: ?*SDL_Window, grabbed: SDL_bool) void;
+pub extern fn SDL_SetWindowMouseGrab(window: ?*SDL_Window, grabbed: SDL_bool) void;
 pub extern fn SDL_GetWindowGrab(window: ?*SDL_Window) SDL_bool;
+pub extern fn SDL_GetWindowKeyboardGrab(window: ?*SDL_Window) SDL_bool;
+pub extern fn SDL_GetWindowMouseGrab(window: ?*SDL_Window) SDL_bool;
 pub extern fn SDL_GetGrabbedWindow() ?*SDL_Window;
 pub extern fn SDL_SetWindowBrightness(window: ?*SDL_Window, brightness: f32) c_int;
 pub extern fn SDL_GetWindowBrightness(window: ?*SDL_Window) f32;
@@ -1158,7 +1336,7 @@ pub const SDL_HITTEST_RESIZE_BOTTOMRIGHT = @enumToInt(enum_unnamed_49.SDL_HITTES
 pub const SDL_HITTEST_RESIZE_BOTTOM = @enumToInt(enum_unnamed_49.SDL_HITTEST_RESIZE_BOTTOM);
 pub const SDL_HITTEST_RESIZE_BOTTOMLEFT = @enumToInt(enum_unnamed_49.SDL_HITTEST_RESIZE_BOTTOMLEFT);
 pub const SDL_HITTEST_RESIZE_LEFT = @enumToInt(enum_unnamed_49.SDL_HITTEST_RESIZE_LEFT);
-const enum_unnamed_49 = extern enum(c_int) {
+const enum_unnamed_49 = enum(c_int) {
     SDL_HITTEST_NORMAL,
     SDL_HITTEST_DRAGGABLE,
     SDL_HITTEST_RESIZE_TOPLEFT,
@@ -1174,6 +1352,7 @@ const enum_unnamed_49 = extern enum(c_int) {
 pub const SDL_HitTestResult = enum_unnamed_49;
 pub const SDL_HitTest = ?fn (?*SDL_Window, [*c]const SDL_Point, ?*c_void) callconv(.C) SDL_HitTestResult;
 pub extern fn SDL_SetWindowHitTest(window: ?*SDL_Window, callback: SDL_HitTest, callback_data: ?*c_void) c_int;
+// pub extern fn SDL_FlashWindow(window: ?*SDL_Window, operation: SDL_FlashOperation) c_int;
 pub extern fn SDL_DestroyWindow(window: ?*SDL_Window) void;
 pub extern fn SDL_IsScreenSaverEnabled() SDL_bool;
 pub extern fn SDL_EnableScreenSaver() void;
@@ -1438,7 +1617,7 @@ pub const SDL_SCANCODE_APP2 = @enumToInt(enum_unnamed_50.SDL_SCANCODE_APP2);
 pub const SDL_SCANCODE_AUDIOREWIND = @enumToInt(enum_unnamed_50.SDL_SCANCODE_AUDIOREWIND);
 pub const SDL_SCANCODE_AUDIOFASTFORWARD = @enumToInt(enum_unnamed_50.SDL_SCANCODE_AUDIOFASTFORWARD);
 pub const SDL_NUM_SCANCODES = @enumToInt(enum_unnamed_50.SDL_NUM_SCANCODES);
-const enum_unnamed_50 = extern enum(c_int) {
+const enum_unnamed_50 = enum(c_int) {
     SDL_SCANCODE_UNKNOWN = 0,
     SDL_SCANCODE_A = 4,
     SDL_SCANCODE_B = 5,
@@ -1927,7 +2106,7 @@ pub const SDLK_APP1 = @enumToInt(enum_unnamed_51.SDLK_APP1);
 pub const SDLK_APP2 = @enumToInt(enum_unnamed_51.SDLK_APP2);
 pub const SDLK_AUDIOREWIND = @enumToInt(enum_unnamed_51.SDLK_AUDIOREWIND);
 pub const SDLK_AUDIOFASTFORWARD = @enumToInt(enum_unnamed_51.SDLK_AUDIOFASTFORWARD);
-const enum_unnamed_51 = extern enum(c_int) {
+const enum_unnamed_51 = enum(c_int) {
     SDLK_UNKNOWN = 0,
     SDLK_RETURN = 13,
     SDLK_ESCAPE = 27,
@@ -2188,7 +2367,7 @@ pub const KMOD_CTRL = @enumToInt(enum_unnamed_52.KMOD_CTRL);
 pub const KMOD_SHIFT = @enumToInt(enum_unnamed_52.KMOD_SHIFT);
 pub const KMOD_ALT = @enumToInt(enum_unnamed_52.KMOD_ALT);
 pub const KMOD_GUI = @enumToInt(enum_unnamed_52.KMOD_GUI);
-const enum_unnamed_52 = extern enum(c_int) {
+const enum_unnamed_52 = enum(c_int) {
     KMOD_NONE = 0,
     KMOD_LSHIFT = 1,
     KMOD_RSHIFT = 2,
@@ -2247,7 +2426,7 @@ pub const SDL_SYSTEM_CURSOR_SIZEALL = @enumToInt(enum_unnamed_53.SDL_SYSTEM_CURS
 pub const SDL_SYSTEM_CURSOR_NO = @enumToInt(enum_unnamed_53.SDL_SYSTEM_CURSOR_NO);
 pub const SDL_SYSTEM_CURSOR_HAND = @enumToInt(enum_unnamed_53.SDL_SYSTEM_CURSOR_HAND);
 pub const SDL_NUM_SYSTEM_CURSORS = @enumToInt(enum_unnamed_53.SDL_NUM_SYSTEM_CURSORS);
-const enum_unnamed_53 = extern enum(c_int) {
+const enum_unnamed_53 = enum(c_int) {
     SDL_SYSTEM_CURSOR_ARROW,
     SDL_SYSTEM_CURSOR_IBEAM,
     SDL_SYSTEM_CURSOR_WAIT,
@@ -2266,7 +2445,7 @@ const enum_unnamed_53 = extern enum(c_int) {
 pub const SDL_SystemCursor = enum_unnamed_53;
 pub const SDL_MOUSEWHEEL_NORMAL = @enumToInt(enum_unnamed_54.SDL_MOUSEWHEEL_NORMAL);
 pub const SDL_MOUSEWHEEL_FLIPPED = @enumToInt(enum_unnamed_54.SDL_MOUSEWHEEL_FLIPPED);
-const enum_unnamed_54 = extern enum(c_int) {
+const enum_unnamed_54 = enum(c_int) {
     SDL_MOUSEWHEEL_NORMAL,
     SDL_MOUSEWHEEL_FLIPPED,
     _,
@@ -2291,10 +2470,9 @@ pub extern fn SDL_FreeCursor(cursor: ?*SDL_Cursor) void;
 pub extern fn SDL_ShowCursor(toggle: c_int) c_int;
 pub const struct__SDL_Joystick = opaque {};
 pub const SDL_Joystick = struct__SDL_Joystick;
-const struct_unnamed_55 = extern struct {
+pub const SDL_JoystickGUID = extern struct {
     data: [16]Uint8,
 };
-pub const SDL_JoystickGUID = struct_unnamed_55;
 pub const SDL_JoystickID = Sint32;
 pub const SDL_JOYSTICK_TYPE_UNKNOWN = @enumToInt(enum_unnamed_56.SDL_JOYSTICK_TYPE_UNKNOWN);
 pub const SDL_JOYSTICK_TYPE_GAMECONTROLLER = @enumToInt(enum_unnamed_56.SDL_JOYSTICK_TYPE_GAMECONTROLLER);
@@ -2306,7 +2484,7 @@ pub const SDL_JOYSTICK_TYPE_GUITAR = @enumToInt(enum_unnamed_56.SDL_JOYSTICK_TYP
 pub const SDL_JOYSTICK_TYPE_DRUM_KIT = @enumToInt(enum_unnamed_56.SDL_JOYSTICK_TYPE_DRUM_KIT);
 pub const SDL_JOYSTICK_TYPE_ARCADE_PAD = @enumToInt(enum_unnamed_56.SDL_JOYSTICK_TYPE_ARCADE_PAD);
 pub const SDL_JOYSTICK_TYPE_THROTTLE = @enumToInt(enum_unnamed_56.SDL_JOYSTICK_TYPE_THROTTLE);
-const enum_unnamed_56 = extern enum(c_int) {
+const enum_unnamed_56 = enum(c_int) {
     SDL_JOYSTICK_TYPE_UNKNOWN,
     SDL_JOYSTICK_TYPE_GAMECONTROLLER,
     SDL_JOYSTICK_TYPE_WHEEL,
@@ -2327,7 +2505,7 @@ pub const SDL_JOYSTICK_POWER_MEDIUM = @enumToInt(enum_unnamed_57.SDL_JOYSTICK_PO
 pub const SDL_JOYSTICK_POWER_FULL = @enumToInt(enum_unnamed_57.SDL_JOYSTICK_POWER_FULL);
 pub const SDL_JOYSTICK_POWER_WIRED = @enumToInt(enum_unnamed_57.SDL_JOYSTICK_POWER_WIRED);
 pub const SDL_JOYSTICK_POWER_MAX = @enumToInt(enum_unnamed_57.SDL_JOYSTICK_POWER_MAX);
-const enum_unnamed_57 = extern enum(c_int) {
+const enum_unnamed_57 = enum(c_int) {
     SDL_JOYSTICK_POWER_UNKNOWN = -1,
     SDL_JOYSTICK_POWER_EMPTY = 0,
     SDL_JOYSTICK_POWER_LOW = 1,
@@ -2352,7 +2530,7 @@ pub extern fn SDL_JoystickGetDeviceInstanceID(device_index: c_int) SDL_JoystickI
 pub extern fn SDL_JoystickOpen(device_index: c_int) ?*SDL_Joystick;
 pub extern fn SDL_JoystickFromInstanceID(instance_id: SDL_JoystickID) ?*SDL_Joystick;
 pub extern fn SDL_JoystickFromPlayerIndex(player_index: c_int) ?*SDL_Joystick;
-pub extern fn SDL_JoystickAttachVirtual(type: SDL_JoystickType, naxes: c_int, nbuttons: c_int, nhats: c_int) c_int;
+pub extern fn SDL_JoystickAttachVirtual(@"type": SDL_JoystickType, naxes: c_int, nbuttons: c_int, nhats: c_int) c_int;
 pub extern fn SDL_JoystickDetachVirtual(device_index: c_int) c_int;
 pub extern fn SDL_JoystickIsVirtual(device_index: c_int) SDL_bool;
 pub extern fn SDL_JoystickSetVirtualAxis(joystick: ?*SDL_Joystick, axis: c_int, value: Sint16) c_int;
@@ -2365,6 +2543,7 @@ pub extern fn SDL_JoystickGetGUID(joystick: ?*SDL_Joystick) SDL_JoystickGUID;
 pub extern fn SDL_JoystickGetVendor(joystick: ?*SDL_Joystick) Uint16;
 pub extern fn SDL_JoystickGetProduct(joystick: ?*SDL_Joystick) Uint16;
 pub extern fn SDL_JoystickGetProductVersion(joystick: ?*SDL_Joystick) Uint16;
+pub extern fn SDL_JoystickGetSerial(joystick: ?*SDL_Joystick) [*c]const u8;
 pub extern fn SDL_JoystickGetType(joystick: ?*SDL_Joystick) SDL_JoystickType;
 pub extern fn SDL_JoystickGetGUIDString(guid: SDL_JoystickGUID, pszGUID: [*c]u8, cbGUID: c_int) void;
 pub extern fn SDL_JoystickGetGUIDFromString(pchGUID: [*c]const u8) SDL_JoystickGUID;
@@ -2382,10 +2561,43 @@ pub extern fn SDL_JoystickGetHat(joystick: ?*SDL_Joystick, hat: c_int) Uint8;
 pub extern fn SDL_JoystickGetBall(joystick: ?*SDL_Joystick, ball: c_int, dx: [*c]c_int, dy: [*c]c_int) c_int;
 pub extern fn SDL_JoystickGetButton(joystick: ?*SDL_Joystick, button: c_int) Uint8;
 pub extern fn SDL_JoystickRumble(joystick: ?*SDL_Joystick, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16, duration_ms: Uint32) c_int;
+pub extern fn SDL_JoystickRumbleTriggers(joystick: ?*SDL_Joystick, left_rumble: Uint16, right_rumble: Uint16, duration_ms: Uint32) c_int;
 pub extern fn SDL_JoystickHasLED(joystick: ?*SDL_Joystick) SDL_bool;
 pub extern fn SDL_JoystickSetLED(joystick: ?*SDL_Joystick, red: Uint8, green: Uint8, blue: Uint8) c_int;
+pub extern fn SDL_JoystickSendEffect(joystick: ?*SDL_Joystick, data: ?*const c_void, size: c_int) c_int;
 pub extern fn SDL_JoystickClose(joystick: ?*SDL_Joystick) void;
 pub extern fn SDL_JoystickCurrentPowerLevel(joystick: ?*SDL_Joystick) SDL_JoystickPowerLevel;
+pub const struct__SDL_Sensor = opaque {};
+pub const SDL_Sensor = struct__SDL_Sensor;
+pub const SDL_SensorID = Sint32;
+pub const SDL_SENSOR_INVALID = @enumToInt(enum_unnamed_83.SDL_SENSOR_INVALID);
+pub const SDL_SENSOR_UNKNOWN = @enumToInt(enum_unnamed_83.SDL_SENSOR_UNKNOWN);
+pub const SDL_SENSOR_ACCEL = @enumToInt(enum_unnamed_83.SDL_SENSOR_ACCEL);
+pub const SDL_SENSOR_GYRO = @enumToInt(enum_unnamed_83.SDL_SENSOR_GYRO);
+const enum_unnamed_83 = enum(c_int) {
+    SDL_SENSOR_INVALID = -1,
+    SDL_SENSOR_UNKNOWN = 0,
+    SDL_SENSOR_ACCEL = 1,
+    SDL_SENSOR_GYRO = 2,
+    _,
+};
+pub const SDL_SensorType = enum_unnamed_83;
+pub extern fn SDL_LockSensors() void;
+pub extern fn SDL_UnlockSensors() void;
+pub extern fn SDL_NumSensors() c_int;
+pub extern fn SDL_SensorGetDeviceName(device_index: c_int) [*c]const u8;
+pub extern fn SDL_SensorGetDeviceType(device_index: c_int) SDL_SensorType;
+pub extern fn SDL_SensorGetDeviceNonPortableType(device_index: c_int) c_int;
+pub extern fn SDL_SensorGetDeviceInstanceID(device_index: c_int) SDL_SensorID;
+pub extern fn SDL_SensorOpen(device_index: c_int) ?*SDL_Sensor;
+pub extern fn SDL_SensorFromInstanceID(instance_id: SDL_SensorID) ?*SDL_Sensor;
+pub extern fn SDL_SensorGetName(sensor: ?*SDL_Sensor) [*c]const u8;
+pub extern fn SDL_SensorGetType(sensor: ?*SDL_Sensor) SDL_SensorType;
+pub extern fn SDL_SensorGetNonPortableType(sensor: ?*SDL_Sensor) c_int;
+pub extern fn SDL_SensorGetInstanceID(sensor: ?*SDL_Sensor) SDL_SensorID;
+pub extern fn SDL_SensorGetData(sensor: ?*SDL_Sensor, data: [*c]f32, num_values: c_int) c_int;
+pub extern fn SDL_SensorClose(sensor: ?*SDL_Sensor) void;
+pub extern fn SDL_SensorUpdate() void;
 pub const struct__SDL_GameController = opaque {};
 pub const SDL_GameController = struct__SDL_GameController;
 pub const SDL_CONTROLLER_TYPE_UNKNOWN = @enumToInt(enum_unnamed_58.SDL_CONTROLLER_TYPE_UNKNOWN);
@@ -2396,7 +2608,7 @@ pub const SDL_CONTROLLER_TYPE_PS4 = @enumToInt(enum_unnamed_58.SDL_CONTROLLER_TY
 pub const SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO = @enumToInt(enum_unnamed_58.SDL_CONTROLLER_TYPE_NINTENDO_SWITCH_PRO);
 pub const SDL_CONTROLLER_TYPE_VIRTUAL = @enumToInt(enum_unnamed_58.SDL_CONTROLLER_TYPE_VIRTUAL);
 pub const SDL_CONTROLLER_TYPE_PS5 = @enumToInt(enum_unnamed_58.SDL_CONTROLLER_TYPE_PS5);
-const enum_unnamed_58 = extern enum(c_int) {
+const enum_unnamed_58 = enum(c_int) {
     SDL_CONTROLLER_TYPE_UNKNOWN = 0,
     SDL_CONTROLLER_TYPE_XBOX360 = 1,
     SDL_CONTROLLER_TYPE_XBOXONE = 2,
@@ -2412,7 +2624,7 @@ pub const SDL_CONTROLLER_BINDTYPE_NONE = @enumToInt(enum_unnamed_59.SDL_CONTROLL
 pub const SDL_CONTROLLER_BINDTYPE_BUTTON = @enumToInt(enum_unnamed_59.SDL_CONTROLLER_BINDTYPE_BUTTON);
 pub const SDL_CONTROLLER_BINDTYPE_AXIS = @enumToInt(enum_unnamed_59.SDL_CONTROLLER_BINDTYPE_AXIS);
 pub const SDL_CONTROLLER_BINDTYPE_HAT = @enumToInt(enum_unnamed_59.SDL_CONTROLLER_BINDTYPE_HAT);
-const enum_unnamed_59 = extern enum(c_int) {
+const enum_unnamed_59 = enum(c_int) {
     SDL_CONTROLLER_BINDTYPE_NONE = 0,
     SDL_CONTROLLER_BINDTYPE_BUTTON = 1,
     SDL_CONTROLLER_BINDTYPE_AXIS = 2,
@@ -2420,18 +2632,18 @@ const enum_unnamed_59 = extern enum(c_int) {
     _,
 };
 pub const SDL_GameControllerBindType = enum_unnamed_59;
-const struct_unnamed_61 = extern struct {
+const struct_unnamed_14 = extern struct {
     hat: c_int,
     hat_mask: c_int,
 };
-const union_unnamed_60 = extern union {
+const union_unnamed_13 = extern union {
     button: c_int,
     axis: c_int,
-    hat: struct_unnamed_61,
+    hat: struct_unnamed_14,
 };
 pub const struct_SDL_GameControllerButtonBind = extern struct {
     bindType: SDL_GameControllerBindType,
-    value: union_unnamed_60,
+    value: union_unnamed_13,
 };
 pub const SDL_GameControllerButtonBind = struct_SDL_GameControllerButtonBind;
 pub extern fn SDL_GameControllerAddMappingsFromRW(rw: [*c]SDL_RWops, freerw: c_int) c_int;
@@ -2454,6 +2666,7 @@ pub extern fn SDL_GameControllerSetPlayerIndex(gamecontroller: ?*SDL_GameControl
 pub extern fn SDL_GameControllerGetVendor(gamecontroller: ?*SDL_GameController) Uint16;
 pub extern fn SDL_GameControllerGetProduct(gamecontroller: ?*SDL_GameController) Uint16;
 pub extern fn SDL_GameControllerGetProductVersion(gamecontroller: ?*SDL_GameController) Uint16;
+pub extern fn SDL_GameControllerGetSerial(gamecontroller: ?*SDL_GameController) [*c]const u8;
 pub extern fn SDL_GameControllerGetAttached(gamecontroller: ?*SDL_GameController) SDL_bool;
 pub extern fn SDL_GameControllerGetJoystick(gamecontroller: ?*SDL_GameController) ?*SDL_Joystick;
 pub extern fn SDL_GameControllerEventState(state: c_int) c_int;
@@ -2466,7 +2679,7 @@ pub const SDL_CONTROLLER_AXIS_RIGHTY = @enumToInt(enum_unnamed_62.SDL_CONTROLLER
 pub const SDL_CONTROLLER_AXIS_TRIGGERLEFT = @enumToInt(enum_unnamed_62.SDL_CONTROLLER_AXIS_TRIGGERLEFT);
 pub const SDL_CONTROLLER_AXIS_TRIGGERRIGHT = @enumToInt(enum_unnamed_62.SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
 pub const SDL_CONTROLLER_AXIS_MAX = @enumToInt(enum_unnamed_62.SDL_CONTROLLER_AXIS_MAX);
-const enum_unnamed_62 = extern enum(c_int) {
+const enum_unnamed_62 = enum(c_int) {
     SDL_CONTROLLER_AXIS_INVALID = -1,
     SDL_CONTROLLER_AXIS_LEFTX = 0,
     SDL_CONTROLLER_AXIS_LEFTY = 1,
@@ -2478,9 +2691,10 @@ const enum_unnamed_62 = extern enum(c_int) {
     _,
 };
 pub const SDL_GameControllerAxis = enum_unnamed_62;
-pub extern fn SDL_GameControllerGetAxisFromString(pchString: [*c]const u8) SDL_GameControllerAxis;
+pub extern fn SDL_GameControllerGetAxisFromString(str: [*c]const u8) SDL_GameControllerAxis;
 pub extern fn SDL_GameControllerGetStringForAxis(axis: SDL_GameControllerAxis) [*c]const u8;
 pub extern fn SDL_GameControllerGetBindForAxis(gamecontroller: ?*SDL_GameController, axis: SDL_GameControllerAxis) SDL_GameControllerButtonBind;
+pub extern fn SDL_GameControllerHasAxis(gamecontroller: ?*SDL_GameController, axis: SDL_GameControllerAxis) SDL_bool;
 pub extern fn SDL_GameControllerGetAxis(gamecontroller: ?*SDL_GameController, axis: SDL_GameControllerAxis) Sint16;
 pub const SDL_CONTROLLER_BUTTON_INVALID = @enumToInt(enum_unnamed_63.SDL_CONTROLLER_BUTTON_INVALID);
 pub const SDL_CONTROLLER_BUTTON_A = @enumToInt(enum_unnamed_63.SDL_CONTROLLER_BUTTON_A);
@@ -2504,7 +2718,7 @@ pub const SDL_CONTROLLER_BUTTON_PADDLE2 = @enumToInt(enum_unnamed_63.SDL_CONTROL
 pub const SDL_CONTROLLER_BUTTON_PADDLE3 = @enumToInt(enum_unnamed_63.SDL_CONTROLLER_BUTTON_PADDLE3);
 pub const SDL_CONTROLLER_BUTTON_PADDLE4 = @enumToInt(enum_unnamed_63.SDL_CONTROLLER_BUTTON_PADDLE4);
 pub const SDL_CONTROLLER_BUTTON_MAX = @enumToInt(enum_unnamed_63.SDL_CONTROLLER_BUTTON_MAX);
-const enum_unnamed_63 = extern enum(c_int) {
+const enum_unnamed_63 = enum(c_int) {
     SDL_CONTROLLER_BUTTON_INVALID = -1,
     SDL_CONTROLLER_BUTTON_A = 0,
     SDL_CONTROLLER_BUTTON_B = 1,
@@ -2530,13 +2744,24 @@ const enum_unnamed_63 = extern enum(c_int) {
     _,
 };
 pub const SDL_GameControllerButton = enum_unnamed_63;
-pub extern fn SDL_GameControllerGetButtonFromString(pchString: [*c]const u8) SDL_GameControllerButton;
+pub extern fn SDL_GameControllerGetButtonFromString(str: [*c]const u8) SDL_GameControllerButton;
 pub extern fn SDL_GameControllerGetStringForButton(button: SDL_GameControllerButton) [*c]const u8;
 pub extern fn SDL_GameControllerGetBindForButton(gamecontroller: ?*SDL_GameController, button: SDL_GameControllerButton) SDL_GameControllerButtonBind;
+pub extern fn SDL_GameControllerHasButton(gamecontroller: ?*SDL_GameController, button: SDL_GameControllerButton) SDL_bool;
 pub extern fn SDL_GameControllerGetButton(gamecontroller: ?*SDL_GameController, button: SDL_GameControllerButton) Uint8;
+pub extern fn SDL_GameControllerGetNumTouchpads(gamecontroller: ?*SDL_GameController) c_int;
+pub extern fn SDL_GameControllerGetNumTouchpadFingers(gamecontroller: ?*SDL_GameController, touchpad: c_int) c_int;
+pub extern fn SDL_GameControllerGetTouchpadFinger(gamecontroller: ?*SDL_GameController, touchpad: c_int, finger: c_int, state: [*c]Uint8, x: [*c]f32, y: [*c]f32, pressure: [*c]f32) c_int;
+pub extern fn SDL_GameControllerHasSensor(gamecontroller: ?*SDL_GameController, @"type": SDL_SensorType) SDL_bool;
+pub extern fn SDL_GameControllerSetSensorEnabled(gamecontroller: ?*SDL_GameController, @"type": SDL_SensorType, enabled: SDL_bool) c_int;
+pub extern fn SDL_GameControllerIsSensorEnabled(gamecontroller: ?*SDL_GameController, @"type": SDL_SensorType) SDL_bool;
+pub extern fn SDL_GameControllerGetSensorDataRate(gamecontroller: ?*SDL_GameController, @"type": SDL_SensorType) f32;
+pub extern fn SDL_GameControllerGetSensorData(gamecontroller: ?*SDL_GameController, @"type": SDL_SensorType, data: [*c]f32, num_values: c_int) c_int;
 pub extern fn SDL_GameControllerRumble(gamecontroller: ?*SDL_GameController, low_frequency_rumble: Uint16, high_frequency_rumble: Uint16, duration_ms: Uint32) c_int;
+pub extern fn SDL_GameControllerRumbleTriggers(gamecontroller: ?*SDL_GameController, left_rumble: Uint16, right_rumble: Uint16, duration_ms: Uint32) c_int;
 pub extern fn SDL_GameControllerHasLED(gamecontroller: ?*SDL_GameController) SDL_bool;
 pub extern fn SDL_GameControllerSetLED(gamecontroller: ?*SDL_GameController, red: Uint8, green: Uint8, blue: Uint8) c_int;
+pub extern fn SDL_GameControllerSendEffect(gamecontroller: ?*SDL_GameController, data: ?*const c_void, size: c_int) c_int;
 pub extern fn SDL_GameControllerClose(gamecontroller: ?*SDL_GameController) void;
 pub const SDL_TouchID = Sint64;
 pub const SDL_FingerID = Sint64;
@@ -2544,7 +2769,7 @@ pub const SDL_TOUCH_DEVICE_INVALID = @enumToInt(enum_unnamed_64.SDL_TOUCH_DEVICE
 pub const SDL_TOUCH_DEVICE_DIRECT = @enumToInt(enum_unnamed_64.SDL_TOUCH_DEVICE_DIRECT);
 pub const SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE = @enumToInt(enum_unnamed_64.SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE);
 pub const SDL_TOUCH_DEVICE_INDIRECT_RELATIVE = @enumToInt(enum_unnamed_64.SDL_TOUCH_DEVICE_INDIRECT_RELATIVE);
-const enum_unnamed_64 = extern enum(c_int) {
+const enum_unnamed_64 = enum(c_int) {
     SDL_TOUCH_DEVICE_INVALID = -1,
     SDL_TOUCH_DEVICE_DIRECT = 0,
     SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE = 1,
@@ -2621,7 +2846,7 @@ pub const SDL_RENDER_TARGETS_RESET = @enumToInt(enum_unnamed_65.SDL_RENDER_TARGE
 pub const SDL_RENDER_DEVICE_RESET = @enumToInt(enum_unnamed_65.SDL_RENDER_DEVICE_RESET);
 pub const SDL_USEREVENT = @enumToInt(enum_unnamed_65.SDL_USEREVENT);
 pub const SDL_LASTEVENT = @enumToInt(enum_unnamed_65.SDL_LASTEVENT);
-const enum_unnamed_65 = extern enum(c_int) {
+const enum_unnamed_65 = enum(c_int) {
     SDL_FIRSTEVENT = 0,
     SDL_QUIT = 256,
     SDL_APP_TERMINATING = 257,
@@ -2845,6 +3070,25 @@ pub const struct_SDL_ControllerDeviceEvent = extern struct {
     which: Sint32,
 };
 pub const SDL_ControllerDeviceEvent = struct_SDL_ControllerDeviceEvent;
+pub const struct_SDL_ControllerTouchpadEvent = extern struct {
+    type: Uint32,
+    timestamp: Uint32,
+    which: SDL_JoystickID,
+    touchpad: Sint32,
+    finger: Sint32,
+    x: f32,
+    y: f32,
+    pressure: f32,
+};
+pub const SDL_ControllerTouchpadEvent = struct_SDL_ControllerTouchpadEvent;
+pub const struct_SDL_ControllerSensorEvent = extern struct {
+    type: Uint32,
+    timestamp: Uint32,
+    which: SDL_JoystickID,
+    sensor: Sint32,
+    data: [3]f32,
+};
+pub const SDL_ControllerSensorEvent = struct_SDL_ControllerSensorEvent;
 pub const struct_SDL_AudioDeviceEvent = extern struct {
     type: Uint32,
     timestamp: Uint32,
@@ -2951,6 +3195,8 @@ pub const union_SDL_Event = extern union {
     caxis: SDL_ControllerAxisEvent,
     cbutton: SDL_ControllerButtonEvent,
     cdevice: SDL_ControllerDeviceEvent,
+    ctouchpad: SDL_ControllerTouchpadEvent,
+    csensor: SDL_ControllerSensorEvent,
     adevice: SDL_AudioDeviceEvent,
     sensor: SDL_SensorEvent,
     quit: SDL_QuitEvent,
@@ -2968,7 +3214,7 @@ pub extern fn SDL_PumpEvents() void;
 pub const SDL_ADDEVENT = @enumToInt(enum_unnamed_66.SDL_ADDEVENT);
 pub const SDL_PEEKEVENT = @enumToInt(enum_unnamed_66.SDL_PEEKEVENT);
 pub const SDL_GETEVENT = @enumToInt(enum_unnamed_66.SDL_GETEVENT);
-const enum_unnamed_66 = extern enum(c_int) {
+const enum_unnamed_66 = enum(c_int) {
     SDL_ADDEVENT,
     SDL_PEEKEVENT,
     SDL_GETEVENT,
@@ -2976,9 +3222,9 @@ const enum_unnamed_66 = extern enum(c_int) {
 };
 pub const SDL_eventaction = enum_unnamed_66;
 pub extern fn SDL_PeepEvents(events: [*c]SDL_Event, numevents: c_int, action: SDL_eventaction, minType: Uint32, maxType: Uint32) c_int;
-pub extern fn SDL_HasEvent(type: Uint32) SDL_bool;
+pub extern fn SDL_HasEvent(@"type": Uint32) SDL_bool;
 pub extern fn SDL_HasEvents(minType: Uint32, maxType: Uint32) SDL_bool;
-pub extern fn SDL_FlushEvent(type: Uint32) void;
+pub extern fn SDL_FlushEvent(@"type": Uint32) void;
 pub extern fn SDL_FlushEvents(minType: Uint32, maxType: Uint32) void;
 pub extern fn SDL_PollEvent(event: [*c]SDL_Event) c_int;
 pub extern fn SDL_WaitEvent(event: [*c]SDL_Event) c_int;
@@ -2990,7 +3236,7 @@ pub extern fn SDL_GetEventFilter(filter: [*c]SDL_EventFilter, userdata: [*c]?*c_
 pub extern fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: ?*c_void) void;
 pub extern fn SDL_DelEventWatch(filter: SDL_EventFilter, userdata: ?*c_void) void;
 pub extern fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: ?*c_void) void;
-pub extern fn SDL_EventState(type: Uint32, state: c_int) Uint8;
+pub extern fn SDL_EventState(@"type": Uint32, state: c_int) Uint8;
 pub extern fn SDL_RegisterEvents(numevents: c_int) Uint32;
 pub extern fn SDL_GetBasePath() [*c]u8;
 pub extern fn SDL_GetPrefPath(org: [*c]const u8, app: [*c]const u8) [*c]u8;
@@ -3129,7 +3375,7 @@ pub extern fn SDL_HapticRumbleStop(haptic: ?*SDL_Haptic) c_int;
 pub const SDL_HINT_DEFAULT = @enumToInt(enum_unnamed_67.SDL_HINT_DEFAULT);
 pub const SDL_HINT_NORMAL = @enumToInt(enum_unnamed_67.SDL_HINT_NORMAL);
 pub const SDL_HINT_OVERRIDE = @enumToInt(enum_unnamed_67.SDL_HINT_OVERRIDE);
-const enum_unnamed_67 = extern enum(c_int) {
+const enum_unnamed_67 = enum(c_int) {
     SDL_HINT_DEFAULT,
     SDL_HINT_NORMAL,
     SDL_HINT_OVERRIDE,
@@ -3167,7 +3413,7 @@ pub const SDL_LOG_CATEGORY_RESERVED8 = @enumToInt(enum_unnamed_68.SDL_LOG_CATEGO
 pub const SDL_LOG_CATEGORY_RESERVED9 = @enumToInt(enum_unnamed_68.SDL_LOG_CATEGORY_RESERVED9);
 pub const SDL_LOG_CATEGORY_RESERVED10 = @enumToInt(enum_unnamed_68.SDL_LOG_CATEGORY_RESERVED10);
 pub const SDL_LOG_CATEGORY_CUSTOM = @enumToInt(enum_unnamed_68.SDL_LOG_CATEGORY_CUSTOM);
-const enum_unnamed_68 = extern enum(c_int) {
+const enum_unnamed_68 = enum(c_int) {
     SDL_LOG_CATEGORY_APPLICATION,
     SDL_LOG_CATEGORY_ERROR,
     SDL_LOG_CATEGORY_ASSERT,
@@ -3198,7 +3444,7 @@ pub const SDL_LOG_PRIORITY_WARN = @enumToInt(enum_unnamed_69.SDL_LOG_PRIORITY_WA
 pub const SDL_LOG_PRIORITY_ERROR = @enumToInt(enum_unnamed_69.SDL_LOG_PRIORITY_ERROR);
 pub const SDL_LOG_PRIORITY_CRITICAL = @enumToInt(enum_unnamed_69.SDL_LOG_PRIORITY_CRITICAL);
 pub const SDL_NUM_LOG_PRIORITIES = @enumToInt(enum_unnamed_69.SDL_NUM_LOG_PRIORITIES);
-const enum_unnamed_69 = extern enum(c_int) {
+const enum_unnamed_69 = enum(c_int) {
     SDL_LOG_PRIORITY_VERBOSE = 1,
     SDL_LOG_PRIORITY_DEBUG = 2,
     SDL_LOG_PRIORITY_INFO = 3,
@@ -3230,7 +3476,7 @@ pub const SDL_MESSAGEBOX_WARNING = @enumToInt(enum_unnamed_70.SDL_MESSAGEBOX_WAR
 pub const SDL_MESSAGEBOX_INFORMATION = @enumToInt(enum_unnamed_70.SDL_MESSAGEBOX_INFORMATION);
 pub const SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT = @enumToInt(enum_unnamed_70.SDL_MESSAGEBOX_BUTTONS_LEFT_TO_RIGHT);
 pub const SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT = @enumToInt(enum_unnamed_70.SDL_MESSAGEBOX_BUTTONS_RIGHT_TO_LEFT);
-const enum_unnamed_70 = extern enum(c_int) {
+const enum_unnamed_70 = enum(c_int) {
     SDL_MESSAGEBOX_ERROR = 16,
     SDL_MESSAGEBOX_WARNING = 32,
     SDL_MESSAGEBOX_INFORMATION = 64,
@@ -3241,31 +3487,29 @@ const enum_unnamed_70 = extern enum(c_int) {
 pub const SDL_MessageBoxFlags = enum_unnamed_70;
 pub const SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT = @enumToInt(enum_unnamed_71.SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT);
 pub const SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT = @enumToInt(enum_unnamed_71.SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT);
-const enum_unnamed_71 = extern enum(c_int) {
+const enum_unnamed_71 = enum(c_int) {
     SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT = 1,
     SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT = 2,
     _,
 };
 pub const SDL_MessageBoxButtonFlags = enum_unnamed_71;
-const struct_unnamed_72 = extern struct {
+pub const SDL_MessageBoxButtonData = extern struct {
     flags: Uint32,
     buttonid: c_int,
     text: [*c]const u8,
 };
-pub const SDL_MessageBoxButtonData = struct_unnamed_72;
-const struct_unnamed_73 = extern struct {
+pub const SDL_MessageBoxColor = extern struct {
     r: Uint8,
     g: Uint8,
     b: Uint8,
 };
-pub const SDL_MessageBoxColor = struct_unnamed_73;
 pub const SDL_MESSAGEBOX_COLOR_BACKGROUND = @enumToInt(enum_unnamed_74.SDL_MESSAGEBOX_COLOR_BACKGROUND);
 pub const SDL_MESSAGEBOX_COLOR_TEXT = @enumToInt(enum_unnamed_74.SDL_MESSAGEBOX_COLOR_TEXT);
 pub const SDL_MESSAGEBOX_COLOR_BUTTON_BORDER = @enumToInt(enum_unnamed_74.SDL_MESSAGEBOX_COLOR_BUTTON_BORDER);
 pub const SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND = @enumToInt(enum_unnamed_74.SDL_MESSAGEBOX_COLOR_BUTTON_BACKGROUND);
 pub const SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED = @enumToInt(enum_unnamed_74.SDL_MESSAGEBOX_COLOR_BUTTON_SELECTED);
 pub const SDL_MESSAGEBOX_COLOR_MAX = @enumToInt(enum_unnamed_74.SDL_MESSAGEBOX_COLOR_MAX);
-const enum_unnamed_74 = extern enum(c_int) {
+const enum_unnamed_74 = enum(c_int) {
     SDL_MESSAGEBOX_COLOR_BACKGROUND,
     SDL_MESSAGEBOX_COLOR_TEXT,
     SDL_MESSAGEBOX_COLOR_BUTTON_BORDER,
@@ -3275,11 +3519,10 @@ const enum_unnamed_74 = extern enum(c_int) {
     _,
 };
 pub const SDL_MessageBoxColorType = enum_unnamed_74;
-const struct_unnamed_75 = extern struct {
+pub const SDL_MessageBoxColorScheme = extern struct {
     colors: [5]SDL_MessageBoxColor,
 };
-pub const SDL_MessageBoxColorScheme = struct_unnamed_75;
-const struct_unnamed_76 = extern struct {
+pub const SDL_MessageBoxData = extern struct {
     flags: Uint32,
     window: ?*SDL_Window,
     title: [*c]const u8,
@@ -3288,7 +3531,6 @@ const struct_unnamed_76 = extern struct {
     buttons: [*c]const SDL_MessageBoxButtonData,
     colorScheme: [*c]const SDL_MessageBoxColorScheme,
 };
-pub const SDL_MessageBoxData = struct_unnamed_76;
 pub extern fn SDL_ShowMessageBox(messageboxdata: [*c]const SDL_MessageBoxData, buttonid: [*c]c_int) c_int;
 pub extern fn SDL_ShowSimpleMessageBox(flags: Uint32, title: [*c]const u8, message: [*c]const u8, window: ?*SDL_Window) c_int;
 pub const SDL_MetalView = ?*c_void;
@@ -3301,7 +3543,7 @@ pub const SDL_POWERSTATE_ON_BATTERY = @enumToInt(enum_unnamed_77.SDL_POWERSTATE_
 pub const SDL_POWERSTATE_NO_BATTERY = @enumToInt(enum_unnamed_77.SDL_POWERSTATE_NO_BATTERY);
 pub const SDL_POWERSTATE_CHARGING = @enumToInt(enum_unnamed_77.SDL_POWERSTATE_CHARGING);
 pub const SDL_POWERSTATE_CHARGED = @enumToInt(enum_unnamed_77.SDL_POWERSTATE_CHARGED);
-const enum_unnamed_77 = extern enum(c_int) {
+const enum_unnamed_77 = enum(c_int) {
     SDL_POWERSTATE_UNKNOWN,
     SDL_POWERSTATE_ON_BATTERY,
     SDL_POWERSTATE_NO_BATTERY,
@@ -3315,7 +3557,7 @@ pub const SDL_RENDERER_SOFTWARE = @enumToInt(enum_unnamed_78.SDL_RENDERER_SOFTWA
 pub const SDL_RENDERER_ACCELERATED = @enumToInt(enum_unnamed_78.SDL_RENDERER_ACCELERATED);
 pub const SDL_RENDERER_PRESENTVSYNC = @enumToInt(enum_unnamed_78.SDL_RENDERER_PRESENTVSYNC);
 pub const SDL_RENDERER_TARGETTEXTURE = @enumToInt(enum_unnamed_78.SDL_RENDERER_TARGETTEXTURE);
-const enum_unnamed_78 = extern enum(c_int) {
+const enum_unnamed_78 = enum(c_int) {
     SDL_RENDERER_SOFTWARE = 1,
     SDL_RENDERER_ACCELERATED = 2,
     SDL_RENDERER_PRESENTVSYNC = 4,
@@ -3335,7 +3577,7 @@ pub const SDL_RendererInfo = struct_SDL_RendererInfo;
 pub const SDL_ScaleModeNearest = @enumToInt(enum_unnamed_79.SDL_ScaleModeNearest);
 pub const SDL_ScaleModeLinear = @enumToInt(enum_unnamed_79.SDL_ScaleModeLinear);
 pub const SDL_ScaleModeBest = @enumToInt(enum_unnamed_79.SDL_ScaleModeBest);
-const enum_unnamed_79 = extern enum(c_int) {
+const enum_unnamed_79 = enum(c_int) {
     SDL_ScaleModeNearest,
     SDL_ScaleModeLinear,
     SDL_ScaleModeBest,
@@ -3345,7 +3587,7 @@ pub const SDL_ScaleMode = enum_unnamed_79;
 pub const SDL_TEXTUREACCESS_STATIC = @enumToInt(enum_unnamed_80.SDL_TEXTUREACCESS_STATIC);
 pub const SDL_TEXTUREACCESS_STREAMING = @enumToInt(enum_unnamed_80.SDL_TEXTUREACCESS_STREAMING);
 pub const SDL_TEXTUREACCESS_TARGET = @enumToInt(enum_unnamed_80.SDL_TEXTUREACCESS_TARGET);
-const enum_unnamed_80 = extern enum(c_int) {
+const enum_unnamed_80 = enum(c_int) {
     SDL_TEXTUREACCESS_STATIC,
     SDL_TEXTUREACCESS_STREAMING,
     SDL_TEXTUREACCESS_TARGET,
@@ -3355,7 +3597,7 @@ pub const SDL_TextureAccess = enum_unnamed_80;
 pub const SDL_TEXTUREMODULATE_NONE = @enumToInt(enum_unnamed_81.SDL_TEXTUREMODULATE_NONE);
 pub const SDL_TEXTUREMODULATE_COLOR = @enumToInt(enum_unnamed_81.SDL_TEXTUREMODULATE_COLOR);
 pub const SDL_TEXTUREMODULATE_ALPHA = @enumToInt(enum_unnamed_81.SDL_TEXTUREMODULATE_ALPHA);
-const enum_unnamed_81 = extern enum(c_int) {
+const enum_unnamed_81 = enum(c_int) {
     SDL_TEXTUREMODULATE_NONE = 0,
     SDL_TEXTUREMODULATE_COLOR = 1,
     SDL_TEXTUREMODULATE_ALPHA = 2,
@@ -3365,7 +3607,7 @@ pub const SDL_TextureModulate = enum_unnamed_81;
 pub const SDL_FLIP_NONE = @enumToInt(enum_unnamed_82.SDL_FLIP_NONE);
 pub const SDL_FLIP_HORIZONTAL = @enumToInt(enum_unnamed_82.SDL_FLIP_HORIZONTAL);
 pub const SDL_FLIP_VERTICAL = @enumToInt(enum_unnamed_82.SDL_FLIP_VERTICAL);
-const enum_unnamed_82 = extern enum(c_int) {
+const enum_unnamed_82 = enum(c_int) {
     SDL_FLIP_NONE = 0,
     SDL_FLIP_HORIZONTAL = 1,
     SDL_FLIP_VERTICAL = 2,
@@ -3397,6 +3639,7 @@ pub extern fn SDL_SetTextureScaleMode(texture: ?*SDL_Texture, scaleMode: SDL_Sca
 pub extern fn SDL_GetTextureScaleMode(texture: ?*SDL_Texture, scaleMode: [*c]SDL_ScaleMode) c_int;
 pub extern fn SDL_UpdateTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, pixels: ?*const c_void, pitch: c_int) c_int;
 pub extern fn SDL_UpdateYUVTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, Yplane: [*c]const Uint8, Ypitch: c_int, Uplane: [*c]const Uint8, Upitch: c_int, Vplane: [*c]const Uint8, Vpitch: c_int) c_int;
+pub extern fn SDL_UpdateNVTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, Yplane: [*c]const Uint8, Ypitch: c_int, UVplane: [*c]const Uint8, UVpitch: c_int) c_int;
 pub extern fn SDL_LockTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, pixels: [*c]?*c_void, pitch: [*c]c_int) c_int;
 pub extern fn SDL_LockTextureToSurface(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, surface: [*c][*c]SDL_Surface) c_int;
 pub extern fn SDL_UnlockTexture(texture: ?*SDL_Texture) void;
@@ -3448,44 +3691,13 @@ pub extern fn SDL_GL_BindTexture(texture: ?*SDL_Texture, texw: [*c]f32, texh: [*
 pub extern fn SDL_GL_UnbindTexture(texture: ?*SDL_Texture) c_int;
 pub extern fn SDL_RenderGetMetalLayer(renderer: ?*SDL_Renderer) ?*c_void;
 pub extern fn SDL_RenderGetMetalCommandEncoder(renderer: ?*SDL_Renderer) ?*c_void;
-pub const struct__SDL_Sensor = opaque {};
-pub const SDL_Sensor = struct__SDL_Sensor;
-pub const SDL_SensorID = Sint32;
-pub const SDL_SENSOR_INVALID = @enumToInt(enum_unnamed_83.SDL_SENSOR_INVALID);
-pub const SDL_SENSOR_UNKNOWN = @enumToInt(enum_unnamed_83.SDL_SENSOR_UNKNOWN);
-pub const SDL_SENSOR_ACCEL = @enumToInt(enum_unnamed_83.SDL_SENSOR_ACCEL);
-pub const SDL_SENSOR_GYRO = @enumToInt(enum_unnamed_83.SDL_SENSOR_GYRO);
-const enum_unnamed_83 = extern enum(c_int) {
-    SDL_SENSOR_INVALID = -1,
-    SDL_SENSOR_UNKNOWN = 0,
-    SDL_SENSOR_ACCEL = 1,
-    SDL_SENSOR_GYRO = 2,
-    _,
-};
-pub const SDL_SensorType = enum_unnamed_83;
-pub extern fn SDL_LockSensors() void;
-pub extern fn SDL_UnlockSensors() void;
-pub extern fn SDL_NumSensors() c_int;
-pub extern fn SDL_SensorGetDeviceName(device_index: c_int) [*c]const u8;
-pub extern fn SDL_SensorGetDeviceType(device_index: c_int) SDL_SensorType;
-pub extern fn SDL_SensorGetDeviceNonPortableType(device_index: c_int) c_int;
-pub extern fn SDL_SensorGetDeviceInstanceID(device_index: c_int) SDL_SensorID;
-pub extern fn SDL_SensorOpen(device_index: c_int) ?*SDL_Sensor;
-pub extern fn SDL_SensorFromInstanceID(instance_id: SDL_SensorID) ?*SDL_Sensor;
-pub extern fn SDL_SensorGetName(sensor: ?*SDL_Sensor) [*c]const u8;
-pub extern fn SDL_SensorGetType(sensor: ?*SDL_Sensor) SDL_SensorType;
-pub extern fn SDL_SensorGetNonPortableType(sensor: ?*SDL_Sensor) c_int;
-pub extern fn SDL_SensorGetInstanceID(sensor: ?*SDL_Sensor) SDL_SensorID;
-pub extern fn SDL_SensorGetData(sensor: ?*SDL_Sensor, data: [*c]f32, num_values: c_int) c_int;
-pub extern fn SDL_SensorClose(sensor: ?*SDL_Sensor) void;
-pub extern fn SDL_SensorUpdate() void;
 pub extern fn SDL_CreateShapedWindow(title: [*c]const u8, x: c_uint, y: c_uint, w: c_uint, h: c_uint, flags: Uint32) ?*SDL_Window;
 pub extern fn SDL_IsShapedWindow(window: ?*const SDL_Window) SDL_bool;
 pub const ShapeModeDefault = @enumToInt(enum_unnamed_84.ShapeModeDefault);
 pub const ShapeModeBinarizeAlpha = @enumToInt(enum_unnamed_84.ShapeModeBinarizeAlpha);
 pub const ShapeModeReverseBinarizeAlpha = @enumToInt(enum_unnamed_84.ShapeModeReverseBinarizeAlpha);
 pub const ShapeModeColorKey = @enumToInt(enum_unnamed_84.ShapeModeColorKey);
-const enum_unnamed_84 = extern enum(c_int) {
+const enum_unnamed_84 = enum(c_int) {
     ShapeModeDefault,
     ShapeModeBinarizeAlpha,
     ShapeModeReverseBinarizeAlpha,
@@ -3493,11 +3705,10 @@ const enum_unnamed_84 = extern enum(c_int) {
     _,
 };
 pub const WindowShapeMode = enum_unnamed_84;
-const union_unnamed_85 = extern union {
+pub const SDL_WindowShapeParams = extern union {
     binarizationCutoff: Uint8,
     colorKey: SDL_Color,
 };
-pub const SDL_WindowShapeParams = union_unnamed_85;
 pub const struct_SDL_WindowShapeMode = extern struct {
     mode: WindowShapeMode,
     parameters: SDL_WindowShapeParams,
@@ -3505,6 +3716,7 @@ pub const struct_SDL_WindowShapeMode = extern struct {
 pub const SDL_WindowShapeMode = struct_SDL_WindowShapeMode;
 pub extern fn SDL_SetWindowShape(window: ?*SDL_Window, shape: [*c]SDL_Surface, shape_mode: [*c]SDL_WindowShapeMode) c_int;
 pub extern fn SDL_GetShapedWindowMode(window: ?*SDL_Window, shape_mode: [*c]SDL_WindowShapeMode) c_int;
+pub extern fn SDL_LinuxSetThreadPriority(threadID: Sint64, priority: c_int) c_int;
 pub extern fn SDL_IsTablet() SDL_bool;
 pub extern fn SDL_OnApplicationWillTerminate() void;
 pub extern fn SDL_OnApplicationDidReceiveMemoryWarning() void;
@@ -3541,519 +3753,611 @@ pub extern fn SDL_InitSubSystem(flags: Uint32) c_int;
 pub extern fn SDL_QuitSubSystem(flags: Uint32) void;
 pub extern fn SDL_WasInit(flags: Uint32) Uint32;
 pub extern fn SDL_Quit() void;
-
-pub const SDL_AUDIO_DRIVER_COREAUDIO = 1;
-pub const SDL_AUDIO_DRIVER_DISK = 1;
-pub const SDL_AUDIO_DRIVER_DUMMY = 1;
-pub const SDL_JOYSTICK_IOKIT = 1;
-pub const SDL_JOYSTICK_VIRTUAL = 1;
-pub const SDL_HAPTIC_IOKIT = 1;
-pub const SDL_SENSOR_DUMMY = 1;
-pub const SDL_LOADSO_DLOPEN = 1;
-pub const SDL_THREAD_PTHREAD = 1;
-pub const SDL_THREAD_PTHREAD_RECURSIVE_MUTEX = 1;
-pub const SDL_TIMER_UNIX = 1;
-pub const SDL_VIDEO_DRIVER_COCOA = 1;
-pub const SDL_VIDEO_DRIVER_DUMMY = 1;
-pub const SDL_VIDEO_DRIVER_X11 = 1;
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC = "/opt/X11/lib/libX11.6.dylib";
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XEXT = "/opt/X11/lib/libXext.6.dylib";
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XCURSOR = "/opt/X11/lib/libXcursor.1.dylib";
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XINERAMA = "/opt/X11/lib/libXinerama.1.dylib";
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XINPUT2 = "/opt/X11/lib/libXi.6.dylib";
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XRANDR = "/opt/X11/lib/libXrandr.2.dylib";
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XSS = "/opt/X11/lib/libXss.1.dylib";
-pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XVIDMODE = "/opt/X11/lib/libXxf86vm.1.dylib";
-pub const SDL_VIDEO_DRIVER_X11_XCURSOR = 1;
-pub const SDL_VIDEO_DRIVER_X11_XDBE = 1;
-pub const SDL_VIDEO_DRIVER_X11_XINERAMA = 1;
-pub const SDL_VIDEO_DRIVER_X11_XINPUT2 = 1;
-pub const SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH = 1;
-pub const SDL_VIDEO_DRIVER_X11_XRANDR = 1;
-pub const SDL_VIDEO_DRIVER_X11_XSCRNSAVER = 1;
-pub const SDL_VIDEO_DRIVER_X11_XSHAPE = 1;
-pub const SDL_VIDEO_DRIVER_X11_XVIDMODE = 1;
-pub const SDL_VIDEO_DRIVER_X11_SUPPORTS_GENERIC_EVENTS = 1;
-pub const SDL_VIDEO_DRIVER_X11_CONST_PARAM_XEXTADDDISPLAY = 1;
-pub const SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM = 1;
-pub const SDL_VIDEO_RENDER_OGL = 1;
-pub const SDL_VIDEO_RENDER_OGL_ES2 = 1;
-pub const SDL_VIDEO_RENDER_METAL = 1;
-pub const SDL_VIDEO_OPENGL = 1;
-pub const SDL_VIDEO_OPENGL_ES2 = 1;
-pub const SDL_VIDEO_OPENGL_CGL = 1;
-pub const SDL_VIDEO_OPENGL_EGL = 1;
-pub const SDL_VIDEO_OPENGL_GLX = 1;
-pub const SDL_VIDEO_VULKAN = 1;
-pub const SDL_VIDEO_METAL = 1;
-pub const SDL_POWER_MACOSX = 1;
-pub const SDL_FILESYSTEM_COCOA = 1;
-pub const SDL_ASSEMBLY_ROUTINES = 1;
-
-pub fn SDL_arraysize(array: anytype) @TypeOf(@import("std").meta.sizeof(array) / @import("std").meta.sizeof(array[0])) {
-    return @import("std").meta.sizeof(array) / @import("std").meta.sizeof(array[0]);
-}
-pub fn SDL_TABLESIZE(table: anytype) @TypeOf(SDL_arraysize(table)) {
+pub const SDL_arraysize = @compileError("unable to translate C expr: expected ')'"); // /usr/include/SDL2/SDL_stdinc.h:121:9
+pub const SDL_STRINGIFY_ARG = @compileError("unable to translate C expr: unexpected token .Hash"); // /usr/include/SDL2/SDL_stdinc.h:129:9
+pub const SDL_IN_BYTECAP = @compileError("unable to translate C expr: unexpected token .Eof"); // /usr/include/SDL2/SDL_stdinc.h:328:9
+pub const SDL_INOUT_Z_CAP = @compileError("unable to translate C expr: unexpected token .Eof"); // /usr/include/SDL2/SDL_stdinc.h:329:9
+pub const SDL_OUT_Z_CAP = @compileError("unable to translate C expr: unexpected token .Eof"); // /usr/include/SDL2/SDL_stdinc.h:330:9
+pub const SDL_OUT_CAP = @compileError("unable to translate C expr: unexpected token .Eof"); // /usr/include/SDL2/SDL_stdinc.h:331:9
+pub const SDL_OUT_BYTECAP = @compileError("unable to translate C expr: unexpected token .Eof"); // /usr/include/SDL2/SDL_stdinc.h:332:9
+pub const SDL_OUT_Z_BYTECAP = @compileError("unable to translate C expr: unexpected token .Eof"); // /usr/include/SDL2/SDL_stdinc.h:333:9
+pub const SDL_PRINTF_VARARG_FUNC = @compileError("unable to translate macro: undefined identifier `__attribute__`"); // /usr/include/SDL2/SDL_stdinc.h:338:9
+pub const SDL_SCANF_VARARG_FUNC = @compileError("unable to translate macro: undefined identifier `__attribute__`"); // /usr/include/SDL2/SDL_stdinc.h:339:9
+pub const SDL_COMPILE_TIME_ASSERT = @compileError("unable to translate macro: undefined identifier `SDL_compile_time_assert_`"); // /usr/include/SDL2/SDL_stdinc.h:346:9
+pub const SDL_stack_alloc = @compileError("unable to translate C expr: unexpected token .RParen"); // /usr/include/SDL2/SDL_stdinc.h:388:9
+pub const SDL_stack_free = @compileError("unable to translate C expr: unexpected token .Eof"); // /usr/include/SDL2/SDL_stdinc.h:389:9
+pub const SDL_zero = @compileError("unable to translate C expr: unexpected token .LParen"); // /usr/include/SDL2/SDL_stdinc.h:457:9
+pub const SDL_zerop = @compileError("unable to translate C expr: unexpected token .Asterisk"); // /usr/include/SDL2/SDL_stdinc.h:458:9
+pub const SDL_zeroa = @compileError("unable to translate C expr: unexpected token .LParen"); // /usr/include/SDL2/SDL_stdinc.h:459:9
+pub const SDL_TriggerBreakpoint = @compileError("unable to translate macro: undefined identifier `__asm__`"); // /usr/include/SDL2/SDL_assert.h:55:13
+pub const SDL_FUNCTION = @compileError("unable to translate macro: undefined identifier `__func__`"); // /usr/include/SDL2/SDL_assert.h:71:12
+pub const SDL_FILE = @compileError("unable to translate macro: undefined identifier `__FILE__`"); // /usr/include/SDL2/SDL_assert.h:77:9
+pub const SDL_LINE = @compileError("unable to translate macro: undefined identifier `__LINE__`"); // /usr/include/SDL2/SDL_assert.h:78:9
+pub const SDL_disabled_assert = @compileError("unable to translate C expr: unexpected token .Keyword_do"); // /usr/include/SDL2/SDL_assert.h:103:9
+pub const SDL_enabled_assert = @compileError("unable to translate macro: undefined identifier `sdl_assert_data`"); // /usr/include/SDL2/SDL_assert.h:149:9
+pub const SDL_CompilerBarrier = @compileError("unable to translate macro: undefined identifier `__asm__`"); // /usr/include/SDL2/SDL_atomic.h:149:9
+pub const SDL_AUDIOCVT_PACKED = @compileError("unable to translate macro: undefined identifier `__attribute__`"); // /usr/include/SDL2/SDL_audio.h:226:9
+pub const SDL_AUDIO_DRIVER_ALSA = @as(c_int, 1);
+pub const SDL_AUDIO_DRIVER_ALSA_DYNAMIC = "libasound.so.2";
+pub const SDL_AUDIO_DRIVER_DISK = @as(c_int, 1);
+pub const SDL_AUDIO_DRIVER_DUMMY = @as(c_int, 1);
+pub const SDL_AUDIO_DRIVER_JACK = @as(c_int, 1);
+pub const SDL_AUDIO_DRIVER_JACK_DYNAMIC = "libjack.so.0";
+pub const SDL_AUDIO_DRIVER_OSS = @as(c_int, 1);
+pub const SDL_AUDIO_DRIVER_PIPEWIRE = @as(c_int, 1);
+pub const SDL_AUDIO_DRIVER_PIPEWIRE_DYNAMIC = "libpipewire-0.3.so.0";
+pub const SDL_AUDIO_DRIVER_PULSEAUDIO = @as(c_int, 1);
+pub const SDL_AUDIO_DRIVER_PULSEAUDIO_DYNAMIC = "libpulse-simple.so.0";
+pub const SDL_INPUT_LINUXEV = @as(c_int, 1);
+pub const SDL_INPUT_LINUXKD = @as(c_int, 1);
+pub const SDL_JOYSTICK_LINUX = @as(c_int, 1);
+pub const SDL_JOYSTICK_HIDAPI = @as(c_int, 1);
+pub const SDL_JOYSTICK_VIRTUAL = @as(c_int, 1);
+pub const SDL_HAPTIC_LINUX = @as(c_int, 1);
+pub const SDL_LIBUSB_DYNAMIC = "";
+pub const SDL_SENSOR_DUMMY = @as(c_int, 1);
+pub const SDL_LOADSO_DLOPEN = @as(c_int, 1);
+pub const SDL_THREAD_PTHREAD = @as(c_int, 1);
+pub const SDL_THREAD_PTHREAD_RECURSIVE_MUTEX = @as(c_int, 1);
+pub const SDL_TIMER_UNIX = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_DUMMY = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_WAYLAND = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_KMSDRM = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_KMSDRM_DYNAMIC = "libdrm.so.2";
+pub const SDL_VIDEO_DRIVER_KMSDRM_DYNAMIC_GBM = "libgbm.so.1";
+pub const SDL_VIDEO_DRIVER_WAYLAND_QT_TOUCH = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC = "libwayland-client.so.0";
+pub const SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_EGL = "libwayland-egl.so.1";
+pub const SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_CURSOR = "libwayland-cursor.so.0";
+pub const SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_XKBCOMMON = "libxkbcommon.so.0";
+pub const SDL_VIDEO_DRIVER_WAYLAND_DYNAMIC_LIBDECOR = "libdecor-0.so.0";
+pub const SDL_VIDEO_DRIVER_X11 = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC = "libX11.so.6";
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XEXT = "libXext.so.6";
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XCURSOR = "libXcursor.so.1";
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XINERAMA = "libXinerama.so.1";
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XINPUT2 = "libXi.so.6";
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XRANDR = "libXrandr.so.2";
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XSS = "libXss.so.1";
+pub const SDL_VIDEO_DRIVER_X11_DYNAMIC_XVIDMODE = "libXxf86vm.so.1";
+pub const SDL_VIDEO_DRIVER_X11_XCURSOR = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_XINERAMA = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_XINPUT2 = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_XINPUT2_SUPPORTS_MULTITOUCH = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_XRANDR = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_XSCRNSAVER = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_XSHAPE = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_XVIDMODE = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_SUPPORTS_GENERIC_EVENTS = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_CONST_PARAM_XEXTADDDISPLAY = @as(c_int, 1);
+pub const SDL_VIDEO_DRIVER_X11_HAS_XKBKEYCODETOKEYSYM = @as(c_int, 1);
+pub const SDL_VIDEO_RENDER_OGL = @as(c_int, 1);
+pub const SDL_VIDEO_RENDER_OGL_ES2 = @as(c_int, 1);
+pub const SDL_VIDEO_OPENGL = @as(c_int, 1);
+pub const SDL_VIDEO_OPENGL_ES2 = @as(c_int, 1);
+pub const SDL_VIDEO_OPENGL_GLX = @as(c_int, 1);
+pub const SDL_VIDEO_OPENGL_EGL = @as(c_int, 1);
+pub const SDL_VIDEO_VULKAN = @as(c_int, 1);
+pub const SDL_POWER_LINUX = @as(c_int, 1);
+pub const SDL_FILESYSTEM_UNIX = @as(c_int, 1);
+pub const SDL_ASSEMBLY_ROUTINES = @as(c_int, 1);
+pub const SDL_LIBSAMPLERATE_DYNAMIC = "libsamplerate.so.0";
+pub inline fn SDL_TABLESIZE(table: anytype) @TypeOf(SDL_arraysize(table)) {
     return SDL_arraysize(table);
 }
-pub fn SDL_reinterpret_cast(type_1: anytype, expression: anytype) @TypeOf((@import("std").meta.cast(type_1, expression))) {
-    return (@import("std").meta.cast(type_1, expression));
+pub inline fn SDL_reinterpret_cast(@"type": anytype, expression: anytype) @TypeOf(@"type"(expression)) {
+    return @"type"(expression);
 }
-pub fn SDL_static_cast(type_1: anytype, expression: anytype) @TypeOf((@import("std").meta.cast(type_1, expression))) {
-    return (@import("std").meta.cast(type_1, expression));
+pub inline fn SDL_static_cast(@"type": anytype, expression: anytype) @TypeOf(@"type"(expression)) {
+    return @"type"(expression);
 }
-pub fn SDL_const_cast(type_1: anytype, expression: anytype) @TypeOf((@import("std").meta.cast(type_1, expression))) {
-    return (@import("std").meta.cast(type_1, expression));
+pub inline fn SDL_const_cast(@"type": anytype, expression: anytype) @TypeOf(@"type"(expression)) {
+    return @"type"(expression);
 }
-pub fn SDL_FOURCC(A: anytype, B: anytype, C: anytype, D: anytype) @TypeOf((((SDL_static_cast(Uint32, SDL_static_cast(Uint8, A)) << 0) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, B)) << 8)) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, C)) << 16)) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, D)) << 24)) {
-    return (((SDL_static_cast(Uint32, SDL_static_cast(Uint8, A)) << 0) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, B)) << 8)) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, C)) << 16)) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, D)) << 24);
+pub inline fn SDL_FOURCC(A: anytype, B: anytype, C: anytype, D: anytype) @TypeOf((((SDL_static_cast(Uint32, SDL_static_cast(Uint8, A)) << @as(c_int, 0)) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, B)) << @as(c_int, 8))) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, C)) << @as(c_int, 16))) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, D)) << @as(c_int, 24))) {
+    return (((SDL_static_cast(Uint32, SDL_static_cast(Uint8, A)) << @as(c_int, 0)) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, B)) << @as(c_int, 8))) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, C)) << @as(c_int, 16))) | (SDL_static_cast(Uint32, SDL_static_cast(Uint8, D)) << @as(c_int, 24));
 }
-pub const SDL_MAX_SINT8 = (@import("std").meta.cast(Sint8, 0x7F));
-pub const SDL_MIN_SINT8 = (@import("std").meta.cast(Sint8, ~0x7F));
-pub const SDL_MAX_UINT8 = (@import("std").meta.cast(Uint8, 0xFF));
-pub const SDL_MIN_UINT8 = (@import("std").meta.cast(Uint8, 0x00));
-pub const SDL_MAX_SINT16 = (@import("std").meta.cast(Sint16, 0x7FFF));
-pub const SDL_MIN_SINT16 = (@import("std").meta.cast(Sint16, ~0x7FFF));
-pub const SDL_MAX_UINT16 = (@import("std").meta.cast(Uint16, 0xFFFF));
-pub const SDL_MIN_UINT16 = (@import("std").meta.cast(Uint16, 0x0000));
-pub const SDL_MAX_SINT32 = (@import("std").meta.cast(Sint32, 0x7FFFFFFF));
-pub const SDL_MIN_SINT32 = (@import("std").meta.cast(Sint32, ~0x7FFFFFFF));
-pub const SDL_MAX_UINT32 = (@import("std").meta.cast(Uint32, @as(c_uint, 0xFFFFFFFF)));
-pub const SDL_MIN_UINT32 = (@import("std").meta.cast(Uint32, 0x00000000));
-pub const SDL_MAX_SINT64 = (@import("std").meta.cast(Sint64, @as(c_longlong, 0x7FFFFFFFFFFFFFFF)));
-pub const SDL_MIN_SINT64 = (@import("std").meta.cast(Sint64, ~@as(c_longlong, 0x7FFFFFFFFFFFFFFF)));
-pub const SDL_MAX_UINT64 = (@import("std").meta.cast(Uint64, @as(c_ulonglong, 0xFFFFFFFFFFFFFFFF)));
-pub const SDL_MIN_UINT64 = (@import("std").meta.cast(Uint64, @as(c_ulonglong, 0x0000000000000000)));
-pub const SDL_PRIs64 = "lld";
+pub const SDL_MAX_SINT8 = @import("std").zig.c_translation.cast(Sint8, @as(c_int, 0x7F));
+pub const SDL_MIN_SINT8 = @import("std").zig.c_translation.cast(Sint8, ~@as(c_int, 0x7F));
+pub const SDL_MAX_UINT8 = @import("std").zig.c_translation.cast(Uint8, @as(c_int, 0xFF));
+pub const SDL_MIN_UINT8 = @import("std").zig.c_translation.cast(Uint8, @as(c_int, 0x00));
+pub const SDL_MAX_SINT16 = @import("std").zig.c_translation.cast(Sint16, @as(c_int, 0x7FFF));
+pub const SDL_MIN_SINT16 = @import("std").zig.c_translation.cast(Sint16, ~@as(c_int, 0x7FFF));
+pub const SDL_MAX_UINT16 = @import("std").zig.c_translation.cast(Uint16, @import("std").zig.c_translation.promoteIntLiteral(c_int, 0xFFFF, .hexadecimal));
+pub const SDL_MIN_UINT16 = @import("std").zig.c_translation.cast(Uint16, @as(c_int, 0x0000));
+pub const SDL_MAX_SINT32 = @import("std").zig.c_translation.cast(Sint32, @import("std").zig.c_translation.promoteIntLiteral(c_int, 0x7FFFFFFF, .hexadecimal));
+pub const SDL_MIN_SINT32 = @import("std").zig.c_translation.cast(Sint32, ~@import("std").zig.c_translation.promoteIntLiteral(c_int, 0x7FFFFFFF, .hexadecimal));
+pub const SDL_MAX_UINT32 = @import("std").zig.c_translation.cast(Uint32, @import("std").zig.c_translation.promoteIntLiteral(c_uint, 0xFFFFFFFF, .hexadecimal));
+pub const SDL_MIN_UINT32 = @import("std").zig.c_translation.cast(Uint32, @as(c_int, 0x00000000));
+pub const SDL_MAX_SINT64 = @import("std").zig.c_translation.cast(Sint64, @as(c_longlong, 0x7FFFFFFFFFFFFFFF));
+pub const SDL_MIN_SINT64 = @import("std").zig.c_translation.cast(Sint64, ~@as(c_longlong, 0x7FFFFFFFFFFFFFFF));
+pub const SDL_MAX_UINT64 = @import("std").zig.c_translation.cast(Uint64, @as(c_ulonglong, 0xFFFFFFFFFFFFFFFF));
+pub const SDL_MIN_UINT64 = @import("std").zig.c_translation.cast(Uint64, @as(c_ulonglong, 0x0000000000000000));
+pub const SDL_PRIs64 = "ld";
 pub const SDL_PRIu64 = PRIu64;
 pub const SDL_PRIx64 = PRIx64;
 pub const SDL_PRIX64 = PRIX64;
-pub fn SDL_PRINTF_VARARG_FUNC(fmtargnumber: anytype) @TypeOf(__attribute__(format(__printf__, fmtargnumber, fmtargnumber + 1))) {
-    return __attribute__(format(__printf__, fmtargnumber, fmtargnumber + 1));
-}
-pub fn SDL_SCANF_VARARG_FUNC(fmtargnumber: anytype) @TypeOf(__attribute__(format(__scanf__, fmtargnumber, fmtargnumber + 1))) {
-    return __attribute__(format(__scanf__, fmtargnumber, fmtargnumber + 1));
-}
-pub fn SDL_stack_alloc(type_1: anytype, count: anytype) @TypeOf((@import("std").meta.cast([*c]type_1, alloca(@import("std").meta.sizeof(type_1) * count)))) {
-    return (@import("std").meta.cast([*c]type_1, alloca(@import("std").meta.sizeof(type_1) * count)));
-}
-pub fn SDL_min(x: anytype, y: anytype) @TypeOf(if (x < y) x else y) {
+pub const SDL_PRIs32 = PRId32;
+pub const SDL_PRIu32 = PRIu32;
+pub const SDL_PRIx32 = PRIx32;
+pub const SDL_PRIX32 = PRIX32;
+pub const SDL_PRINTF_FORMAT_STRING = "";
+pub const SDL_SCANF_FORMAT_STRING = "";
+pub inline fn SDL_min(x: anytype, y: anytype) @TypeOf(if (x < y) x else y) {
     return if (x < y) x else y;
 }
-pub fn SDL_max(x: anytype, y: anytype) @TypeOf(if (x > y) x else y) {
+pub inline fn SDL_max(x: anytype, y: anytype) @TypeOf(if (x > y) x else y) {
     return if (x > y) x else y;
 }
-pub fn SDL_zero(x: anytype) @TypeOf(SDL_memset(&x, 0, @import("std").meta.sizeof(x))) {
-    return SDL_memset(&x, 0, @import("std").meta.sizeof(x));
+pub const SDL_ICONV_ERROR = @import("std").zig.c_translation.cast(usize, -@as(c_int, 1));
+pub const SDL_ICONV_E2BIG = @import("std").zig.c_translation.cast(usize, -@as(c_int, 2));
+pub const SDL_ICONV_EILSEQ = @import("std").zig.c_translation.cast(usize, -@as(c_int, 3));
+pub const SDL_ICONV_EINVAL = @import("std").zig.c_translation.cast(usize, -@as(c_int, 4));
+pub inline fn SDL_iconv_utf8_locale(S: anytype) @TypeOf(SDL_iconv_string("", "UTF-8", S, SDL_strlen(S) + @as(c_int, 1))) {
+    return SDL_iconv_string("", "UTF-8", S, SDL_strlen(S) + @as(c_int, 1));
 }
-pub fn SDL_zerop(x: anytype) @TypeOf(SDL_memset(x, 0, @import("std").meta.sizeof(x.*))) {
-    return SDL_memset(x, 0, @import("std").meta.sizeof(x.*));
+pub inline fn SDL_iconv_utf8_ucs2(S: anytype) [*c]Uint16 {
+    return @import("std").zig.c_translation.cast([*c]Uint16, SDL_iconv_string("UCS-2-INTERNAL", "UTF-8", S, SDL_strlen(S) + @as(c_int, 1)));
 }
-pub fn SDL_zeroa(x: anytype) @TypeOf(SDL_memset(x, 0, @import("std").meta.sizeof(x))) {
-    return SDL_memset(x, 0, @import("std").meta.sizeof(x));
+pub inline fn SDL_iconv_utf8_ucs4(S: anytype) [*c]Uint32 {
+    return @import("std").zig.c_translation.cast([*c]Uint32, SDL_iconv_string("UCS-4-INTERNAL", "UTF-8", S, SDL_strlen(S) + @as(c_int, 1)));
 }
-pub const SDL_ICONV_ERROR = usize - 1;
-pub const SDL_ICONV_E2BIG = usize - 2;
-pub const SDL_ICONV_EILSEQ = usize - 3;
-pub const SDL_ICONV_EINVAL = usize - 4;
-pub fn SDL_iconv_utf8_locale(S: anytype) @TypeOf(SDL_iconv_string("", "UTF-8", S, SDL_strlen(S) + 1)) {
-    return SDL_iconv_string("", "UTF-8", S, SDL_strlen(S) + 1);
-}
-pub fn SDL_iconv_utf8_ucs2(S: anytype) @TypeOf((@import("std").meta.cast([*c]Uint16, SDL_iconv_string("UCS-2-INTERNAL", "UTF-8", S, SDL_strlen(S) + 1)))) {
-    return (@import("std").meta.cast([*c]Uint16, SDL_iconv_string("UCS-2-INTERNAL", "UTF-8", S, SDL_strlen(S) + 1)));
-}
-pub fn SDL_iconv_utf8_ucs4(S: anytype) @TypeOf((@import("std").meta.cast([*c]Uint32, SDL_iconv_string("UCS-4-INTERNAL", "UTF-8", S, SDL_strlen(S) + 1)))) {
-    return (@import("std").meta.cast([*c]Uint32, SDL_iconv_string("UCS-4-INTERNAL", "UTF-8", S, SDL_strlen(S) + 1)));
-}
-pub const SDL_ASSERT_LEVEL = 2;
-pub const SDL_FUNCTION = __func__;
-pub const SDL_FILE = __FILE__;
-pub const SDL_LINE = __LINE__;
-pub const SDL_NULL_WHILE_LOOP_CONDITION = 0;
-pub fn SDL_assert(condition: anytype) @TypeOf(SDL_enabled_assert(condition)) {
+pub const SDLMAIN_DECLSPEC = "";
+pub const SDL_assert_h_ = "";
+pub const SDL_ASSERT_LEVEL = @as(c_int, 2);
+pub const SDL_NULL_WHILE_LOOP_CONDITION = @as(c_int, 0);
+pub inline fn SDL_assert(condition: anytype) @TypeOf(SDL_enabled_assert(condition)) {
     return SDL_enabled_assert(condition);
 }
-pub fn SDL_assert_release(condition: anytype) @TypeOf(SDL_enabled_assert(condition)) {
+pub inline fn SDL_assert_release(condition: anytype) @TypeOf(SDL_enabled_assert(condition)) {
     return SDL_enabled_assert(condition);
 }
-pub fn SDL_assert_paranoid(condition: anytype) @TypeOf(SDL_disabled_assert(condition)) {
+pub inline fn SDL_assert_paranoid(condition: anytype) @TypeOf(SDL_disabled_assert(condition)) {
     return SDL_disabled_assert(condition);
 }
-pub fn SDL_assert_always(condition: anytype) @TypeOf(SDL_enabled_assert(condition)) {
+pub inline fn SDL_assert_always(condition: anytype) @TypeOf(SDL_enabled_assert(condition)) {
     return SDL_enabled_assert(condition);
 }
 pub const SDL_assert_state = SDL_AssertState;
 pub const SDL_assert_data = SDL_AssertData;
-pub fn SDL_AtomicIncRef(a: anytype) @TypeOf(SDL_AtomicAdd(a, 1)) {
-    return SDL_AtomicAdd(a, 1);
+pub const SDL_atomic_h_ = "";
+pub inline fn SDL_MemoryBarrierRelease() @TypeOf(SDL_CompilerBarrier()) {
+    return SDL_CompilerBarrier();
 }
-pub fn SDL_AtomicDecRef(a: anytype) @TypeOf(SDL_AtomicAdd(a, -1) == 1) {
-    return SDL_AtomicAdd(a, -1) == 1;
+pub inline fn SDL_MemoryBarrierAcquire() @TypeOf(SDL_CompilerBarrier()) {
+    return SDL_CompilerBarrier();
 }
-pub fn SDL_InvalidParamError(param: anytype) @TypeOf(SDL_SetError("Parameter '%s' is invalid", param)) {
+pub inline fn SDL_AtomicIncRef(a: anytype) @TypeOf(SDL_AtomicAdd(a, @as(c_int, 1))) {
+    return SDL_AtomicAdd(a, @as(c_int, 1));
+}
+pub inline fn SDL_AtomicDecRef(a: anytype) @TypeOf(SDL_AtomicAdd(a, -@as(c_int, 1)) == @as(c_int, 1)) {
+    return SDL_AtomicAdd(a, -@as(c_int, 1)) == @as(c_int, 1);
+}
+pub const SDL_audio_h_ = "";
+pub const SDL_error_h_ = "";
+pub inline fn SDL_OutOfMemory() @TypeOf(SDL_Error(SDL_ENOMEM)) {
+    return SDL_Error(SDL_ENOMEM);
+}
+pub inline fn SDL_Unsupported() @TypeOf(SDL_Error(SDL_UNSUPPORTED)) {
+    return SDL_Error(SDL_UNSUPPORTED);
+}
+pub inline fn SDL_InvalidParamError(param: anytype) @TypeOf(SDL_SetError("Parameter '%s' is invalid", param)) {
     return SDL_SetError("Parameter '%s' is invalid", param);
 }
-pub const SDL_LIL_ENDIAN = 1234;
-pub const SDL_BIG_ENDIAN = 4321;
-pub const SDL_BYTEORDER = SDL_LIL_ENDIAN;
-pub fn SDL_SwapLE16(X: anytype) @TypeOf(X) {
+pub const SDL_endian_h_ = "";
+pub const SDL_LIL_ENDIAN = @as(c_int, 1234);
+pub const SDL_BIG_ENDIAN = @as(c_int, 4321);
+pub const SDL_BYTEORDER = __BYTE_ORDER;
+pub inline fn SDL_Swap16(x: anytype) @TypeOf(__builtin_bswap16(x)) {
+    return __builtin_bswap16(x);
+}
+pub inline fn SDL_Swap32(x: anytype) @TypeOf(__builtin_bswap32(x)) {
+    return __builtin_bswap32(x);
+}
+pub inline fn SDL_Swap64(x: anytype) @TypeOf(__builtin_bswap64(x)) {
+    return __builtin_bswap64(x);
+}
+pub inline fn SDL_SwapLE16(X: anytype) @TypeOf(X) {
     return X;
 }
-pub fn SDL_SwapLE32(X: anytype) @TypeOf(X) {
+pub inline fn SDL_SwapLE32(X: anytype) @TypeOf(X) {
     return X;
 }
-pub fn SDL_SwapLE64(X: anytype) @TypeOf(X) {
+pub inline fn SDL_SwapLE64(X: anytype) @TypeOf(X) {
     return X;
 }
-pub fn SDL_SwapFloatLE(X: anytype) @TypeOf(X) {
+pub inline fn SDL_SwapFloatLE(X: anytype) @TypeOf(X) {
     return X;
 }
-pub fn SDL_SwapBE16(X: anytype) @TypeOf(SDL_Swap16(X)) {
+pub inline fn SDL_SwapBE16(X: anytype) @TypeOf(SDL_Swap16(X)) {
     return SDL_Swap16(X);
 }
-pub fn SDL_SwapBE32(X: anytype) @TypeOf(SDL_Swap32(X)) {
+pub inline fn SDL_SwapBE32(X: anytype) @TypeOf(SDL_Swap32(X)) {
     return SDL_Swap32(X);
 }
-pub fn SDL_SwapBE64(X: anytype) @TypeOf(SDL_Swap64(X)) {
+pub inline fn SDL_SwapBE64(X: anytype) @TypeOf(SDL_Swap64(X)) {
     return SDL_Swap64(X);
 }
-pub fn SDL_SwapFloatBE(X: anytype) @TypeOf(SDL_SwapFloat(X)) {
+pub inline fn SDL_SwapFloatBE(X: anytype) @TypeOf(SDL_SwapFloat(X)) {
     return SDL_SwapFloat(X);
 }
-pub const SDL_MUTEX_TIMEDOUT = 1;
-pub const SDL_MUTEX_MAXWAIT = ~(@import("std").meta.cast(Uint32, 0));
-pub fn SDL_mutexP(m: anytype) @TypeOf(SDL_LockMutex(m)) {
+pub const SDL_mutex_h_ = "";
+pub const SDL_MUTEX_TIMEDOUT = @as(c_int, 1);
+pub const SDL_MUTEX_MAXWAIT = ~@import("std").zig.c_translation.cast(Uint32, @as(c_int, 0));
+pub inline fn SDL_mutexP(m: anytype) @TypeOf(SDL_LockMutex(m)) {
     return SDL_LockMutex(m);
 }
-pub fn SDL_mutexV(m: anytype) @TypeOf(SDL_UnlockMutex(m)) {
+pub inline fn SDL_mutexV(m: anytype) @TypeOf(SDL_UnlockMutex(m)) {
     return SDL_UnlockMutex(m);
 }
+pub const SDL_thread_h_ = "";
+pub const SDL_rwops_h_ = "";
 pub const SDL_RWOPS_UNKNOWN = @as(c_uint, 0);
 pub const SDL_RWOPS_WINFILE = @as(c_uint, 1);
 pub const SDL_RWOPS_STDFILE = @as(c_uint, 2);
 pub const SDL_RWOPS_JNIFILE = @as(c_uint, 3);
 pub const SDL_RWOPS_MEMORY = @as(c_uint, 4);
 pub const SDL_RWOPS_MEMORY_RO = @as(c_uint, 5);
-pub const RW_SEEK_SET = 0;
-pub const RW_SEEK_CUR = 1;
-pub const RW_SEEK_END = 2;
-pub const SDL_AUDIO_MASK_BITSIZE = 0xFF;
-pub const SDL_AUDIO_MASK_DATATYPE = 1 << 8;
-pub const SDL_AUDIO_MASK_ENDIAN = 1 << 12;
-pub const SDL_AUDIO_MASK_SIGNED = 1 << 15;
-pub fn SDL_AUDIO_BITSIZE(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_BITSIZE) {
+pub const RW_SEEK_SET = @as(c_int, 0);
+pub const RW_SEEK_CUR = @as(c_int, 1);
+pub const RW_SEEK_END = @as(c_int, 2);
+pub const SDL_AUDIO_MASK_BITSIZE = @as(c_int, 0xFF);
+pub const SDL_AUDIO_MASK_DATATYPE = @as(c_int, 1) << @as(c_int, 8);
+pub const SDL_AUDIO_MASK_ENDIAN = @as(c_int, 1) << @as(c_int, 12);
+pub const SDL_AUDIO_MASK_SIGNED = @as(c_int, 1) << @as(c_int, 15);
+pub inline fn SDL_AUDIO_BITSIZE(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_BITSIZE) {
     return x & SDL_AUDIO_MASK_BITSIZE;
 }
-pub fn SDL_AUDIO_ISFLOAT(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_DATATYPE) {
+pub inline fn SDL_AUDIO_ISFLOAT(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_DATATYPE) {
     return x & SDL_AUDIO_MASK_DATATYPE;
 }
-pub fn SDL_AUDIO_ISBIGENDIAN(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_ENDIAN) {
+pub inline fn SDL_AUDIO_ISBIGENDIAN(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_ENDIAN) {
     return x & SDL_AUDIO_MASK_ENDIAN;
 }
-pub fn SDL_AUDIO_ISSIGNED(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_SIGNED) {
+pub inline fn SDL_AUDIO_ISSIGNED(x: anytype) @TypeOf(x & SDL_AUDIO_MASK_SIGNED) {
     return x & SDL_AUDIO_MASK_SIGNED;
 }
-pub fn SDL_AUDIO_ISINT(x: anytype) @TypeOf(!(SDL_AUDIO_ISFLOAT(x) != 0)) {
+pub inline fn SDL_AUDIO_ISINT(x: anytype) @TypeOf(!(SDL_AUDIO_ISFLOAT(x) != 0)) {
     return !(SDL_AUDIO_ISFLOAT(x) != 0);
 }
-pub fn SDL_AUDIO_ISLITTLEENDIAN(x: anytype) @TypeOf(!(SDL_AUDIO_ISBIGENDIAN(x) != 0)) {
+pub inline fn SDL_AUDIO_ISLITTLEENDIAN(x: anytype) @TypeOf(!(SDL_AUDIO_ISBIGENDIAN(x) != 0)) {
     return !(SDL_AUDIO_ISBIGENDIAN(x) != 0);
 }
-pub fn SDL_AUDIO_ISUNSIGNED(x: anytype) @TypeOf(!(SDL_AUDIO_ISSIGNED(x) != 0)) {
+pub inline fn SDL_AUDIO_ISUNSIGNED(x: anytype) @TypeOf(!(SDL_AUDIO_ISSIGNED(x) != 0)) {
     return !(SDL_AUDIO_ISSIGNED(x) != 0);
 }
-pub const AUDIO_U8 = 0x0008;
-pub const AUDIO_S8 = 0x8008;
-pub const AUDIO_U16LSB = 0x0010;
-pub const AUDIO_S16LSB = 0x8010;
-pub const AUDIO_U16MSB = 0x1010;
-pub const AUDIO_S16MSB = 0x9010;
-pub const AUDIO_U16 = AUDIO_U16LSB;
-pub const AUDIO_S16 = AUDIO_S16LSB;
-pub const AUDIO_S32LSB = 0x8020;
-pub const AUDIO_S32MSB = 0x9020;
-pub const AUDIO_S32 = AUDIO_S32LSB;
-pub const AUDIO_F32LSB = 0x8120;
-pub const AUDIO_F32MSB = 0x9120;
-pub const AUDIO_F32 = AUDIO_F32LSB;
-pub const AUDIO_U16SYS = AUDIO_U16LSB;
-pub const AUDIO_S16SYS = AUDIO_S16LSB;
-pub const AUDIO_S32SYS = AUDIO_S32LSB;
-pub const AUDIO_F32SYS = AUDIO_F32LSB;
-pub const SDL_AUDIO_ALLOW_FREQUENCY_CHANGE = 0x00000001;
-pub const SDL_AUDIO_ALLOW_FORMAT_CHANGE = 0x00000002;
-pub const SDL_AUDIO_ALLOW_CHANNELS_CHANGE = 0x00000004;
-pub const SDL_AUDIO_ALLOW_SAMPLES_CHANGE = 0x00000008;
+pub const SDL_AUDIO_ALLOW_FREQUENCY_CHANGE = @as(c_int, 0x00000001);
+pub const SDL_AUDIO_ALLOW_FORMAT_CHANGE = @as(c_int, 0x00000002);
+pub const SDL_AUDIO_ALLOW_CHANNELS_CHANGE = @as(c_int, 0x00000004);
+pub const SDL_AUDIO_ALLOW_SAMPLES_CHANGE = @as(c_int, 0x00000008);
 pub const SDL_AUDIO_ALLOW_ANY_CHANGE = ((SDL_AUDIO_ALLOW_FREQUENCY_CHANGE | SDL_AUDIO_ALLOW_FORMAT_CHANGE) | SDL_AUDIO_ALLOW_CHANNELS_CHANGE) | SDL_AUDIO_ALLOW_SAMPLES_CHANGE;
-pub const SDL_AUDIOCVT_MAX_FILTERS = 9;
-pub const SDL_AUDIOCVT_PACKED = __attribute__(@"packed");
-pub fn SDL_LoadWAV(file: anytype, spec: anytype, audio_buf: anytype, audio_len: anytype) @TypeOf(SDL_LoadWAV_RW(SDL_RWFromFile(file, "rb"), 1, spec, audio_buf, audio_len)) {
-    return SDL_LoadWAV_RW(SDL_RWFromFile(file, "rb"), 1, spec, audio_buf, audio_len);
+pub const SDL_AUDIOCVT_MAX_FILTERS = @as(c_int, 9);
+pub inline fn SDL_LoadWAV(file: anytype, spec: anytype, audio_buf: anytype, audio_len: anytype) @TypeOf(SDL_LoadWAV_RW(SDL_RWFromFile(file, "rb"), @as(c_int, 1), spec, audio_buf, audio_len)) {
+    return SDL_LoadWAV_RW(SDL_RWFromFile(file, "rb"), @as(c_int, 1), spec, audio_buf, audio_len);
 }
-pub const SDL_MIX_MAXVOLUME = 128;
-pub const SDL_CACHELINE_SIZE = 128;
-pub const SDL_ALPHA_OPAQUE = 255;
-pub const SDL_ALPHA_TRANSPARENT = 0;
-pub fn SDL_DEFINE_PIXELFOURCC(A: anytype, B: anytype, C: anytype, D: anytype) @TypeOf(SDL_FOURCC(A, B, C, D)) {
+pub const SDL_MIX_MAXVOLUME = @as(c_int, 128);
+pub const SDL_clipboard_h_ = "";
+pub const SDL_cpuinfo_h_ = "";
+pub const SDL_CACHELINE_SIZE = @as(c_int, 128);
+pub const SDL_events_h_ = "";
+pub const SDL_video_h_ = "";
+pub const SDL_pixels_h_ = "";
+pub const SDL_ALPHA_OPAQUE = @as(c_int, 255);
+pub const SDL_ALPHA_TRANSPARENT = @as(c_int, 0);
+pub inline fn SDL_DEFINE_PIXELFOURCC(A: anytype, B: anytype, C: anytype, D: anytype) @TypeOf(SDL_FOURCC(A, B, C, D)) {
     return SDL_FOURCC(A, B, C, D);
 }
-pub fn SDL_DEFINE_PIXELFORMAT(type_1: anytype, order: anytype, layout: anytype, bits: anytype, bytes: anytype) @TypeOf((((((1 << 28) | (type_1 << 24)) | (order << 20)) | (layout << 16)) | (bits << 8)) | (bytes << 0)) {
-    return (((((1 << 28) | (type_1 << 24)) | (order << 20)) | (layout << 16)) | (bits << 8)) | (bytes << 0);
+pub inline fn SDL_DEFINE_PIXELFORMAT(@"type": anytype, order: anytype, layout: anytype, bits: anytype, bytes: anytype) @TypeOf((((((@as(c_int, 1) << @as(c_int, 28)) | (@"type" << @as(c_int, 24))) | (order << @as(c_int, 20))) | (layout << @as(c_int, 16))) | (bits << @as(c_int, 8))) | (bytes << @as(c_int, 0))) {
+    return (((((@as(c_int, 1) << @as(c_int, 28)) | (@"type" << @as(c_int, 24))) | (order << @as(c_int, 20))) | (layout << @as(c_int, 16))) | (bits << @as(c_int, 8))) | (bytes << @as(c_int, 0));
 }
-pub fn SDL_PIXELFLAG(X: anytype) @TypeOf((X >> 28) & 0x0F) {
-    return (X >> 28) & 0x0F;
+pub inline fn SDL_PIXELFLAG(X: anytype) @TypeOf((X >> @as(c_int, 28)) & @as(c_int, 0x0F)) {
+    return (X >> @as(c_int, 28)) & @as(c_int, 0x0F);
 }
-pub fn SDL_PIXELTYPE(X: anytype) @TypeOf((X >> 24) & 0x0F) {
-    return (X >> 24) & 0x0F;
+pub inline fn SDL_PIXELTYPE(X: anytype) @TypeOf((X >> @as(c_int, 24)) & @as(c_int, 0x0F)) {
+    return (X >> @as(c_int, 24)) & @as(c_int, 0x0F);
 }
-pub fn SDL_PIXELORDER(X: anytype) @TypeOf((X >> 20) & 0x0F) {
-    return (X >> 20) & 0x0F;
+pub inline fn SDL_PIXELORDER(X: anytype) @TypeOf((X >> @as(c_int, 20)) & @as(c_int, 0x0F)) {
+    return (X >> @as(c_int, 20)) & @as(c_int, 0x0F);
 }
-pub fn SDL_PIXELLAYOUT(X: anytype) @TypeOf((X >> 16) & 0x0F) {
-    return (X >> 16) & 0x0F;
+pub inline fn SDL_PIXELLAYOUT(X: anytype) @TypeOf((X >> @as(c_int, 16)) & @as(c_int, 0x0F)) {
+    return (X >> @as(c_int, 16)) & @as(c_int, 0x0F);
 }
-pub fn SDL_BITSPERPIXEL(X: anytype) @TypeOf((X >> 8) & 0xFF) {
-    return (X >> 8) & 0xFF;
+pub inline fn SDL_BITSPERPIXEL(X: anytype) @TypeOf((X >> @as(c_int, 8)) & @as(c_int, 0xFF)) {
+    return (X >> @as(c_int, 8)) & @as(c_int, 0xFF);
 }
-pub fn SDL_BYTESPERPIXEL(X: anytype) @TypeOf(if (SDL_ISPIXELFORMAT_FOURCC(X)) if (((X == SDL_PIXELFORMAT_YUY2) or (X == SDL_PIXELFORMAT_UYVY)) or (X == SDL_PIXELFORMAT_YVYU)) 2 else 1 else (X >> 0) & 0xFF) {
-    return if (SDL_ISPIXELFORMAT_FOURCC(X)) if (((X == SDL_PIXELFORMAT_YUY2) or (X == SDL_PIXELFORMAT_UYVY)) or (X == SDL_PIXELFORMAT_YVYU)) 2 else 1 else (X >> 0) & 0xFF;
+pub inline fn SDL_BYTESPERPIXEL(X: anytype) @TypeOf(if (SDL_ISPIXELFORMAT_FOURCC(X)) if (((X == SDL_PIXELFORMAT_YUY2) or (X == SDL_PIXELFORMAT_UYVY)) or (X == SDL_PIXELFORMAT_YVYU)) @as(c_int, 2) else @as(c_int, 1) else (X >> @as(c_int, 0)) & @as(c_int, 0xFF)) {
+    return if (SDL_ISPIXELFORMAT_FOURCC(X)) if (((X == SDL_PIXELFORMAT_YUY2) or (X == SDL_PIXELFORMAT_UYVY)) or (X == SDL_PIXELFORMAT_YVYU)) @as(c_int, 2) else @as(c_int, 1) else (X >> @as(c_int, 0)) & @as(c_int, 0xFF);
 }
-pub fn SDL_ISPIXELFORMAT_INDEXED(format: anytype) @TypeOf(!(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8))) {
+pub inline fn SDL_ISPIXELFORMAT_INDEXED(format: anytype) @TypeOf(!(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8))) {
     return !(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8));
 }
-pub fn SDL_ISPIXELFORMAT_PACKED(format: anytype) @TypeOf(!(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32))) {
+pub inline fn SDL_ISPIXELFORMAT_PACKED(format: anytype) @TypeOf(!(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32))) {
     return !(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32));
 }
-pub fn SDL_ISPIXELFORMAT_ARRAY(format: anytype) @TypeOf(!(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32))) {
+pub inline fn SDL_ISPIXELFORMAT_ARRAY(format: anytype) @TypeOf(!(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32))) {
     return !(SDL_ISPIXELFORMAT_FOURCC(format) != 0) and (((((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16)) or (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32));
 }
-pub fn SDL_ISPIXELFORMAT_ALPHA(format: anytype) @TypeOf(((SDL_ISPIXELFORMAT_PACKED(format) != 0) and ((((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA)) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR)) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))) or ((SDL_ISPIXELFORMAT_ARRAY(format) != 0) and ((((SDL_PIXELORDER(format) == SDL_ARRAYORDER_ARGB) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_RGBA)) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR)) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA)))) {
+pub inline fn SDL_ISPIXELFORMAT_ALPHA(format: anytype) @TypeOf(((SDL_ISPIXELFORMAT_PACKED(format) != 0) and ((((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA)) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR)) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))) or ((SDL_ISPIXELFORMAT_ARRAY(format) != 0) and ((((SDL_PIXELORDER(format) == SDL_ARRAYORDER_ARGB) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_RGBA)) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR)) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA)))) {
     return ((SDL_ISPIXELFORMAT_PACKED(format) != 0) and ((((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA)) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR)) or (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))) or ((SDL_ISPIXELFORMAT_ARRAY(format) != 0) and ((((SDL_PIXELORDER(format) == SDL_ARRAYORDER_ARGB) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_RGBA)) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR)) or (SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA)));
 }
-pub fn SDL_ISPIXELFORMAT_FOURCC(format: anytype) @TypeOf((format != 0) and (SDL_PIXELFLAG(format) != 1)) {
-    return (format != 0) and (SDL_PIXELFLAG(format) != 1);
+pub inline fn SDL_ISPIXELFORMAT_FOURCC(format: anytype) @TypeOf((format != 0) and (SDL_PIXELFLAG(format) != @as(c_int, 1))) {
+    return (format != 0) and (SDL_PIXELFLAG(format) != @as(c_int, 1));
 }
 pub const SDL_Colour = SDL_Color;
-pub const SDL_SWSURFACE = 0;
-pub const SDL_PREALLOC = 0x00000001;
-pub const SDL_RLEACCEL = 0x00000002;
-pub const SDL_DONTFREE = 0x00000004;
-pub const SDL_SIMD_ALIGNED = 0x00000008;
-pub fn SDL_MUSTLOCK(S: anytype) @TypeOf(((S.*.flags) & SDL_RLEACCEL) != 0) {
-    return ((S.*.flags) & SDL_RLEACCEL) != 0;
+pub const SDL_rect_h_ = "";
+pub const SDL_surface_h_ = "";
+pub const SDL_blendmode_h_ = "";
+pub const SDL_SWSURFACE = @as(c_int, 0);
+pub const SDL_PREALLOC = @as(c_int, 0x00000001);
+pub const SDL_RLEACCEL = @as(c_int, 0x00000002);
+pub const SDL_DONTFREE = @as(c_int, 0x00000004);
+pub const SDL_SIMD_ALIGNED = @as(c_int, 0x00000008);
+pub inline fn SDL_MUSTLOCK(S: anytype) @TypeOf((S.*.flags & SDL_RLEACCEL) != @as(c_int, 0)) {
+    return (S.*.flags & SDL_RLEACCEL) != @as(c_int, 0);
 }
-pub fn SDL_LoadBMP(file: anytype) @TypeOf(SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), 1)) {
-    return SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), 1);
+pub inline fn SDL_LoadBMP(file: anytype) @TypeOf(SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), @as(c_int, 1))) {
+    return SDL_LoadBMP_RW(SDL_RWFromFile(file, "rb"), @as(c_int, 1));
 }
-pub fn SDL_SaveBMP(surface: anytype, file: anytype) @TypeOf(SDL_SaveBMP_RW(surface, SDL_RWFromFile(file, "wb"), 1)) {
-    return SDL_SaveBMP_RW(surface, SDL_RWFromFile(file, "wb"), 1);
+pub inline fn SDL_SaveBMP(surface: anytype, file: anytype) @TypeOf(SDL_SaveBMP_RW(surface, SDL_RWFromFile(file, "wb"), @as(c_int, 1))) {
+    return SDL_SaveBMP_RW(surface, SDL_RWFromFile(file, "wb"), @as(c_int, 1));
 }
 pub const SDL_BlitSurface = SDL_UpperBlit;
 pub const SDL_BlitScaled = SDL_UpperBlitScaled;
-pub const SDL_WINDOWPOS_UNDEFINED_MASK = @as(c_uint, 0x1FFF0000);
-pub fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: anytype) @TypeOf(SDL_WINDOWPOS_UNDEFINED_MASK | X) {
+pub const SDL_WINDOWPOS_UNDEFINED_MASK = @import("std").zig.c_translation.promoteIntLiteral(c_uint, 0x1FFF0000, .hexadecimal);
+pub inline fn SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: anytype) @TypeOf(SDL_WINDOWPOS_UNDEFINED_MASK | X) {
     return SDL_WINDOWPOS_UNDEFINED_MASK | X;
 }
-pub const SDL_WINDOWPOS_UNDEFINED = SDL_WINDOWPOS_UNDEFINED_DISPLAY(0);
-pub fn SDL_WINDOWPOS_ISUNDEFINED(X: anytype) @TypeOf((X & 0xFFFF0000) == SDL_WINDOWPOS_UNDEFINED_MASK) {
-    return (X & 0xFFFF0000) == SDL_WINDOWPOS_UNDEFINED_MASK;
+pub const SDL_WINDOWPOS_UNDEFINED = SDL_WINDOWPOS_UNDEFINED_DISPLAY(@as(c_int, 0));
+pub inline fn SDL_WINDOWPOS_ISUNDEFINED(X: anytype) @TypeOf((X & @import("std").zig.c_translation.promoteIntLiteral(c_int, 0xFFFF0000, .hexadecimal)) == SDL_WINDOWPOS_UNDEFINED_MASK) {
+    return (X & @import("std").zig.c_translation.promoteIntLiteral(c_int, 0xFFFF0000, .hexadecimal)) == SDL_WINDOWPOS_UNDEFINED_MASK;
 }
-pub const SDL_WINDOWPOS_CENTERED_MASK = @as(c_uint, 0x2FFF0000);
-pub fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: anytype) @TypeOf(SDL_WINDOWPOS_CENTERED_MASK | X) {
+pub const SDL_WINDOWPOS_CENTERED_MASK = @import("std").zig.c_translation.promoteIntLiteral(c_uint, 0x2FFF0000, .hexadecimal);
+pub inline fn SDL_WINDOWPOS_CENTERED_DISPLAY(X: anytype) @TypeOf(SDL_WINDOWPOS_CENTERED_MASK | X) {
     return SDL_WINDOWPOS_CENTERED_MASK | X;
 }
-pub const SDL_WINDOWPOS_CENTERED = SDL_WINDOWPOS_CENTERED_DISPLAY(0);
-pub fn SDL_WINDOWPOS_ISCENTERED(X: anytype) @TypeOf((X & 0xFFFF0000) == SDL_WINDOWPOS_CENTERED_MASK) {
-    return (X & 0xFFFF0000) == SDL_WINDOWPOS_CENTERED_MASK;
+pub const SDL_WINDOWPOS_CENTERED = SDL_WINDOWPOS_CENTERED_DISPLAY(@as(c_int, 0));
+pub inline fn SDL_WINDOWPOS_ISCENTERED(X: anytype) @TypeOf((X & @import("std").zig.c_translation.promoteIntLiteral(c_int, 0xFFFF0000, .hexadecimal)) == SDL_WINDOWPOS_CENTERED_MASK) {
+    return (X & @import("std").zig.c_translation.promoteIntLiteral(c_int, 0xFFFF0000, .hexadecimal)) == SDL_WINDOWPOS_CENTERED_MASK;
 }
-pub const SDLK_SCANCODE_MASK = 1 << 30;
-pub fn SDL_SCANCODE_TO_KEYCODE(X: anytype) @TypeOf(X | SDLK_SCANCODE_MASK) {
+pub const SDL_keyboard_h_ = "";
+pub const SDL_keycode_h_ = "";
+pub const SDL_scancode_h_ = "";
+pub const SDLK_SCANCODE_MASK = @as(c_int, 1) << @as(c_int, 30);
+pub inline fn SDL_SCANCODE_TO_KEYCODE(X: anytype) @TypeOf(X | SDLK_SCANCODE_MASK) {
     return X | SDLK_SCANCODE_MASK;
 }
-pub fn SDL_BUTTON(X: anytype) @TypeOf(1 << (X - 1)) {
-    return 1 << (X - 1);
+pub const SDL_mouse_h_ = "";
+pub inline fn SDL_BUTTON(X: anytype) @TypeOf(@as(c_int, 1) << (X - @as(c_int, 1))) {
+    return @as(c_int, 1) << (X - @as(c_int, 1));
 }
-pub const SDL_BUTTON_LEFT = 1;
-pub const SDL_BUTTON_MIDDLE = 2;
-pub const SDL_BUTTON_RIGHT = 3;
-pub const SDL_BUTTON_X1 = 4;
-pub const SDL_BUTTON_X2 = 5;
+pub const SDL_BUTTON_LEFT = @as(c_int, 1);
+pub const SDL_BUTTON_MIDDLE = @as(c_int, 2);
+pub const SDL_BUTTON_RIGHT = @as(c_int, 3);
+pub const SDL_BUTTON_X1 = @as(c_int, 4);
+pub const SDL_BUTTON_X2 = @as(c_int, 5);
 pub const SDL_BUTTON_LMASK = SDL_BUTTON(SDL_BUTTON_LEFT);
 pub const SDL_BUTTON_MMASK = SDL_BUTTON(SDL_BUTTON_MIDDLE);
 pub const SDL_BUTTON_RMASK = SDL_BUTTON(SDL_BUTTON_RIGHT);
 pub const SDL_BUTTON_X1MASK = SDL_BUTTON(SDL_BUTTON_X1);
 pub const SDL_BUTTON_X2MASK = SDL_BUTTON(SDL_BUTTON_X2);
-pub const SDL_JOYSTICK_AXIS_MAX = 32767;
-pub const SDL_JOYSTICK_AXIS_MIN = -32768;
-pub const SDL_HAT_CENTERED = 0x00;
-pub const SDL_HAT_UP = 0x01;
-pub const SDL_HAT_RIGHT = 0x02;
-pub const SDL_HAT_DOWN = 0x04;
-pub const SDL_HAT_LEFT = 0x08;
+pub const SDL_joystick_h_ = "";
+pub const SDL_IPHONE_MAX_GFORCE = 5.0;
+pub const SDL_JOYSTICK_AXIS_MAX = @as(c_int, 32767);
+pub const SDL_JOYSTICK_AXIS_MIN = -@import("std").zig.c_translation.promoteIntLiteral(c_int, 32768, .decimal);
+pub const SDL_HAT_CENTERED = @as(c_int, 0x00);
+pub const SDL_HAT_UP = @as(c_int, 0x01);
+pub const SDL_HAT_RIGHT = @as(c_int, 0x02);
+pub const SDL_HAT_DOWN = @as(c_int, 0x04);
+pub const SDL_HAT_LEFT = @as(c_int, 0x08);
 pub const SDL_HAT_RIGHTUP = SDL_HAT_RIGHT | SDL_HAT_UP;
 pub const SDL_HAT_RIGHTDOWN = SDL_HAT_RIGHT | SDL_HAT_DOWN;
 pub const SDL_HAT_LEFTUP = SDL_HAT_LEFT | SDL_HAT_UP;
 pub const SDL_HAT_LEFTDOWN = SDL_HAT_LEFT | SDL_HAT_DOWN;
-pub fn SDL_GameControllerAddMappingsFromFile(file: anytype) @TypeOf(SDL_GameControllerAddMappingsFromRW(SDL_RWFromFile(file, "rb"), 1)) {
-    return SDL_GameControllerAddMappingsFromRW(SDL_RWFromFile(file, "rb"), 1);
+pub const SDL_gamecontroller_h_ = "";
+pub const SDL_sensor_h_ = "";
+pub const SDL_STANDARD_GRAVITY = @as(f32, 9.80665);
+pub inline fn SDL_GameControllerAddMappingsFromFile(file: anytype) @TypeOf(SDL_GameControllerAddMappingsFromRW(SDL_RWFromFile(file, "rb"), @as(c_int, 1))) {
+    return SDL_GameControllerAddMappingsFromRW(SDL_RWFromFile(file, "rb"), @as(c_int, 1));
 }
-pub const SDL_TOUCH_MOUSEID = Uint32 - 1;
-pub const SDL_MOUSE_TOUCHID = Sint64 - 1;
-pub const SDL_RELEASED = 0;
-pub const SDL_PRESSED = 1;
-pub const SDL_TEXTEDITINGEVENT_TEXT_SIZE = 32;
-pub const SDL_TEXTINPUTEVENT_TEXT_SIZE = 32;
-pub const SDL_QUERY = -1;
-pub const SDL_IGNORE = 0;
-pub const SDL_DISABLE = 0;
-pub const SDL_ENABLE = 1;
-pub fn SDL_GetEventState(type_1: anytype) @TypeOf(SDL_EventState(type_1, SDL_QUERY)) {
-    return SDL_EventState(type_1, SDL_QUERY);
+pub const SDL_quit_h_ = "";
+pub inline fn SDL_QuitRequested() @TypeOf(SDL_PeepEvents(NULL, @as(c_int, 0), SDL_PEEKEVENT, SDL_QUIT, SDL_QUIT) > @as(c_int, 0)) {
+    return blk: {
+        _ = SDL_PumpEvents();
+        break :blk SDL_PeepEvents(NULL, @as(c_int, 0), SDL_PEEKEVENT, SDL_QUIT, SDL_QUIT) > @as(c_int, 0);
+    };
 }
-pub const SDL_HAPTIC_CONSTANT = @as(c_uint, 1) << 0;
-pub const SDL_HAPTIC_SINE = @as(c_uint, 1) << 1;
-pub const SDL_HAPTIC_LEFTRIGHT = @as(c_uint, 1) << 2;
-pub const SDL_HAPTIC_TRIANGLE = @as(c_uint, 1) << 3;
-pub const SDL_HAPTIC_SAWTOOTHUP = @as(c_uint, 1) << 4;
-pub const SDL_HAPTIC_SAWTOOTHDOWN = @as(c_uint, 1) << 5;
-pub const SDL_HAPTIC_RAMP = @as(c_uint, 1) << 6;
-pub const SDL_HAPTIC_SPRING = @as(c_uint, 1) << 7;
-pub const SDL_HAPTIC_DAMPER = @as(c_uint, 1) << 8;
-pub const SDL_HAPTIC_INERTIA = @as(c_uint, 1) << 9;
-pub const SDL_HAPTIC_FRICTION = @as(c_uint, 1) << 10;
-pub const SDL_HAPTIC_CUSTOM = @as(c_uint, 1) << 11;
-pub const SDL_HAPTIC_GAIN = @as(c_uint, 1) << 12;
-pub const SDL_HAPTIC_AUTOCENTER = @as(c_uint, 1) << 13;
-pub const SDL_HAPTIC_STATUS = @as(c_uint, 1) << 14;
-pub const SDL_HAPTIC_PAUSE = @as(c_uint, 1) << 15;
-pub const SDL_HAPTIC_POLAR = 0;
-pub const SDL_HAPTIC_CARTESIAN = 1;
-pub const SDL_HAPTIC_SPHERICAL = 2;
-pub const SDL_HAPTIC_STEERING_AXIS = 3;
-pub const SDL_HAPTIC_INFINITY = @as(c_uint, 4294967295);
-pub const SDL_HINT_FRAMEBUFFER_ACCELERATION = "SDL_FRAMEBUFFER_ACCELERATION";
-pub const SDL_HINT_RENDER_DRIVER = "SDL_RENDER_DRIVER";
-pub const SDL_HINT_RENDER_OPENGL_SHADERS = "SDL_RENDER_OPENGL_SHADERS";
-pub const SDL_HINT_RENDER_DIRECT3D_THREADSAFE = "SDL_RENDER_DIRECT3D_THREADSAFE";
-pub const SDL_HINT_RENDER_DIRECT3D11_DEBUG = "SDL_RENDER_DIRECT3D11_DEBUG";
-pub const SDL_HINT_RENDER_LOGICAL_SIZE_MODE = "SDL_RENDER_LOGICAL_SIZE_MODE";
-pub const SDL_HINT_RENDER_SCALE_QUALITY = "SDL_RENDER_SCALE_QUALITY";
-pub const SDL_HINT_RENDER_VSYNC = "SDL_RENDER_VSYNC";
-pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER = "SDL_VIDEO_ALLOW_SCREENSAVER";
-pub const SDL_HINT_VIDEO_EXTERNAL_CONTEXT = "SDL_VIDEO_EXTERNAL_CONTEXT";
-pub const SDL_HINT_VIDEO_X11_XVIDMODE = "SDL_VIDEO_X11_XVIDMODE";
-pub const SDL_HINT_VIDEO_X11_XINERAMA = "SDL_VIDEO_X11_XINERAMA";
-pub const SDL_HINT_VIDEO_X11_XRANDR = "SDL_VIDEO_X11_XRANDR";
-pub const SDL_HINT_VIDEO_X11_WINDOW_VISUALID = "SDL_VIDEO_X11_WINDOW_VISUALID";
-pub const SDL_HINT_VIDEO_X11_NET_WM_PING = "SDL_VIDEO_X11_NET_WM_PING";
-pub const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR = "SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR";
-pub const SDL_HINT_VIDEO_X11_FORCE_EGL = "SDL_VIDEO_X11_FORCE_EGL";
-pub const SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN = "SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN";
-pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON = "SDL_WINDOWS_INTRESOURCE_ICON";
-pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL = "SDL_WINDOWS_INTRESOURCE_ICON_SMALL";
-pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP = "SDL_WINDOWS_ENABLE_MESSAGELOOP";
-pub const SDL_HINT_GRAB_KEYBOARD = "SDL_GRAB_KEYBOARD";
-pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME = "SDL_MOUSE_DOUBLE_CLICK_TIME";
-pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS = "SDL_MOUSE_DOUBLE_CLICK_RADIUS";
-pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE = "SDL_MOUSE_NORMAL_SPEED_SCALE";
-pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE = "SDL_MOUSE_RELATIVE_SPEED_SCALE";
-pub const SDL_HINT_MOUSE_RELATIVE_SCALING = "SDL_MOUSE_RELATIVE_SCALING";
-pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP = "SDL_MOUSE_RELATIVE_MODE_WARP";
-pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH = "SDL_MOUSE_FOCUS_CLICKTHROUGH";
-pub const SDL_HINT_TOUCH_MOUSE_EVENTS = "SDL_TOUCH_MOUSE_EVENTS";
-pub const SDL_HINT_MOUSE_TOUCH_EVENTS = "SDL_MOUSE_TOUCH_EVENTS";
-pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS = "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS";
-pub const SDL_HINT_IDLE_TIMER_DISABLED = "SDL_IOS_IDLE_TIMER_DISABLED";
-pub const SDL_HINT_ORIENTATIONS = "SDL_IOS_ORIENTATIONS";
+pub const SDL_gesture_h_ = "";
+pub const SDL_touch_h_ = "";
+pub const SDL_TOUCH_MOUSEID = @import("std").zig.c_translation.cast(Uint32, -@as(c_int, 1));
+pub const SDL_MOUSE_TOUCHID = @import("std").zig.c_translation.cast(Sint64, -@as(c_int, 1));
+pub const SDL_RELEASED = @as(c_int, 0);
+pub const SDL_PRESSED = @as(c_int, 1);
+pub const SDL_TEXTEDITINGEVENT_TEXT_SIZE = @as(c_int, 32);
+pub const SDL_TEXTINPUTEVENT_TEXT_SIZE = @as(c_int, 32);
+pub const SDL_QUERY = -@as(c_int, 1);
+pub const SDL_IGNORE = @as(c_int, 0);
+pub const SDL_DISABLE = @as(c_int, 0);
+pub const SDL_ENABLE = @as(c_int, 1);
+pub inline fn SDL_GetEventState(@"type": anytype) @TypeOf(SDL_EventState(@"type", SDL_QUERY)) {
+    return SDL_EventState(@"type", SDL_QUERY);
+}
+pub const SDL_filesystem_h_ = "";
+pub const SDL_haptic_h_ = "";
+pub const SDL_HAPTIC_CONSTANT = @as(c_uint, 1) << @as(c_int, 0);
+pub const SDL_HAPTIC_SINE = @as(c_uint, 1) << @as(c_int, 1);
+pub const SDL_HAPTIC_LEFTRIGHT = @as(c_uint, 1) << @as(c_int, 2);
+pub const SDL_HAPTIC_TRIANGLE = @as(c_uint, 1) << @as(c_int, 3);
+pub const SDL_HAPTIC_SAWTOOTHUP = @as(c_uint, 1) << @as(c_int, 4);
+pub const SDL_HAPTIC_SAWTOOTHDOWN = @as(c_uint, 1) << @as(c_int, 5);
+pub const SDL_HAPTIC_RAMP = @as(c_uint, 1) << @as(c_int, 6);
+pub const SDL_HAPTIC_SPRING = @as(c_uint, 1) << @as(c_int, 7);
+pub const SDL_HAPTIC_DAMPER = @as(c_uint, 1) << @as(c_int, 8);
+pub const SDL_HAPTIC_INERTIA = @as(c_uint, 1) << @as(c_int, 9);
+pub const SDL_HAPTIC_FRICTION = @as(c_uint, 1) << @as(c_int, 10);
+pub const SDL_HAPTIC_CUSTOM = @as(c_uint, 1) << @as(c_int, 11);
+pub const SDL_HAPTIC_GAIN = @as(c_uint, 1) << @as(c_int, 12);
+pub const SDL_HAPTIC_AUTOCENTER = @as(c_uint, 1) << @as(c_int, 13);
+pub const SDL_HAPTIC_STATUS = @as(c_uint, 1) << @as(c_int, 14);
+pub const SDL_HAPTIC_PAUSE = @as(c_uint, 1) << @as(c_int, 15);
+pub const SDL_HAPTIC_POLAR = @as(c_int, 0);
+pub const SDL_HAPTIC_CARTESIAN = @as(c_int, 1);
+pub const SDL_HAPTIC_SPHERICAL = @as(c_int, 2);
+pub const SDL_HAPTIC_STEERING_AXIS = @as(c_int, 3);
+pub const SDL_HAPTIC_INFINITY = @import("std").zig.c_translation.promoteIntLiteral(c_uint, 4294967295, .decimal);
+pub const SDL_hints_h_ = "";
+pub const SDL_HINT_ACCELEROMETER_AS_JOYSTICK = "SDL_ACCELEROMETER_AS_JOYSTICK";
+pub const SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED = "SDL_ALLOW_ALT_TAB_WHILE_GRABBED";
+pub const SDL_HINT_ALLOW_TOPMOST = "SDL_ALLOW_TOPMOST";
+pub const SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION = "SDL_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION";
+pub const SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION = "SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION";
+pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE = "SDL_ANDROID_BLOCK_ON_PAUSE";
+pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO = "SDL_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO";
+pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON = "SDL_ANDROID_TRAP_BACK_BUTTON";
 pub const SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS = "SDL_APPLE_TV_CONTROLLER_UI_EVENTS";
 pub const SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION = "SDL_APPLE_TV_REMOTE_ALLOW_ROTATION";
-pub const SDL_HINT_IOS_HIDE_HOME_INDICATOR = "SDL_IOS_HIDE_HOME_INDICATOR";
-pub const SDL_HINT_ACCELEROMETER_AS_JOYSTICK = "SDL_ACCELEROMETER_AS_JOYSTICK";
-pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK = "SDL_TV_REMOTE_AS_JOYSTICK";
-pub const SDL_HINT_XINPUT_ENABLED = "SDL_XINPUT_ENABLED";
-pub const SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING = "SDL_XINPUT_USE_OLD_JOYSTICK_MAPPING";
-pub const SDL_HINT_GAMECONTROLLERTYPE = "SDL_GAMECONTROLLERTYPE";
+pub const SDL_HINT_AUDIO_CATEGORY = "SDL_AUDIO_CATEGORY";
+pub const SDL_HINT_AUDIO_DEVICE_APP_NAME = "SDL_AUDIO_DEVICE_APP_NAME";
+pub const SDL_HINT_AUDIO_DEVICE_STREAM_NAME = "SDL_AUDIO_DEVICE_STREAM_NAME";
+pub const SDL_HINT_AUDIO_DEVICE_STREAM_ROLE = "SDL_AUDIO_DEVICE_STREAM_ROLE";
+pub const SDL_HINT_AUDIO_RESAMPLING_MODE = "SDL_AUDIO_RESAMPLING_MODE";
+pub const SDL_HINT_AUTO_UPDATE_JOYSTICKS = "SDL_AUTO_UPDATE_JOYSTICKS";
+pub const SDL_HINT_AUTO_UPDATE_SENSORS = "SDL_AUTO_UPDATE_SENSORS";
+pub const SDL_HINT_BMP_SAVE_LEGACY_FORMAT = "SDL_BMP_SAVE_LEGACY_FORMAT";
+pub const SDL_HINT_DISPLAY_USABLE_BOUNDS = "SDL_DISPLAY_USABLE_BOUNDS";
+pub const SDL_HINT_EMSCRIPTEN_ASYNCIFY = "SDL_EMSCRIPTEN_ASYNCIFY";
+pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT = "SDL_EMSCRIPTEN_KEYBOARD_ELEMENT";
+pub const SDL_HINT_ENABLE_STEAM_CONTROLLERS = "SDL_ENABLE_STEAM_CONTROLLERS";
+pub const SDL_HINT_EVENT_LOGGING = "SDL_EVENT_LOGGING";
+pub const SDL_HINT_FRAMEBUFFER_ACCELERATION = "SDL_FRAMEBUFFER_ACCELERATION";
 pub const SDL_HINT_GAMECONTROLLERCONFIG = "SDL_GAMECONTROLLERCONFIG";
 pub const SDL_HINT_GAMECONTROLLERCONFIG_FILE = "SDL_GAMECONTROLLERCONFIG_FILE";
+pub const SDL_HINT_GAMECONTROLLERTYPE = "SDL_GAMECONTROLLERTYPE";
 pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES = "SDL_GAMECONTROLLER_IGNORE_DEVICES";
 pub const SDL_HINT_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT = "SDL_GAMECONTROLLER_IGNORE_DEVICES_EXCEPT";
 pub const SDL_HINT_GAMECONTROLLER_USE_BUTTON_LABELS = "SDL_GAMECONTROLLER_USE_BUTTON_LABELS";
+pub const SDL_HINT_GRAB_KEYBOARD = "SDL_GRAB_KEYBOARD";
+pub const SDL_HINT_IDLE_TIMER_DISABLED = "SDL_IOS_IDLE_TIMER_DISABLED";
+pub const SDL_HINT_IME_INTERNAL_EDITING = "SDL_IME_INTERNAL_EDITING";
+pub const SDL_HINT_IOS_HIDE_HOME_INDICATOR = "SDL_IOS_HIDE_HOME_INDICATOR";
 pub const SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS = "SDL_JOYSTICK_ALLOW_BACKGROUND_EVENTS";
 pub const SDL_HINT_JOYSTICK_HIDAPI = "SDL_JOYSTICK_HIDAPI";
+pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE = "SDL_JOYSTICK_HIDAPI_GAMECUBE";
+pub const SDL_HINT_JOYSTICK_HIDAPI_JOY_CONS = "SDL_JOYSTICK_HIDAPI_JOY_CONS";
+pub const SDL_HINT_JOYSTICK_HIDAPI_LUNA = "SDL_JOYSTICK_HIDAPI_LUNA";
 pub const SDL_HINT_JOYSTICK_HIDAPI_PS4 = "SDL_JOYSTICK_HIDAPI_PS4";
-pub const SDL_HINT_JOYSTICK_HIDAPI_PS5 = "SDL_JOYSTICK_HIDAPI_PS5";
 pub const SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE = "SDL_JOYSTICK_HIDAPI_PS4_RUMBLE";
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS5 = "SDL_JOYSTICK_HIDAPI_PS5";
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_PLAYER_LED = "SDL_JOYSTICK_HIDAPI_PS5_PLAYER_LED";
+pub const SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE = "SDL_JOYSTICK_HIDAPI_PS5_RUMBLE";
+pub const SDL_HINT_JOYSTICK_HIDAPI_STADIA = "SDL_JOYSTICK_HIDAPI_STADIA";
 pub const SDL_HINT_JOYSTICK_HIDAPI_STEAM = "SDL_JOYSTICK_HIDAPI_STEAM";
 pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH = "SDL_JOYSTICK_HIDAPI_SWITCH";
+pub const SDL_HINT_JOYSTICK_HIDAPI_SWITCH_HOME_LED = "SDL_JOYSTICK_HIDAPI_SWITCH_HOME_LED";
 pub const SDL_HINT_JOYSTICK_HIDAPI_XBOX = "SDL_JOYSTICK_HIDAPI_XBOX";
-pub const SDL_HINT_JOYSTICK_HIDAPI_CORRELATE_XINPUT = "SDL_JOYSTICK_HIDAPI_CORRELATE_XINPUT";
-pub const SDL_HINT_JOYSTICK_HIDAPI_GAMECUBE = "SDL_JOYSTICK_HIDAPI_GAMECUBE";
-pub const SDL_HINT_ENABLE_STEAM_CONTROLLERS = "SDL_ENABLE_STEAM_CONTROLLERS";
 pub const SDL_HINT_JOYSTICK_RAWINPUT = "SDL_JOYSTICK_RAWINPUT";
+pub const SDL_HINT_JOYSTICK_RAWINPUT_CORRELATE_XINPUT = "SDL_JOYSTICK_RAWINPUT_CORRELATE_XINPUT";
+pub const SDL_HINT_JOYSTICK_THREAD = "SDL_JOYSTICK_THREAD";
+pub const SDL_HINT_KMSDRM_REQUIRE_DRM_MASTER = "SDL_KMSDRM_REQUIRE_DRM_MASTER";
 pub const SDL_HINT_LINUX_JOYSTICK_DEADZONES = "SDL_LINUX_JOYSTICK_DEADZONES";
-pub const SDL_HINT_ALLOW_TOPMOST = "SDL_ALLOW_TOPMOST";
-pub const SDL_HINT_TIMER_RESOLUTION = "SDL_TIMER_RESOLUTION";
+pub const SDL_HINT_MAC_BACKGROUND_APP = "SDL_MAC_BACKGROUND_APP";
+pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK = "SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK";
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_RADIUS = "SDL_MOUSE_DOUBLE_CLICK_RADIUS";
+pub const SDL_HINT_MOUSE_DOUBLE_CLICK_TIME = "SDL_MOUSE_DOUBLE_CLICK_TIME";
+pub const SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH = "SDL_MOUSE_FOCUS_CLICKTHROUGH";
+pub const SDL_HINT_MOUSE_NORMAL_SPEED_SCALE = "SDL_MOUSE_NORMAL_SPEED_SCALE";
+pub const SDL_HINT_MOUSE_RELATIVE_MODE_WARP = "SDL_MOUSE_RELATIVE_MODE_WARP";
+pub const SDL_HINT_MOUSE_RELATIVE_SCALING = "SDL_MOUSE_RELATIVE_SCALING";
+pub const SDL_HINT_MOUSE_RELATIVE_SPEED_SCALE = "SDL_MOUSE_RELATIVE_SPEED_SCALE";
+pub const SDL_HINT_MOUSE_TOUCH_EVENTS = "SDL_MOUSE_TOUCH_EVENTS";
+pub const SDL_HINT_NO_SIGNAL_HANDLERS = "SDL_NO_SIGNAL_HANDLERS";
+pub const SDL_HINT_OPENGL_ES_DRIVER = "SDL_OPENGL_ES_DRIVER";
+pub const SDL_HINT_ORIENTATIONS = "SDL_IOS_ORIENTATIONS";
+pub const SDL_HINT_PREFERRED_LOCALES = "SDL_PREFERRED_LOCALES";
 pub const SDL_HINT_QTWAYLAND_CONTENT_ORIENTATION = "SDL_QTWAYLAND_CONTENT_ORIENTATION";
 pub const SDL_HINT_QTWAYLAND_WINDOW_FLAGS = "SDL_QTWAYLAND_WINDOW_FLAGS";
-pub const SDL_HINT_THREAD_STACK_SIZE = "SDL_THREAD_STACK_SIZE";
-pub const SDL_HINT_THREAD_PRIORITY_POLICY = "SDL_THREAD_PRIORITY_POLICY";
-pub const SDL_HINT_VIDEO_HIGHDPI_DISABLED = "SDL_VIDEO_HIGHDPI_DISABLED";
-pub const SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK = "SDL_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK";
-pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER = "SDL_VIDEO_WIN_D3DCOMPILER";
-pub const SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT = "SDL_VIDEO_WINDOW_SHARE_PIXEL_FORMAT";
-pub const SDL_HINT_WINRT_PRIVACY_POLICY_URL = "SDL_WINRT_PRIVACY_POLICY_URL";
-pub const SDL_HINT_WINRT_PRIVACY_POLICY_LABEL = "SDL_WINRT_PRIVACY_POLICY_LABEL";
-pub const SDL_HINT_WINRT_HANDLE_BACK_BUTTON = "SDL_WINRT_HANDLE_BACK_BUTTON";
-pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES = "SDL_VIDEO_MAC_FULLSCREEN_SPACES";
-pub const SDL_HINT_MAC_BACKGROUND_APP = "SDL_MAC_BACKGROUND_APP";
-pub const SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION = "SDL_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION";
-pub const SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION = "SDL_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION";
-pub const SDL_HINT_IME_INTERNAL_EDITING = "SDL_IME_INTERNAL_EDITING";
-pub const SDL_HINT_ANDROID_TRAP_BACK_BUTTON = "SDL_ANDROID_TRAP_BACK_BUTTON";
-pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE = "SDL_ANDROID_BLOCK_ON_PAUSE";
-pub const SDL_HINT_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO = "SDL_ANDROID_BLOCK_ON_PAUSE_PAUSEAUDIO";
-pub const SDL_HINT_RETURN_KEY_HIDES_IME = "SDL_RETURN_KEY_HIDES_IME";
-pub const SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT = "SDL_EMSCRIPTEN_KEYBOARD_ELEMENT";
-pub const SDL_HINT_EMSCRIPTEN_ASYNCIFY = "SDL_EMSCRIPTEN_ASYNCIFY";
-pub const SDL_HINT_NO_SIGNAL_HANDLERS = "SDL_NO_SIGNAL_HANDLERS";
-pub const SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4 = "SDL_WINDOWS_NO_CLOSE_ON_ALT_F4";
-pub const SDL_HINT_BMP_SAVE_LEGACY_FORMAT = "SDL_BMP_SAVE_LEGACY_FORMAT";
-pub const SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING = "SDL_WINDOWS_DISABLE_THREAD_NAMING";
-pub const SDL_HINT_RPI_VIDEO_LAYER = "SDL_RPI_VIDEO_LAYER";
-pub const SDL_HINT_VIDEO_DOUBLE_BUFFER = "SDL_VIDEO_DOUBLE_BUFFER";
-pub const SDL_HINT_OPENGL_ES_DRIVER = "SDL_OPENGL_ES_DRIVER";
-pub const SDL_HINT_AUDIO_RESAMPLING_MODE = "SDL_AUDIO_RESAMPLING_MODE";
-pub const SDL_HINT_AUDIO_CATEGORY = "SDL_AUDIO_CATEGORY";
 pub const SDL_HINT_RENDER_BATCHING = "SDL_RENDER_BATCHING";
-pub const SDL_HINT_EVENT_LOGGING = "SDL_EVENT_LOGGING";
+pub const SDL_HINT_RENDER_DIRECT3D11_DEBUG = "SDL_RENDER_DIRECT3D11_DEBUG";
+pub const SDL_HINT_RENDER_DIRECT3D_THREADSAFE = "SDL_RENDER_DIRECT3D_THREADSAFE";
+pub const SDL_HINT_RENDER_DRIVER = "SDL_RENDER_DRIVER";
+pub const SDL_HINT_RENDER_LOGICAL_SIZE_MODE = "SDL_RENDER_LOGICAL_SIZE_MODE";
+pub const SDL_HINT_RENDER_OPENGL_SHADERS = "SDL_RENDER_OPENGL_SHADERS";
+pub const SDL_HINT_RENDER_SCALE_QUALITY = "SDL_RENDER_SCALE_QUALITY";
+pub const SDL_HINT_RENDER_VSYNC = "SDL_RENDER_VSYNC";
+pub const SDL_HINT_RETURN_KEY_HIDES_IME = "SDL_RETURN_KEY_HIDES_IME";
+pub const SDL_HINT_RPI_VIDEO_LAYER = "SDL_RPI_VIDEO_LAYER";
+pub const SDL_HINT_THREAD_FORCE_REALTIME_TIME_CRITICAL = "SDL_THREAD_FORCE_REALTIME_TIME_CRITICAL";
+pub const SDL_HINT_THREAD_PRIORITY_POLICY = "SDL_THREAD_PRIORITY_POLICY";
+pub const SDL_HINT_THREAD_STACK_SIZE = "SDL_THREAD_STACK_SIZE";
+pub const SDL_HINT_TIMER_RESOLUTION = "SDL_TIMER_RESOLUTION";
+pub const SDL_HINT_TOUCH_MOUSE_EVENTS = "SDL_TOUCH_MOUSE_EVENTS";
+pub const SDL_HINT_TV_REMOTE_AS_JOYSTICK = "SDL_TV_REMOTE_AS_JOYSTICK";
+pub const SDL_HINT_VIDEO_ALLOW_SCREENSAVER = "SDL_VIDEO_ALLOW_SCREENSAVER";
+pub const SDL_HINT_VIDEO_DOUBLE_BUFFER = "SDL_VIDEO_DOUBLE_BUFFER";
+pub const SDL_HINT_VIDEO_EXTERNAL_CONTEXT = "SDL_VIDEO_EXTERNAL_CONTEXT";
+pub const SDL_HINT_VIDEO_HIGHDPI_DISABLED = "SDL_VIDEO_HIGHDPI_DISABLED";
+pub const SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES = "SDL_VIDEO_MAC_FULLSCREEN_SPACES";
+pub const SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS = "SDL_VIDEO_MINIMIZE_ON_FOCUS_LOSS";
+pub const SDL_HINT_VIDEO_WAYLAND_ALLOW_LIBDECOR = "SDL_VIDEO_WAYLAND_ALLOW_LIBDECOR";
+pub const SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT = "SDL_VIDEO_WINDOW_SHARE_PIXEL_FORMAT";
+pub const SDL_HINT_VIDEO_WIN_D3DCOMPILER = "SDL_VIDEO_WIN_D3DCOMPILER";
+pub const SDL_HINT_VIDEO_X11_FORCE_EGL = "SDL_VIDEO_X11_FORCE_EGL";
+pub const SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR = "SDL_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR";
+pub const SDL_HINT_VIDEO_X11_NET_WM_PING = "SDL_VIDEO_X11_NET_WM_PING";
+pub const SDL_HINT_VIDEO_X11_WINDOW_VISUALID = "SDL_VIDEO_X11_WINDOW_VISUALID";
+pub const SDL_HINT_VIDEO_X11_XINERAMA = "SDL_VIDEO_X11_XINERAMA";
+pub const SDL_HINT_VIDEO_X11_XRANDR = "SDL_VIDEO_X11_XRANDR";
+pub const SDL_HINT_VIDEO_X11_XVIDMODE = "SDL_VIDEO_X11_XVIDMODE";
+pub const SDL_HINT_WAVE_FACT_CHUNK = "SDL_WAVE_FACT_CHUNK";
 pub const SDL_HINT_WAVE_RIFF_CHUNK_SIZE = "SDL_WAVE_RIFF_CHUNK_SIZE";
 pub const SDL_HINT_WAVE_TRUNCATION = "SDL_WAVE_TRUNCATION";
-pub const SDL_HINT_WAVE_FACT_CHUNK = "SDL_WAVE_FACT_CHUNK";
-pub const SDL_HINT_DISPLAY_USABLE_BOUNDS = "SDL_DISPLAY_USABLE_BOUNDS";
-pub const SDL_HINT_AUDIO_DEVICE_APP_NAME = "SDL_AUDIO_DEVICE_APP_NAME";
-pub const SDL_HINT_AUDIO_DEVICE_STREAM_NAME = "SDL_AUDIO_DEVICE_STREAM_NAME";
-pub const SDL_HINT_PREFERRED_LOCALES = "SDL_PREFERRED_LOCALES";
-pub const SDL_MAX_LOG_MESSAGE = 4096;
-pub const SDL_STANDARD_GRAVITY = @as(f32, 9.80665);
-pub const SDL_NONSHAPEABLE_WINDOW = -1;
-pub const SDL_INVALID_SHAPE_ARGUMENT = -2;
-pub const SDL_WINDOW_LACKS_SHAPE = -3;
-pub fn SDL_SHAPEMODEALPHA(mode: anytype) @TypeOf(((mode == ShapeModeDefault) or (mode == ShapeModeBinarizeAlpha)) or (mode == ShapeModeReverseBinarizeAlpha)) {
+pub const SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING = "SDL_WINDOWS_DISABLE_THREAD_NAMING";
+pub const SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP = "SDL_WINDOWS_ENABLE_MESSAGELOOP";
+pub const SDL_HINT_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS = "SDL_WINDOWS_FORCE_MUTEX_CRITICAL_SECTIONS";
+pub const SDL_HINT_WINDOWS_FORCE_SEMAPHORE_KERNEL = "SDL_WINDOWS_FORCE_SEMAPHORE_KERNEL";
+pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON = "SDL_WINDOWS_INTRESOURCE_ICON";
+pub const SDL_HINT_WINDOWS_INTRESOURCE_ICON_SMALL = "SDL_WINDOWS_INTRESOURCE_ICON_SMALL";
+pub const SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4 = "SDL_WINDOWS_NO_CLOSE_ON_ALT_F4";
+pub const SDL_HINT_WINDOWS_USE_D3D9EX = "SDL_WINDOWS_USE_D3D9EX";
+pub const SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN = "SDL_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN";
+pub const SDL_HINT_WINRT_HANDLE_BACK_BUTTON = "SDL_WINRT_HANDLE_BACK_BUTTON";
+pub const SDL_HINT_WINRT_PRIVACY_POLICY_LABEL = "SDL_WINRT_PRIVACY_POLICY_LABEL";
+pub const SDL_HINT_WINRT_PRIVACY_POLICY_URL = "SDL_WINRT_PRIVACY_POLICY_URL";
+pub const SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT = "SDL_X11_FORCE_OVERRIDE_REDIRECT";
+pub const SDL_HINT_XINPUT_ENABLED = "SDL_XINPUT_ENABLED";
+pub const SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING = "SDL_XINPUT_USE_OLD_JOYSTICK_MAPPING";
+pub const SDL_HINT_AUDIO_INCLUDE_MONITORS = "SDL_AUDIO_INCLUDE_MONITORS";
+pub const SDL_loadso_h_ = "";
+pub const SDL_log_h_ = "";
+pub const SDL_MAX_LOG_MESSAGE = @as(c_int, 4096);
+pub const SDL_messagebox_h_ = "";
+pub const SDL_metal_h_ = "";
+pub const SDL_power_h_ = "";
+pub const SDL_render_h_ = "";
+pub const SDL_shape_h_ = "";
+pub const SDL_NONSHAPEABLE_WINDOW = -@as(c_int, 1);
+pub const SDL_INVALID_SHAPE_ARGUMENT = -@as(c_int, 2);
+pub const SDL_WINDOW_LACKS_SHAPE = -@as(c_int, 3);
+pub inline fn SDL_SHAPEMODEALPHA(mode: anytype) @TypeOf(((mode == ShapeModeDefault) or (mode == ShapeModeBinarizeAlpha)) or (mode == ShapeModeReverseBinarizeAlpha)) {
     return ((mode == ShapeModeDefault) or (mode == ShapeModeBinarizeAlpha)) or (mode == ShapeModeReverseBinarizeAlpha);
 }
-pub fn SDL_TICKS_PASSED(A: anytype, B: anytype) @TypeOf((@import("std").meta.cast(Sint32, B - A)) <= 0) {
-    return (@import("std").meta.cast(Sint32, B - A)) <= 0;
+pub const SDL_system_h_ = "";
+pub const SDL_timer_h_ = "";
+pub inline fn SDL_TICKS_PASSED(A: anytype, B: anytype) @TypeOf(@import("std").zig.c_translation.cast(Sint32, B - A) <= @as(c_int, 0)) {
+    return @import("std").zig.c_translation.cast(Sint32, B - A) <= @as(c_int, 0);
 }
-pub const SDL_MAJOR_VERSION = 2;
-pub const SDL_MINOR_VERSION = 0;
-pub const SDL_PATCHLEVEL = 13;
-pub fn SDL_VERSIONNUM(X: anytype, Y: anytype, Z: anytype) @TypeOf(((X * 1000) + (Y * 100)) + Z) {
-    return ((X * 1000) + (Y * 100)) + Z;
+pub const SDL_version_h_ = "";
+pub const SDL_MAJOR_VERSION = @as(c_int, 2);
+pub const SDL_MINOR_VERSION = @as(c_int, 0);
+pub const SDL_PATCHLEVEL = @as(c_int, 16);
+pub inline fn SDL_VERSIONNUM(X: anytype, Y: anytype, Z: anytype) @TypeOf(((X * @as(c_int, 1000)) + (Y * @as(c_int, 100))) + Z) {
+    return ((X * @as(c_int, 1000)) + (Y * @as(c_int, 100))) + Z;
 }
 pub const SDL_COMPILEDVERSION = SDL_VERSIONNUM(SDL_MAJOR_VERSION, SDL_MINOR_VERSION, SDL_PATCHLEVEL);
-pub fn SDL_VERSION_ATLEAST(X: anytype, Y: anytype, Z: anytype) @TypeOf(SDL_COMPILEDVERSION >= SDL_VERSIONNUM(X, Y, Z)) {
+pub inline fn SDL_VERSION_ATLEAST(X: anytype, Y: anytype, Z: anytype) @TypeOf(SDL_COMPILEDVERSION >= SDL_VERSIONNUM(X, Y, Z)) {
     return SDL_COMPILEDVERSION >= SDL_VERSIONNUM(X, Y, Z);
 }
+pub const _SDL_locale_h = "";
+pub const SDL_misc_h_ = "";
 pub const SDL_INIT_TIMER = @as(c_uint, 0x00000001);
 pub const SDL_INIT_AUDIO = @as(c_uint, 0x00000010);
 pub const SDL_INIT_VIDEO = @as(c_uint, 0x00000020);
@@ -4062,5 +4366,5 @@ pub const SDL_INIT_HAPTIC = @as(c_uint, 0x00001000);
 pub const SDL_INIT_GAMECONTROLLER = @as(c_uint, 0x00002000);
 pub const SDL_INIT_EVENTS = @as(c_uint, 0x00004000);
 pub const SDL_INIT_SENSOR = @as(c_uint, 0x00008000);
-pub const SDL_INIT_NOPARACHUTE = @as(c_uint, 0x00100000);
+pub const SDL_INIT_NOPARACHUTE = @import("std").zig.c_translation.promoteIntLiteral(c_uint, 0x00100000, .hexadecimal);
 pub const SDL_INIT_EVERYTHING = ((((((SDL_INIT_TIMER | SDL_INIT_AUDIO) | SDL_INIT_VIDEO) | SDL_INIT_EVENTS) | SDL_INIT_JOYSTICK) | SDL_INIT_HAPTIC) | SDL_INIT_GAMECONTROLLER) | SDL_INIT_SENSOR;

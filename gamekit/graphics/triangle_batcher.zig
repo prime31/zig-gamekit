@@ -17,11 +17,11 @@ pub const TriangleBatcher = struct {
     vert_count: i32 = 0, // total verts that we have not yet rendered
     buffer_offset: i32 = 0, // offset into the vertex buffer of the first non-rendered vert
 
-    fn createDynamicMesh(allocator: *std.mem.Allocator, max_tris: u16) !DynamicMesh(void, Vertex) {
+    fn createDynamicMesh(allocator: std.mem.Allocator, max_tris: u16) !DynamicMesh(void, Vertex) {
         return try DynamicMesh(void, Vertex).init(allocator, max_tris * 3, &[_]void{});
     }
 
-    pub fn init(allocator: *std.mem.Allocator, max_tris: u16) !TriangleBatcher {
+    pub fn init(allocator: std.mem.Allocator, max_tris: u16) !TriangleBatcher {
         var batcher = TriangleBatcher{
             .mesh = try createDynamicMesh(allocator, max_tris * 3),
             .draw_calls = try std.ArrayList(i32).initCapacity(allocator, 10),
@@ -91,7 +91,7 @@ pub const TriangleBatcher = struct {
 
                 self.mesh.deinit();
                 self.mesh = try createDynamicMesh(self.mesh.allocator, @intCast(u16, new_max_tris));
-                std.debug.print("Metal buffer overflow. TriangleBatcher creating new buffer with max_tris {}\n", .{new_max_tris});
+                std.log.print("Metal buffer overflow. TriangleBatcher creating new buffer with max_tris {}\n", .{new_max_tris});
             } else {
                 return error.OutOfSpace;
             }
@@ -105,7 +105,7 @@ pub const TriangleBatcher = struct {
 
     pub fn drawTriangle(self: *TriangleBatcher, pt1: math.Vec2, pt2: math.Vec2, pt3: math.Vec2, color: math.Color) void {
         self.ensureCapacity() catch |err| {
-            std.debug.warn("TriangleBatcher.draw failed to append a draw call with error: {}\n", .{err});
+            std.log.warn("TriangleBatcher.draw failed to append a draw call with error: {}\n", .{err});
             return;
         };
 

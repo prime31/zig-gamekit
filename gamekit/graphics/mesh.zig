@@ -44,9 +44,9 @@ pub fn DynamicMesh(comptime IndexT: type, comptime VertT: type) type {
         bindings: renderkit.BufferBindings,
         verts: []VertT,
         element_count: c_int,
-        allocator: *std.mem.Allocator,
+        allocator: std.mem.Allocator,
 
-        pub fn init(allocator: *std.mem.Allocator, vertex_count: usize, indices: []IndexT) !Self {
+        pub fn init(allocator: std.mem.Allocator, vertex_count: usize, indices: []IndexT) !Self {
             var ibuffer = if (IndexT == void) @as(renderer.Buffer, 0) else renderer.createBuffer(IndexT, .{
                 .type = .index,
                 .content = indices,

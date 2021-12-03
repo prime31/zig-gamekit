@@ -25,7 +25,7 @@ fn defaultVertexShader() [:0]const u8 {
     return switch (rk.current_renderer) {
         .opengl => @embedFile("../assets/sprite_vs.glsl"),
         .metal => @embedFile("../assets/sprite_vs.metal"),
-        else => @panic("no default vert shader for renderer: " ++ renderkit.current_renderer),
+        else => @panic("no default vert shader for renderer: " ++ rk.current_renderer),
     };
 }
 
@@ -33,7 +33,7 @@ fn defaultFragmentShader() [:0]const u8 {
     return switch (rk.current_renderer) {
         .opengl => @embedFile("../assets/sprite_fs.glsl"),
         .metal => @embedFile("../assets/sprite_fs.metal"),
-        else => @panic("no default vert shader for renderer: " ++ renderkit.current_renderer),
+        else => @panic("no default vert shader for renderer: " ++ rk.current_renderer),
     };
 }
 
@@ -46,7 +46,7 @@ pub const Shader = struct {
 
     pub const ShaderOptions = struct {
         /// if vert and frag are file paths an Allocator is required. If they are the shader code then no Allocator should be provided
-        allocator: ?*std.mem.Allocator = null,
+        allocator: ?std.mem.Allocator = null,
 
         /// optional vertex shader file path (without extension) or shader code. If null, the default sprite shader vertex shader is used
         vert: ?[:0]const u8 = null,

@@ -38,6 +38,7 @@ pub const Time = struct {
     }
 
     pub fn sleep(self: Time, ms: u32) void {
+        _ = self;
         sdl.SDL_Delay(ms);
     }
 
@@ -46,10 +47,12 @@ pub const Time = struct {
     }
 
     pub fn ticks(self: Time) u32 {
+        _ = self;
         return sdl.SDL_GetTicks();
     }
 
     pub fn seconds(self: Time) f32 {
+        _ = self;
         return @intToFloat(f32, sdl.SDL_GetTicks()) / 1000;
     }
 
@@ -66,25 +69,29 @@ pub const Time = struct {
     }
 
     pub fn now(self: Time) u64 {
+        _ = self;
         return sdl.SDL_GetPerformanceCounter();
     }
 
     /// returns the time in milliseconds since the last call
-    pub fn laptime(self: Time, last_time: *u64) f64 {
-        tmp = last_time;
-        const now = self.now();
+    pub fn laptime(self: Time, last_time: *f64) f64 {
+        var tmp = last_time;
+        // now
+        const n = self.now();
 
-        const dt: f64 = if (tmp.* != 0) {
-            @intToFloat(f64, ((now - tmp.*) * 1000.0) / @intToFloat(f64, sdl.SDL_GetPerformanceFrequency()));
+        const curr_dt: f64 = if (tmp.* != 0) {
+            @intToFloat(f64, ((n - tmp.*) * 1000.0) / @intToFloat(f64, sdl.SDL_GetPerformanceFrequency()));
         } else 0;
-        return dt;
+        return curr_dt;
     }
 
     pub fn toSeconds(self: Time, perf_counter_time: u64) f64 {
+        _ = self;
         return @intToFloat(f64, perf_counter_time) / @intToFloat(f64, sdl.SDL_GetPerformanceFrequency());
     }
 
     pub fn toMs(self: Time, perf_counter_time: u64) f64 {
+        _ = self;
         return @intToFloat(f64, perf_counter_time) * 1000 / @intToFloat(f64, sdl.SDL_GetPerformanceFrequency());
     }
 

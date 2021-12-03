@@ -13,6 +13,7 @@ var state = struct {
 
 // public methods
 pub fn init(window: *sdl.SDL_Window, docking: bool, viewports: bool, icon_font: bool) void {
+    _ = window;
     state.renderer = Renderer.init(docking, viewports, icon_font);
     state.events = Events.init();
 }
