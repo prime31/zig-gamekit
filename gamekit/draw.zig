@@ -60,6 +60,18 @@ pub const draw = struct {
         batcher.draw(texture, quad, mat, math.Color.white);
     }
 
+    pub fn texScaleOriginRotation(texture: Texture, x: f32, y: f32, scale: f32, ox: f32, oy: f32, angle: f32) void {
+        quad.setFill(texture.width, texture.height);
+
+        var mat = math.Mat32.initTransform(.{ .x = x, .y = y, .sx = scale, .sy = scale, .ox = ox, .oy = oy, .angle = angle });
+        batcher.draw(texture, quad, mat, math.Color.white);
+    }
+
+    pub fn texMatrix(texture: Texture, mat: math.Mat32) void {
+        quad.setFill(texture.width, texture.height);
+        batcher.draw(texture, quad, mat, math.Color.white);
+    }
+
     pub fn texViewport(texture: Texture, viewport: math.RectI, transform: math.Mat32) void {
         quad.setImageDimensions(texture.width, texture.height);
         quad.setViewportRectI(viewport);
