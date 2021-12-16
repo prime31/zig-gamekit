@@ -35,7 +35,7 @@ pub const Texture = struct {
 
     pub fn initFromFile(allocator: std.mem.Allocator, file: []const u8, filter: renderkit.TextureFilter) !Texture {
         const image_contents = try fs.read(allocator, file);
-        errdefer allocator.free(image_contents);
+        defer allocator.free(image_contents);
 
         var w: c_int = undefined;
         var h: c_int = undefined;
