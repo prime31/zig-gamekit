@@ -19,7 +19,7 @@ pub const MultiBatcher = struct {
     textures: [8]rk.Image = undefined,
     last_texture: usize = 0,
 
-    pub fn init(allocator: *std.mem.Allocator, max_sprites: usize) MultiBatcher {
+    pub fn init(allocator: std.mem.Allocator, max_sprites: usize) MultiBatcher {
         if (max_sprites * 6 > std.math.maxInt(u16)) @panic("max_sprites exceeds u16 index buffer size");
 
         var indices = allocator.alloc(u16, max_sprites * 6) catch unreachable;

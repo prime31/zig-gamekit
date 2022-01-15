@@ -131,7 +131,7 @@ pub const FontBook = struct {
         return std.mem.zeroes(fons.Quad);
     }
 
-    fn renderCreate(ctx: ?*c_void, width: c_int, height: c_int) callconv(.C) c_int {
+    fn renderCreate(ctx: ?*anyopaque, width: c_int, height: c_int) callconv(.C) c_int {
         var self = @ptrCast(*FontBook, @alignCast(@alignOf(FontBook), ctx));
 
         if (self.texture != null and (self.texture.?.width != @intToFloat(f32, width) or self.texture.?.height != @intToFloat(f32, height))) {
@@ -148,11 +148,11 @@ pub const FontBook = struct {
         return 1;
     }
 
-    fn renderResize(ctx: ?*c_void, width: c_int, height: c_int) callconv(.C) c_int {
+    fn renderResize(ctx: ?*anyopaque, width: c_int, height: c_int) callconv(.C) c_int {
         return renderCreate(ctx, width, height);
     }
 
-    fn renderUpdate(ctx: ?*c_void, rect: [*c]c_int, data: [*c]const u8) callconv(.C) c_int {
+    fn renderUpdate(ctx: ?*anyopaque, rect: [*c]c_int, data: [*c]const u8) callconv(.C) c_int {
         // TODO: only update the rect that changed
         _ = rect;
 

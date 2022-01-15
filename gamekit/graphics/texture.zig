@@ -129,6 +129,6 @@ pub const Texture = struct {
     }
 
     pub fn imTextureID(self: Texture) imgui.ImTextureID {
-        return @intToPtr(*c_void, self.img);
+        return @intToPtr(*anyopaque, self.img);
     }
 };

@@ -73,7 +73,7 @@ pub const Events = struct {
         }
     }
 
-    fn getClipboardTextFn(ctx: ?*c_void) callconv(.C) [*c]const u8 {
+    fn getClipboardTextFn(ctx: ?*anyopaque) callconv(.C) [*c]const u8 {
         _ = ctx;
         if (clipboard_text) |txt| {
             sdl.SDL_free(txt);
@@ -83,7 +83,7 @@ pub const Events = struct {
         return clipboard_text;
     }
 
-    fn setClipboardTextFn(ctx: ?*c_void, text: [*c]const u8) callconv(.C) void {
+    fn setClipboardTextFn(ctx: ?*anyopaque, text: [*c]const u8) callconv(.C) void {
         _ = ctx;
         _ = sdl.SDL_SetClipboardText(text);
     }

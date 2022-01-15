@@ -18,10 +18,10 @@ pub const Params = extern struct {
     width: c_int = 256,
     height: c_int = 256,
     flags: Flags = .top_left,
-    user_ptr: *c_void,
-    renderCreate: ?fn (?*c_void, c_int, c_int) callconv(.C) c_int = null,
-    renderResize: ?fn (?*c_void, c_int, c_int) callconv(.C) c_int = null,
-    renderUpdate: ?fn (?*c_void, [*c]c_int, [*c]const u8) callconv(.C) c_int = null,
+    user_ptr: *anyopaque,
+    renderCreate: ?fn (?*anyopaque, c_int, c_int) callconv(.C) c_int = null,
+    renderResize: ?fn (?*anyopaque, c_int, c_int) callconv(.C) c_int = null,
+    renderUpdate: ?fn (?*anyopaque, [*c]c_int, [*c]const u8) callconv(.C) c_int = null,
 };
 
 pub const Flags = enum(u8) {
@@ -90,7 +90,7 @@ pub const FONS_INVALID = -1;
 
 pub extern fn fonsCreateInternal(params: [*c]Params) ?*Context;
 pub extern fn fonsDeleteInternal(s: ?*Context) void;
-pub extern fn fonsSetErrorCallback(s: ?*Context, callback: ?fn (?*c_void, c_int, c_int) callconv(.C) void, uptr: ?*c_void) void;
+pub extern fn fonsSetErrorCallback(s: ?*Context, callback: ?fn (?*anyopaque, c_int, c_int) callconv(.C) void, uptr: ?*anyopaque) void;
 pub extern fn fonsGetAtlasSize(s: ?*Context, width: [*c]c_int, height: [*c]c_int) void;
 pub extern fn fonsExpandAtlas(s: ?*Context, width: c_int, height: c_int) c_int;
 pub extern fn fonsResetAtlas(stash: ?*Context, width: c_int, height: c_int) c_int;

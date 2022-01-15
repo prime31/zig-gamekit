@@ -12,6 +12,6 @@ pub fn main() !void {
 fn init() !void {}
 
 fn render() !void {
-    gk.gfx.beginPass(.{.color = Color.lime });
+    gk.gfx.beginPass(.{ .color = Color.lime });
     gk.gfx.endPass();
 }

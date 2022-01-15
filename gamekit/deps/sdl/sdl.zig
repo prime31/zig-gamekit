@@ -1,7 +1,7 @@
 const wchar_t = c_int;
 const __off_t = c_long;
 const __off64_t = c_long;
-const _IO_lock_t = c_void;
+const _IO_lock_t = anyopaque;
 const union_unnamed_5 = extern union {
     __wch: c_uint,
     __wchb: [4]u8,
@@ -13,12 +13,12 @@ const __mbstate_t = extern struct {
 const struct___va_list_tag = extern struct {
     gp_offset: c_uint,
     fp_offset: c_uint,
-    overflow_arg_area: ?*c_void,
-    reg_save_area: ?*c_void,
+    overflow_arg_area: ?*anyopaque,
+    reg_save_area: ?*anyopaque,
 };
 const __builtin_va_list = [1]struct___va_list_tag;
 const va_list = __builtin_va_list;
-const NULL = @import("std").zig.c_translation.cast(?*c_void, @as(c_int, 0));
+const NULL = @import("std").zig.c_translation.cast(?*anyopaque, @as(c_int, 0));
 const __builtin_bswap16 = @import("std").zig.c_builtins.__builtin_bswap16;
 const __builtin_bswap32 = @import("std").zig.c_builtins.__builtin_bswap32;
 const __builtin_bswap64 = @import("std").zig.c_builtins.__builtin_bswap64;
@@ -140,7 +140,7 @@ const struct__IO_FILE = extern struct {
     _codecvt: ?*struct__IO_codecvt,
     _wide_data: ?*struct__IO_wide_data,
     _freeres_list: [*c]struct__IO_FILE,
-    _freeres_buf: ?*c_void,
+    _freeres_buf: ?*anyopaque,
     __pad5: usize,
     _mode: c_int,
     _unused2: [20]u8,
@@ -193,20 +193,20 @@ const enum_unnamed_15 = enum(c_int) {
     _,
 };
 pub const SDL_compile_time_assert_enum = [1]c_int;
-pub extern fn SDL_malloc(size: usize) ?*c_void;
-pub extern fn SDL_calloc(nmemb: usize, size: usize) ?*c_void;
-pub extern fn SDL_realloc(mem: ?*c_void, size: usize) ?*c_void;
-pub extern fn SDL_free(mem: ?*c_void) void;
-pub const SDL_malloc_func = ?fn (usize) callconv(.C) ?*c_void;
-pub const SDL_calloc_func = ?fn (usize, usize) callconv(.C) ?*c_void;
-pub const SDL_realloc_func = ?fn (?*c_void, usize) callconv(.C) ?*c_void;
-pub const SDL_free_func = ?fn (?*c_void) callconv(.C) void;
+pub extern fn SDL_malloc(size: usize) ?*anyopaque;
+pub extern fn SDL_calloc(nmemb: usize, size: usize) ?*anyopaque;
+pub extern fn SDL_realloc(mem: ?*anyopaque, size: usize) ?*anyopaque;
+pub extern fn SDL_free(mem: ?*anyopaque) void;
+pub const SDL_malloc_func = ?fn (usize) callconv(.C) ?*anyopaque;
+pub const SDL_calloc_func = ?fn (usize, usize) callconv(.C) ?*anyopaque;
+pub const SDL_realloc_func = ?fn (?*anyopaque, usize) callconv(.C) ?*anyopaque;
+pub const SDL_free_func = ?fn (?*anyopaque) callconv(.C) void;
 pub extern fn SDL_GetMemoryFunctions(malloc_func: [*c]SDL_malloc_func, calloc_func: [*c]SDL_calloc_func, realloc_func: [*c]SDL_realloc_func, free_func: [*c]SDL_free_func) void;
 pub extern fn SDL_SetMemoryFunctions(malloc_func: SDL_malloc_func, calloc_func: SDL_calloc_func, realloc_func: SDL_realloc_func, free_func: SDL_free_func) c_int;
 pub extern fn SDL_GetNumAllocations() c_int;
 pub extern fn SDL_getenv(name: [*c]const u8) [*c]u8;
 pub extern fn SDL_setenv(name: [*c]const u8, value: [*c]const u8, overwrite: c_int) c_int;
-pub extern fn SDL_qsort(base: ?*c_void, nmemb: usize, size: usize, compare: ?fn (?*const c_void, ?*const c_void) callconv(.C) c_int) void;
+pub extern fn SDL_qsort(base: ?*anyopaque, nmemb: usize, size: usize, compare: ?fn (?*const anyopaque, ?*const anyopaque) callconv(.C) c_int) void;
 pub extern fn SDL_abs(x: c_int) c_int;
 pub extern fn SDL_isalpha(x: c_int) c_int;
 pub extern fn SDL_isalnum(x: c_int) c_int;
@@ -222,13 +222,13 @@ pub extern fn SDL_isprint(x: c_int) c_int;
 pub extern fn SDL_isgraph(x: c_int) c_int;
 pub extern fn SDL_toupper(x: c_int) c_int;
 pub extern fn SDL_tolower(x: c_int) c_int;
-pub extern fn SDL_crc32(crc: Uint32, data: ?*const c_void, len: usize) Uint32;
-pub extern fn SDL_memset(dst: ?*c_void, c: c_int, len: usize) ?*c_void; // /usr/include/SDL2/SDL_stdinc.h:491:9: warning: TODO complex switch
+pub extern fn SDL_crc32(crc: Uint32, data: ?*const anyopaque, len: usize) Uint32;
+pub extern fn SDL_memset(dst: ?*anyopaque, c: c_int, len: usize) ?*anyopaque; // /usr/include/SDL2/SDL_stdinc.h:491:9: warning: TODO complex switch
 // /usr/include/SDL2/SDL_stdinc.h:462:23: warning: unable to translate function, demoted to extern
-pub extern fn SDL_memset4(arg_dst: ?*c_void, arg_val: Uint32, arg_dwords: usize) void;
-pub extern fn SDL_memcpy(dst: ?*c_void, src: ?*const c_void, len: usize) ?*c_void;
-pub extern fn SDL_memmove(dst: ?*c_void, src: ?*const c_void, len: usize) ?*c_void;
-pub extern fn SDL_memcmp(s1: ?*const c_void, s2: ?*const c_void, len: usize) c_int;
+pub extern fn SDL_memset4(arg_dst: ?*anyopaque, arg_val: Uint32, arg_dwords: usize) void;
+pub extern fn SDL_memcpy(dst: ?*anyopaque, src: ?*const anyopaque, len: usize) ?*anyopaque;
+pub extern fn SDL_memmove(dst: ?*anyopaque, src: ?*const anyopaque, len: usize) ?*anyopaque;
+pub extern fn SDL_memcmp(s1: ?*const anyopaque, s2: ?*const anyopaque, len: usize) c_int;
 pub extern fn SDL_wcslen(wstr: [*c]const wchar_t) usize;
 pub extern fn SDL_wcslcpy(dst: [*c]wchar_t, src: [*c]const wchar_t, maxlen: usize) usize;
 pub extern fn SDL_wcslcat(dst: [*c]wchar_t, src: [*c]const wchar_t, maxlen: usize) usize;
@@ -320,7 +320,7 @@ pub extern fn SDL_iconv_open(tocode: [*c]const u8, fromcode: [*c]const u8) SDL_i
 pub extern fn SDL_iconv_close(cd: SDL_iconv_t) c_int;
 pub extern fn SDL_iconv(cd: SDL_iconv_t, inbuf: [*c][*c]const u8, inbytesleft: [*c]usize, outbuf: [*c][*c]u8, outbytesleft: [*c]usize) usize;
 pub extern fn SDL_iconv_string(tocode: [*c]const u8, fromcode: [*c]const u8, inbuf: [*c]const u8, inbytesleft: usize) [*c]u8;
-pub inline fn SDL_memcpy4(arg_dst: ?*c_void, arg_src: ?*const c_void, arg_dwords: usize) ?*c_void {
+pub inline fn SDL_memcpy4(arg_dst: ?*anyopaque, arg_src: ?*const anyopaque, arg_dwords: usize) ?*anyopaque {
     var dst = arg_dst;
     var src = arg_src;
     var dwords = arg_dwords;
@@ -354,10 +354,10 @@ pub const struct_SDL_AssertData = extern struct {
 };
 pub const SDL_AssertData = struct_SDL_AssertData;
 pub extern fn SDL_ReportAssertion([*c]SDL_AssertData, [*c]const u8, [*c]const u8, c_int) SDL_AssertState;
-pub const SDL_AssertionHandler = ?fn ([*c]const SDL_AssertData, ?*c_void) callconv(.C) SDL_AssertState;
-pub extern fn SDL_SetAssertionHandler(handler: SDL_AssertionHandler, userdata: ?*c_void) void;
+pub const SDL_AssertionHandler = ?fn ([*c]const SDL_AssertData, ?*anyopaque) callconv(.C) SDL_AssertState;
+pub extern fn SDL_SetAssertionHandler(handler: SDL_AssertionHandler, userdata: ?*anyopaque) void;
 pub extern fn SDL_GetDefaultAssertionHandler() SDL_AssertionHandler;
-pub extern fn SDL_GetAssertionHandler(puserdata: [*c]?*c_void) SDL_AssertionHandler;
+pub extern fn SDL_GetAssertionHandler(puserdata: [*c]?*anyopaque) SDL_AssertionHandler;
 pub extern fn SDL_GetAssertionReport() [*c]const SDL_AssertData;
 pub extern fn SDL_ResetAssertionReport() void;
 pub const SDL_SpinLock = c_int;
@@ -373,9 +373,9 @@ pub extern fn SDL_AtomicCAS(a: [*c]SDL_atomic_t, oldval: c_int, newval: c_int) S
 pub extern fn SDL_AtomicSet(a: [*c]SDL_atomic_t, v: c_int) c_int;
 pub extern fn SDL_AtomicGet(a: [*c]SDL_atomic_t) c_int;
 pub extern fn SDL_AtomicAdd(a: [*c]SDL_atomic_t, v: c_int) c_int;
-pub extern fn SDL_AtomicCASPtr(a: [*c]?*c_void, oldval: ?*c_void, newval: ?*c_void) SDL_bool;
-pub extern fn SDL_AtomicSetPtr(a: [*c]?*c_void, v: ?*c_void) ?*c_void;
-pub extern fn SDL_AtomicGetPtr(a: [*c]?*c_void) ?*c_void;
+pub extern fn SDL_AtomicCASPtr(a: [*c]?*anyopaque, oldval: ?*anyopaque, newval: ?*anyopaque) SDL_bool;
+pub extern fn SDL_AtomicSetPtr(a: [*c]?*anyopaque, v: ?*anyopaque) ?*anyopaque;
+pub extern fn SDL_AtomicGetPtr(a: [*c]?*anyopaque) ?*anyopaque;
 pub extern fn SDL_SetError(fmt: [*c]const u8, ...) c_int;
 pub extern fn SDL_GetError() [*c]const u8;
 pub extern fn SDL_GetErrorMsg(errstr: [*c]u8, maxlen: c_int) [*c]u8;
@@ -449,9 +449,9 @@ const enum_unnamed_19 = enum(c_int) {
     _,
 };
 pub const SDL_ThreadPriority = enum_unnamed_19;
-pub const SDL_ThreadFunction = ?fn (?*c_void) callconv(.C) c_int;
-pub extern fn SDL_CreateThread(@"fn": SDL_ThreadFunction, name: [*c]const u8, data: ?*c_void) ?*SDL_Thread;
-pub extern fn SDL_CreateThreadWithStackSize(@"fn": SDL_ThreadFunction, name: [*c]const u8, stacksize: usize, data: ?*c_void) ?*SDL_Thread;
+pub const SDL_ThreadFunction = ?fn (?*anyopaque) callconv(.C) c_int;
+pub extern fn SDL_CreateThread(@"fn": SDL_ThreadFunction, name: [*c]const u8, data: ?*anyopaque) ?*SDL_Thread;
+pub extern fn SDL_CreateThreadWithStackSize(@"fn": SDL_ThreadFunction, name: [*c]const u8, stacksize: usize, data: ?*anyopaque) ?*SDL_Thread;
 pub extern fn SDL_GetThreadName(thread: ?*SDL_Thread) [*c]const u8;
 pub extern fn SDL_ThreadID() SDL_threadID;
 pub extern fn SDL_GetThreadID(thread: ?*SDL_Thread) SDL_threadID;
@@ -459,8 +459,8 @@ pub extern fn SDL_SetThreadPriority(priority: SDL_ThreadPriority) c_int;
 pub extern fn SDL_WaitThread(thread: ?*SDL_Thread, status: [*c]c_int) void;
 pub extern fn SDL_DetachThread(thread: ?*SDL_Thread) void;
 pub extern fn SDL_TLSCreate() SDL_TLSID;
-pub extern fn SDL_TLSGet(id: SDL_TLSID) ?*c_void;
-pub extern fn SDL_TLSSet(id: SDL_TLSID, value: ?*const c_void, destructor: ?fn (?*c_void) callconv(.C) void) c_int;
+pub extern fn SDL_TLSGet(id: SDL_TLSID) ?*anyopaque;
+pub extern fn SDL_TLSSet(id: SDL_TLSID, value: ?*const anyopaque, destructor: ?fn (?*anyopaque) callconv(.C) void) c_int;
 pub extern fn SDL_TLSCleanup() void;
 const struct_unnamed_10 = extern struct {
     autoclose: SDL_bool,
@@ -472,8 +472,8 @@ const struct_unnamed_11 = extern struct {
     stop: [*c]Uint8,
 };
 const struct_unnamed_12 = extern struct {
-    data1: ?*c_void,
-    data2: ?*c_void,
+    data1: ?*anyopaque,
+    data2: ?*anyopaque,
 };
 const union_unnamed_9 = extern union {
     stdio: struct_unnamed_10,
@@ -483,8 +483,8 @@ const union_unnamed_9 = extern union {
 pub const struct_SDL_RWops = extern struct {
     size: ?fn ([*c]struct_SDL_RWops) callconv(.C) Sint64,
     seek: ?fn ([*c]struct_SDL_RWops, Sint64, c_int) callconv(.C) Sint64,
-    read: ?fn ([*c]struct_SDL_RWops, ?*c_void, usize, usize) callconv(.C) usize,
-    write: ?fn ([*c]struct_SDL_RWops, ?*const c_void, usize, usize) callconv(.C) usize,
+    read: ?fn ([*c]struct_SDL_RWops, ?*anyopaque, usize, usize) callconv(.C) usize,
+    write: ?fn ([*c]struct_SDL_RWops, ?*const anyopaque, usize, usize) callconv(.C) usize,
     close: ?fn ([*c]struct_SDL_RWops) callconv(.C) c_int,
     type: Uint32,
     hidden: union_unnamed_9,
@@ -492,18 +492,18 @@ pub const struct_SDL_RWops = extern struct {
 pub const SDL_RWops = struct_SDL_RWops;
 pub extern fn SDL_RWFromFile(file: [*c]const u8, mode: [*c]const u8) [*c]SDL_RWops;
 pub extern fn SDL_RWFromFP(fp: [*c]FILE, autoclose: SDL_bool) [*c]SDL_RWops;
-pub extern fn SDL_RWFromMem(mem: ?*c_void, size: c_int) [*c]SDL_RWops;
-pub extern fn SDL_RWFromConstMem(mem: ?*const c_void, size: c_int) [*c]SDL_RWops;
+pub extern fn SDL_RWFromMem(mem: ?*anyopaque, size: c_int) [*c]SDL_RWops;
+pub extern fn SDL_RWFromConstMem(mem: ?*const anyopaque, size: c_int) [*c]SDL_RWops;
 pub extern fn SDL_AllocRW() [*c]SDL_RWops;
 pub extern fn SDL_FreeRW(area: [*c]SDL_RWops) void;
 pub extern fn SDL_RWsize(context: [*c]SDL_RWops) Sint64;
 pub extern fn SDL_RWseek(context: [*c]SDL_RWops, offset: Sint64, whence: c_int) Sint64;
 pub extern fn SDL_RWtell(context: [*c]SDL_RWops) Sint64;
-pub extern fn SDL_RWread(context: [*c]SDL_RWops, ptr: ?*c_void, size: usize, maxnum: usize) usize;
-pub extern fn SDL_RWwrite(context: [*c]SDL_RWops, ptr: ?*const c_void, size: usize, num: usize) usize;
+pub extern fn SDL_RWread(context: [*c]SDL_RWops, ptr: ?*anyopaque, size: usize, maxnum: usize) usize;
+pub extern fn SDL_RWwrite(context: [*c]SDL_RWops, ptr: ?*const anyopaque, size: usize, num: usize) usize;
 pub extern fn SDL_RWclose(context: [*c]SDL_RWops) c_int;
-pub extern fn SDL_LoadFile_RW(src: [*c]SDL_RWops, datasize: [*c]usize, freesrc: c_int) ?*c_void;
-pub extern fn SDL_LoadFile(file: [*c]const u8, datasize: [*c]usize) ?*c_void;
+pub extern fn SDL_LoadFile_RW(src: [*c]SDL_RWops, datasize: [*c]usize, freesrc: c_int) ?*anyopaque;
+pub extern fn SDL_LoadFile(file: [*c]const u8, datasize: [*c]usize) ?*anyopaque;
 pub extern fn SDL_ReadU8(src: [*c]SDL_RWops) Uint8;
 pub extern fn SDL_ReadLE16(src: [*c]SDL_RWops) Uint16;
 pub extern fn SDL_ReadBE16(src: [*c]SDL_RWops) Uint16;
@@ -519,7 +519,7 @@ pub extern fn SDL_WriteBE32(dst: [*c]SDL_RWops, value: Uint32) usize;
 pub extern fn SDL_WriteLE64(dst: [*c]SDL_RWops, value: Uint64) usize;
 pub extern fn SDL_WriteBE64(dst: [*c]SDL_RWops, value: Uint64) usize;
 pub const SDL_AudioFormat = Uint16;
-pub const SDL_AudioCallback = ?fn (?*c_void, [*c]Uint8, c_int) callconv(.C) void;
+pub const SDL_AudioCallback = ?fn (?*anyopaque, [*c]Uint8, c_int) callconv(.C) void;
 pub const struct_SDL_AudioSpec = extern struct {
     freq: c_int,
     format: SDL_AudioFormat,
@@ -529,7 +529,7 @@ pub const struct_SDL_AudioSpec = extern struct {
     padding: Uint16,
     size: Uint32,
     callback: SDL_AudioCallback,
-    userdata: ?*c_void,
+    userdata: ?*anyopaque,
 };
 pub const SDL_AudioSpec = struct_SDL_AudioSpec;
 pub const SDL_AudioFilter = ?fn ([*c]struct_SDL_AudioCVT, SDL_AudioFormat) callconv(.C) void;
@@ -579,16 +579,16 @@ pub extern fn SDL_ConvertAudio(cvt: [*c]SDL_AudioCVT) c_int;
 pub const struct__SDL_AudioStream = opaque {};
 pub const SDL_AudioStream = struct__SDL_AudioStream;
 pub extern fn SDL_NewAudioStream(src_format: SDL_AudioFormat, src_channels: Uint8, src_rate: c_int, dst_format: SDL_AudioFormat, dst_channels: Uint8, dst_rate: c_int) ?*SDL_AudioStream;
-pub extern fn SDL_AudioStreamPut(stream: ?*SDL_AudioStream, buf: ?*const c_void, len: c_int) c_int;
-pub extern fn SDL_AudioStreamGet(stream: ?*SDL_AudioStream, buf: ?*c_void, len: c_int) c_int;
+pub extern fn SDL_AudioStreamPut(stream: ?*SDL_AudioStream, buf: ?*const anyopaque, len: c_int) c_int;
+pub extern fn SDL_AudioStreamGet(stream: ?*SDL_AudioStream, buf: ?*anyopaque, len: c_int) c_int;
 pub extern fn SDL_AudioStreamAvailable(stream: ?*SDL_AudioStream) c_int;
 pub extern fn SDL_AudioStreamFlush(stream: ?*SDL_AudioStream) c_int;
 pub extern fn SDL_AudioStreamClear(stream: ?*SDL_AudioStream) void;
 pub extern fn SDL_FreeAudioStream(stream: ?*SDL_AudioStream) void;
 pub extern fn SDL_MixAudio(dst: [*c]Uint8, src: [*c]const Uint8, len: Uint32, volume: c_int) void;
 pub extern fn SDL_MixAudioFormat(dst: [*c]Uint8, src: [*c]const Uint8, format: SDL_AudioFormat, len: Uint32, volume: c_int) void;
-pub extern fn SDL_QueueAudio(dev: SDL_AudioDeviceID, data: ?*const c_void, len: Uint32) c_int;
-pub extern fn SDL_DequeueAudio(dev: SDL_AudioDeviceID, data: ?*c_void, len: Uint32) Uint32;
+pub extern fn SDL_QueueAudio(dev: SDL_AudioDeviceID, data: ?*const anyopaque, len: Uint32) c_int;
+pub extern fn SDL_DequeueAudio(dev: SDL_AudioDeviceID, data: ?*anyopaque, len: Uint32) Uint32;
 pub extern fn SDL_GetQueuedAudioSize(dev: SDL_AudioDeviceID) Uint32;
 pub extern fn SDL_ClearQueuedAudio(dev: SDL_AudioDeviceID) void;
 pub extern fn SDL_LockAudio() void;
@@ -618,9 +618,9 @@ pub extern fn SDL_HasARMSIMD() SDL_bool;
 pub extern fn SDL_HasNEON() SDL_bool;
 pub extern fn SDL_GetSystemRAM() c_int;
 pub extern fn SDL_SIMDGetAlignment() usize;
-pub extern fn SDL_SIMDAlloc(len: usize) ?*c_void;
-pub extern fn SDL_SIMDRealloc(mem: ?*c_void, len: usize) ?*c_void;
-pub extern fn SDL_SIMDFree(ptr: ?*c_void) void;
+pub extern fn SDL_SIMDAlloc(len: usize) ?*anyopaque;
+pub extern fn SDL_SIMDRealloc(mem: ?*anyopaque, len: usize) ?*anyopaque;
+pub extern fn SDL_SIMDFree(ptr: ?*anyopaque) void;
 pub const SDL_PIXELTYPE_UNKNOWN = @enumToInt(enum_unnamed_29.SDL_PIXELTYPE_UNKNOWN);
 pub const SDL_PIXELTYPE_INDEX1 = @enumToInt(enum_unnamed_29.SDL_PIXELTYPE_INDEX1);
 pub const SDL_PIXELTYPE_INDEX4 = @enumToInt(enum_unnamed_29.SDL_PIXELTYPE_INDEX4);
@@ -980,10 +980,10 @@ pub const struct_SDL_Surface = extern struct {
     w: c_int,
     h: c_int,
     pitch: c_int,
-    pixels: ?*c_void,
-    userdata: ?*c_void,
+    pixels: ?*anyopaque,
+    userdata: ?*anyopaque,
     locked: c_int,
-    list_blitmap: ?*c_void,
+    list_blitmap: ?*anyopaque,
     clip_rect: SDL_Rect,
     map: ?*struct_SDL_BlitMap,
     refcount: c_int,
@@ -1004,8 +1004,8 @@ const enum_unnamed_38 = enum(c_int) {
 pub const SDL_YUV_CONVERSION_MODE = enum_unnamed_38;
 pub extern fn SDL_CreateRGBSurface(flags: Uint32, width: c_int, height: c_int, depth: c_int, Rmask: Uint32, Gmask: Uint32, Bmask: Uint32, Amask: Uint32) [*c]SDL_Surface;
 pub extern fn SDL_CreateRGBSurfaceWithFormat(flags: Uint32, width: c_int, height: c_int, depth: c_int, format: Uint32) [*c]SDL_Surface;
-pub extern fn SDL_CreateRGBSurfaceFrom(pixels: ?*c_void, width: c_int, height: c_int, depth: c_int, pitch: c_int, Rmask: Uint32, Gmask: Uint32, Bmask: Uint32, Amask: Uint32) [*c]SDL_Surface;
-pub extern fn SDL_CreateRGBSurfaceWithFormatFrom(pixels: ?*c_void, width: c_int, height: c_int, depth: c_int, pitch: c_int, format: Uint32) [*c]SDL_Surface;
+pub extern fn SDL_CreateRGBSurfaceFrom(pixels: ?*anyopaque, width: c_int, height: c_int, depth: c_int, pitch: c_int, Rmask: Uint32, Gmask: Uint32, Bmask: Uint32, Amask: Uint32) [*c]SDL_Surface;
+pub extern fn SDL_CreateRGBSurfaceWithFormatFrom(pixels: ?*anyopaque, width: c_int, height: c_int, depth: c_int, pitch: c_int, format: Uint32) [*c]SDL_Surface;
 pub extern fn SDL_FreeSurface(surface: [*c]SDL_Surface) void;
 pub extern fn SDL_SetSurfacePalette(surface: [*c]SDL_Surface, palette: [*c]SDL_Palette) c_int;
 pub extern fn SDL_LockSurface(surface: [*c]SDL_Surface) c_int;
@@ -1028,7 +1028,7 @@ pub extern fn SDL_GetClipRect(surface: [*c]SDL_Surface, rect: [*c]SDL_Rect) void
 pub extern fn SDL_DuplicateSurface(surface: [*c]SDL_Surface) [*c]SDL_Surface;
 pub extern fn SDL_ConvertSurface(src: [*c]SDL_Surface, fmt: [*c]const SDL_PixelFormat, flags: Uint32) [*c]SDL_Surface;
 pub extern fn SDL_ConvertSurfaceFormat(src: [*c]SDL_Surface, pixel_format: Uint32, flags: Uint32) [*c]SDL_Surface;
-pub extern fn SDL_ConvertPixels(width: c_int, height: c_int, src_format: Uint32, src: ?*const c_void, src_pitch: c_int, dst_format: Uint32, dst: ?*c_void, dst_pitch: c_int) c_int;
+pub extern fn SDL_ConvertPixels(width: c_int, height: c_int, src_format: Uint32, src: ?*const anyopaque, src_pitch: c_int, dst_format: Uint32, dst: ?*anyopaque, dst_pitch: c_int) c_int;
 pub extern fn SDL_FillRect(dst: [*c]SDL_Surface, rect: [*c]const SDL_Rect, color: Uint32) c_int;
 pub extern fn SDL_FillRects(dst: [*c]SDL_Surface, rects: [*c]const SDL_Rect, count: c_int, color: Uint32) c_int;
 pub extern fn SDL_UpperBlit(src: [*c]SDL_Surface, srcrect: [*c]const SDL_Rect, dst: [*c]SDL_Surface, dstrect: [*c]SDL_Rect) c_int;
@@ -1045,7 +1045,7 @@ pub const SDL_DisplayMode = extern struct {
     w: c_int,
     h: c_int,
     refresh_rate: c_int,
-    driverdata: ?*c_void,
+    driverdata: ?*anyopaque,
 };
 pub const struct_SDL_Window = opaque {};
 pub const SDL_Window = struct_SDL_Window;
@@ -1161,7 +1161,7 @@ const enum_unnamed_43 = enum(c_int) {
     _,
 };
 pub const SDL_DisplayOrientation = enum_unnamed_43;
-pub const SDL_GLContext = ?*c_void;
+pub const SDL_GLContext = ?*anyopaque;
 pub const SDL_GL_RED_SIZE = @enumToInt(enum_unnamed_44.SDL_GL_RED_SIZE);
 pub const SDL_GL_GREEN_SIZE = @enumToInt(enum_unnamed_44.SDL_GL_GREEN_SIZE);
 pub const SDL_GL_BLUE_SIZE = @enumToInt(enum_unnamed_44.SDL_GL_BLUE_SIZE);
@@ -1280,15 +1280,15 @@ pub extern fn SDL_SetWindowDisplayMode(window: ?*SDL_Window, mode: [*c]const SDL
 pub extern fn SDL_GetWindowDisplayMode(window: ?*SDL_Window, mode: [*c]SDL_DisplayMode) c_int;
 pub extern fn SDL_GetWindowPixelFormat(window: ?*SDL_Window) Uint32;
 pub extern fn SDL_CreateWindow(title: [*c]const u8, x: c_int, y: c_int, w: c_int, h: c_int, flags: Uint32) ?*SDL_Window;
-pub extern fn SDL_CreateWindowFrom(data: ?*const c_void) ?*SDL_Window;
+pub extern fn SDL_CreateWindowFrom(data: ?*const anyopaque) ?*SDL_Window;
 pub extern fn SDL_GetWindowID(window: ?*SDL_Window) Uint32;
 pub extern fn SDL_GetWindowFromID(id: Uint32) ?*SDL_Window;
 pub extern fn SDL_GetWindowFlags(window: ?*SDL_Window) Uint32;
 pub extern fn SDL_SetWindowTitle(window: ?*SDL_Window, title: [*c]const u8) void;
 pub extern fn SDL_GetWindowTitle(window: ?*SDL_Window) [*c]const u8;
 pub extern fn SDL_SetWindowIcon(window: ?*SDL_Window, icon: [*c]SDL_Surface) void;
-pub extern fn SDL_SetWindowData(window: ?*SDL_Window, name: [*c]const u8, userdata: ?*c_void) ?*c_void;
-pub extern fn SDL_GetWindowData(window: ?*SDL_Window, name: [*c]const u8) ?*c_void;
+pub extern fn SDL_SetWindowData(window: ?*SDL_Window, name: [*c]const u8, userdata: ?*anyopaque) ?*anyopaque;
+pub extern fn SDL_GetWindowData(window: ?*SDL_Window, name: [*c]const u8) ?*anyopaque;
 pub extern fn SDL_SetWindowPosition(window: ?*SDL_Window, x: c_int, y: c_int) void;
 pub extern fn SDL_GetWindowPosition(window: ?*SDL_Window, x: [*c]c_int, y: [*c]c_int) void;
 pub extern fn SDL_SetWindowSize(window: ?*SDL_Window, w: c_int, h: c_int) void;
@@ -1350,15 +1350,15 @@ const enum_unnamed_49 = enum(c_int) {
     _,
 };
 pub const SDL_HitTestResult = enum_unnamed_49;
-pub const SDL_HitTest = ?fn (?*SDL_Window, [*c]const SDL_Point, ?*c_void) callconv(.C) SDL_HitTestResult;
-pub extern fn SDL_SetWindowHitTest(window: ?*SDL_Window, callback: SDL_HitTest, callback_data: ?*c_void) c_int;
+pub const SDL_HitTest = ?fn (?*SDL_Window, [*c]const SDL_Point, ?*anyopaque) callconv(.C) SDL_HitTestResult;
+pub extern fn SDL_SetWindowHitTest(window: ?*SDL_Window, callback: SDL_HitTest, callback_data: ?*anyopaque) c_int;
 // pub extern fn SDL_FlashWindow(window: ?*SDL_Window, operation: SDL_FlashOperation) c_int;
 pub extern fn SDL_DestroyWindow(window: ?*SDL_Window) void;
 pub extern fn SDL_IsScreenSaverEnabled() SDL_bool;
 pub extern fn SDL_EnableScreenSaver() void;
 pub extern fn SDL_DisableScreenSaver() void;
 pub extern fn SDL_GL_LoadLibrary(path: [*c]const u8) c_int;
-pub extern fn SDL_GL_GetProcAddress(proc: [*c]const u8) ?*c_void;
+pub extern fn SDL_GL_GetProcAddress(proc: [*c]const u8) ?*anyopaque;
 pub extern fn SDL_GL_UnloadLibrary() void;
 pub extern fn SDL_GL_ExtensionSupported(extension: [*c]const u8) SDL_bool;
 pub extern fn SDL_GL_ResetAttributes() void;
@@ -2564,7 +2564,7 @@ pub extern fn SDL_JoystickRumble(joystick: ?*SDL_Joystick, low_frequency_rumble:
 pub extern fn SDL_JoystickRumbleTriggers(joystick: ?*SDL_Joystick, left_rumble: Uint16, right_rumble: Uint16, duration_ms: Uint32) c_int;
 pub extern fn SDL_JoystickHasLED(joystick: ?*SDL_Joystick) SDL_bool;
 pub extern fn SDL_JoystickSetLED(joystick: ?*SDL_Joystick, red: Uint8, green: Uint8, blue: Uint8) c_int;
-pub extern fn SDL_JoystickSendEffect(joystick: ?*SDL_Joystick, data: ?*const c_void, size: c_int) c_int;
+pub extern fn SDL_JoystickSendEffect(joystick: ?*SDL_Joystick, data: ?*const anyopaque, size: c_int) c_int;
 pub extern fn SDL_JoystickClose(joystick: ?*SDL_Joystick) void;
 pub extern fn SDL_JoystickCurrentPowerLevel(joystick: ?*SDL_Joystick) SDL_JoystickPowerLevel;
 pub const struct__SDL_Sensor = opaque {};
@@ -2761,7 +2761,7 @@ pub extern fn SDL_GameControllerRumble(gamecontroller: ?*SDL_GameController, low
 pub extern fn SDL_GameControllerRumbleTriggers(gamecontroller: ?*SDL_GameController, left_rumble: Uint16, right_rumble: Uint16, duration_ms: Uint32) c_int;
 pub extern fn SDL_GameControllerHasLED(gamecontroller: ?*SDL_GameController) SDL_bool;
 pub extern fn SDL_GameControllerSetLED(gamecontroller: ?*SDL_GameController, red: Uint8, green: Uint8, blue: Uint8) c_int;
-pub extern fn SDL_GameControllerSendEffect(gamecontroller: ?*SDL_GameController, data: ?*const c_void, size: c_int) c_int;
+pub extern fn SDL_GameControllerSendEffect(gamecontroller: ?*SDL_GameController, data: ?*const anyopaque, size: c_int) c_int;
 pub extern fn SDL_GameControllerClose(gamecontroller: ?*SDL_GameController) void;
 pub const SDL_TouchID = Sint64;
 pub const SDL_FingerID = Sint64;
@@ -3164,8 +3164,8 @@ pub const struct_SDL_UserEvent = extern struct {
     timestamp: Uint32,
     windowID: Uint32,
     code: Sint32,
-    data1: ?*c_void,
-    data2: ?*c_void,
+    data1: ?*anyopaque,
+    data2: ?*anyopaque,
 };
 pub const SDL_UserEvent = struct_SDL_UserEvent;
 pub const struct_SDL_SysWMmsg = opaque {};
@@ -3230,12 +3230,12 @@ pub extern fn SDL_PollEvent(event: [*c]SDL_Event) c_int;
 pub extern fn SDL_WaitEvent(event: [*c]SDL_Event) c_int;
 pub extern fn SDL_WaitEventTimeout(event: [*c]SDL_Event, timeout: c_int) c_int;
 pub extern fn SDL_PushEvent(event: [*c]SDL_Event) c_int;
-pub const SDL_EventFilter = ?fn (?*c_void, [*c]SDL_Event) callconv(.C) c_int;
-pub extern fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: ?*c_void) void;
-pub extern fn SDL_GetEventFilter(filter: [*c]SDL_EventFilter, userdata: [*c]?*c_void) SDL_bool;
-pub extern fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: ?*c_void) void;
-pub extern fn SDL_DelEventWatch(filter: SDL_EventFilter, userdata: ?*c_void) void;
-pub extern fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: ?*c_void) void;
+pub const SDL_EventFilter = ?fn (?*anyopaque, [*c]SDL_Event) callconv(.C) c_int;
+pub extern fn SDL_SetEventFilter(filter: SDL_EventFilter, userdata: ?*anyopaque) void;
+pub extern fn SDL_GetEventFilter(filter: [*c]SDL_EventFilter, userdata: [*c]?*anyopaque) SDL_bool;
+pub extern fn SDL_AddEventWatch(filter: SDL_EventFilter, userdata: ?*anyopaque) void;
+pub extern fn SDL_DelEventWatch(filter: SDL_EventFilter, userdata: ?*anyopaque) void;
+pub extern fn SDL_FilterEvents(filter: SDL_EventFilter, userdata: ?*anyopaque) void;
 pub extern fn SDL_EventState(@"type": Uint32, state: c_int) Uint8;
 pub extern fn SDL_RegisterEvents(numevents: c_int) Uint32;
 pub extern fn SDL_GetBasePath() [*c]u8;
@@ -3386,13 +3386,13 @@ pub extern fn SDL_SetHintWithPriority(name: [*c]const u8, value: [*c]const u8, p
 pub extern fn SDL_SetHint(name: [*c]const u8, value: [*c]const u8) SDL_bool;
 pub extern fn SDL_GetHint(name: [*c]const u8) [*c]const u8;
 pub extern fn SDL_GetHintBoolean(name: [*c]const u8, default_value: SDL_bool) SDL_bool;
-pub const SDL_HintCallback = ?fn (?*c_void, [*c]const u8, [*c]const u8, [*c]const u8) callconv(.C) void;
-pub extern fn SDL_AddHintCallback(name: [*c]const u8, callback: SDL_HintCallback, userdata: ?*c_void) void;
-pub extern fn SDL_DelHintCallback(name: [*c]const u8, callback: SDL_HintCallback, userdata: ?*c_void) void;
+pub const SDL_HintCallback = ?fn (?*anyopaque, [*c]const u8, [*c]const u8, [*c]const u8) callconv(.C) void;
+pub extern fn SDL_AddHintCallback(name: [*c]const u8, callback: SDL_HintCallback, userdata: ?*anyopaque) void;
+pub extern fn SDL_DelHintCallback(name: [*c]const u8, callback: SDL_HintCallback, userdata: ?*anyopaque) void;
 pub extern fn SDL_ClearHints() void;
-pub extern fn SDL_LoadObject(sofile: [*c]const u8) ?*c_void;
-pub extern fn SDL_LoadFunction(handle: ?*c_void, name: [*c]const u8) ?*c_void;
-pub extern fn SDL_UnloadObject(handle: ?*c_void) void;
+pub extern fn SDL_LoadObject(sofile: [*c]const u8) ?*anyopaque;
+pub extern fn SDL_LoadFunction(handle: ?*anyopaque, name: [*c]const u8) ?*anyopaque;
+pub extern fn SDL_UnloadObject(handle: ?*anyopaque) void;
 pub const SDL_LOG_CATEGORY_APPLICATION = @enumToInt(enum_unnamed_68.SDL_LOG_CATEGORY_APPLICATION);
 pub const SDL_LOG_CATEGORY_ERROR = @enumToInt(enum_unnamed_68.SDL_LOG_CATEGORY_ERROR);
 pub const SDL_LOG_CATEGORY_ASSERT = @enumToInt(enum_unnamed_68.SDL_LOG_CATEGORY_ASSERT);
@@ -3468,9 +3468,9 @@ pub extern fn SDL_LogError(category: c_int, fmt: [*c]const u8, ...) void;
 pub extern fn SDL_LogCritical(category: c_int, fmt: [*c]const u8, ...) void;
 pub extern fn SDL_LogMessage(category: c_int, priority: SDL_LogPriority, fmt: [*c]const u8, ...) void;
 pub extern fn SDL_LogMessageV(category: c_int, priority: SDL_LogPriority, fmt: [*c]const u8, ap: [*c]struct___va_list_tag) void;
-pub const SDL_LogOutputFunction = ?fn (?*c_void, c_int, SDL_LogPriority, [*c]const u8) callconv(.C) void;
-pub extern fn SDL_LogGetOutputFunction(callback: [*c]SDL_LogOutputFunction, userdata: [*c]?*c_void) void;
-pub extern fn SDL_LogSetOutputFunction(callback: SDL_LogOutputFunction, userdata: ?*c_void) void;
+pub const SDL_LogOutputFunction = ?fn (?*anyopaque, c_int, SDL_LogPriority, [*c]const u8) callconv(.C) void;
+pub extern fn SDL_LogGetOutputFunction(callback: [*c]SDL_LogOutputFunction, userdata: [*c]?*anyopaque) void;
+pub extern fn SDL_LogSetOutputFunction(callback: SDL_LogOutputFunction, userdata: ?*anyopaque) void;
 pub const SDL_MESSAGEBOX_ERROR = @enumToInt(enum_unnamed_70.SDL_MESSAGEBOX_ERROR);
 pub const SDL_MESSAGEBOX_WARNING = @enumToInt(enum_unnamed_70.SDL_MESSAGEBOX_WARNING);
 pub const SDL_MESSAGEBOX_INFORMATION = @enumToInt(enum_unnamed_70.SDL_MESSAGEBOX_INFORMATION);
@@ -3533,10 +3533,10 @@ pub const SDL_MessageBoxData = extern struct {
 };
 pub extern fn SDL_ShowMessageBox(messageboxdata: [*c]const SDL_MessageBoxData, buttonid: [*c]c_int) c_int;
 pub extern fn SDL_ShowSimpleMessageBox(flags: Uint32, title: [*c]const u8, message: [*c]const u8, window: ?*SDL_Window) c_int;
-pub const SDL_MetalView = ?*c_void;
+pub const SDL_MetalView = ?*anyopaque;
 pub extern fn SDL_Metal_CreateView(window: ?*SDL_Window) SDL_MetalView;
 pub extern fn SDL_Metal_DestroyView(view: SDL_MetalView) void;
-pub extern fn SDL_Metal_GetLayer(view: SDL_MetalView) ?*c_void;
+pub extern fn SDL_Metal_GetLayer(view: SDL_MetalView) ?*anyopaque;
 pub extern fn SDL_Metal_GetDrawableSize(window: ?*SDL_Window, w: [*c]c_int, h: [*c]c_int) void;
 pub const SDL_POWERSTATE_UNKNOWN = @enumToInt(enum_unnamed_77.SDL_POWERSTATE_UNKNOWN);
 pub const SDL_POWERSTATE_ON_BATTERY = @enumToInt(enum_unnamed_77.SDL_POWERSTATE_ON_BATTERY);
@@ -3637,10 +3637,10 @@ pub extern fn SDL_SetTextureBlendMode(texture: ?*SDL_Texture, blendMode: SDL_Ble
 pub extern fn SDL_GetTextureBlendMode(texture: ?*SDL_Texture, blendMode: [*c]SDL_BlendMode) c_int;
 pub extern fn SDL_SetTextureScaleMode(texture: ?*SDL_Texture, scaleMode: SDL_ScaleMode) c_int;
 pub extern fn SDL_GetTextureScaleMode(texture: ?*SDL_Texture, scaleMode: [*c]SDL_ScaleMode) c_int;
-pub extern fn SDL_UpdateTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, pixels: ?*const c_void, pitch: c_int) c_int;
+pub extern fn SDL_UpdateTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, pixels: ?*const anyopaque, pitch: c_int) c_int;
 pub extern fn SDL_UpdateYUVTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, Yplane: [*c]const Uint8, Ypitch: c_int, Uplane: [*c]const Uint8, Upitch: c_int, Vplane: [*c]const Uint8, Vpitch: c_int) c_int;
 pub extern fn SDL_UpdateNVTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, Yplane: [*c]const Uint8, Ypitch: c_int, UVplane: [*c]const Uint8, UVpitch: c_int) c_int;
-pub extern fn SDL_LockTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, pixels: [*c]?*c_void, pitch: [*c]c_int) c_int;
+pub extern fn SDL_LockTexture(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, pixels: [*c]?*anyopaque, pitch: [*c]c_int) c_int;
 pub extern fn SDL_LockTextureToSurface(texture: ?*SDL_Texture, rect: [*c]const SDL_Rect, surface: [*c][*c]SDL_Surface) c_int;
 pub extern fn SDL_UnlockTexture(texture: ?*SDL_Texture) void;
 pub extern fn SDL_RenderTargetSupported(renderer: ?*SDL_Renderer) SDL_bool;
@@ -3682,15 +3682,15 @@ pub extern fn SDL_RenderFillRectF(renderer: ?*SDL_Renderer, rect: [*c]const SDL_
 pub extern fn SDL_RenderFillRectsF(renderer: ?*SDL_Renderer, rects: [*c]const SDL_FRect, count: c_int) c_int;
 pub extern fn SDL_RenderCopyF(renderer: ?*SDL_Renderer, texture: ?*SDL_Texture, srcrect: [*c]const SDL_Rect, dstrect: [*c]const SDL_FRect) c_int;
 pub extern fn SDL_RenderCopyExF(renderer: ?*SDL_Renderer, texture: ?*SDL_Texture, srcrect: [*c]const SDL_Rect, dstrect: [*c]const SDL_FRect, angle: f64, center: [*c]const SDL_FPoint, flip: SDL_RendererFlip) c_int;
-pub extern fn SDL_RenderReadPixels(renderer: ?*SDL_Renderer, rect: [*c]const SDL_Rect, format: Uint32, pixels: ?*c_void, pitch: c_int) c_int;
+pub extern fn SDL_RenderReadPixels(renderer: ?*SDL_Renderer, rect: [*c]const SDL_Rect, format: Uint32, pixels: ?*anyopaque, pitch: c_int) c_int;
 pub extern fn SDL_RenderPresent(renderer: ?*SDL_Renderer) void;
 pub extern fn SDL_DestroyTexture(texture: ?*SDL_Texture) void;
 pub extern fn SDL_DestroyRenderer(renderer: ?*SDL_Renderer) void;
 pub extern fn SDL_RenderFlush(renderer: ?*SDL_Renderer) c_int;
 pub extern fn SDL_GL_BindTexture(texture: ?*SDL_Texture, texw: [*c]f32, texh: [*c]f32) c_int;
 pub extern fn SDL_GL_UnbindTexture(texture: ?*SDL_Texture) c_int;
-pub extern fn SDL_RenderGetMetalLayer(renderer: ?*SDL_Renderer) ?*c_void;
-pub extern fn SDL_RenderGetMetalCommandEncoder(renderer: ?*SDL_Renderer) ?*c_void;
+pub extern fn SDL_RenderGetMetalLayer(renderer: ?*SDL_Renderer) ?*anyopaque;
+pub extern fn SDL_RenderGetMetalCommandEncoder(renderer: ?*SDL_Renderer) ?*anyopaque;
 pub extern fn SDL_CreateShapedWindow(title: [*c]const u8, x: c_uint, y: c_uint, w: c_uint, h: c_uint, flags: Uint32) ?*SDL_Window;
 pub extern fn SDL_IsShapedWindow(window: ?*const SDL_Window) SDL_bool;
 pub const ShapeModeDefault = @enumToInt(enum_unnamed_84.ShapeModeDefault);
@@ -3728,9 +3728,9 @@ pub extern fn SDL_GetTicks() Uint32;
 pub extern fn SDL_GetPerformanceCounter() Uint64;
 pub extern fn SDL_GetPerformanceFrequency() Uint64;
 pub extern fn SDL_Delay(ms: Uint32) void;
-pub const SDL_TimerCallback = ?fn (Uint32, ?*c_void) callconv(.C) Uint32;
+pub const SDL_TimerCallback = ?fn (Uint32, ?*anyopaque) callconv(.C) Uint32;
 pub const SDL_TimerID = c_int;
-pub extern fn SDL_AddTimer(interval: Uint32, callback: SDL_TimerCallback, param: ?*c_void) SDL_TimerID;
+pub extern fn SDL_AddTimer(interval: Uint32, callback: SDL_TimerCallback, param: ?*anyopaque) SDL_TimerID;
 pub extern fn SDL_RemoveTimer(id: SDL_TimerID) SDL_bool;
 pub const struct_SDL_version = extern struct {
     major: Uint8,
