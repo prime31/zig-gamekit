@@ -100,8 +100,8 @@ fn shutdown() !void {
 
 fn update() !void {
     const size = gk.window.size();
-    const win_w = @intToFloat(f32, size.w) - 40;
-    const win_h = @intToFloat(f32, size.h) - 40;
+    const win_w = @intToFloat(f32, size.w);
+    const win_h = @intToFloat(f32, size.h);
 
     if (@mod(gk.time.frames(), 500) == 0) std.debug.print("fps: {d}\n", .{gk.time.fps()});
 
@@ -143,10 +143,6 @@ fn render() !void {
 
 fn loadTextures() void {
     textures = std.testing.allocator.alloc(gfx.Texture, total_textures) catch unreachable;
-
-    //    var width: c_int = undefined;
-    //    var height: c_int = undefined;
-    //    var channels: c_int = undefined;
 
     var buf: [512]u8 = undefined;
     for (textures) |_, i| {
