@@ -30,7 +30,7 @@ fn init() !void {
 
 fn render() !void {
     gamekit.gfx.beginPass(.{ .color = Color.lime });
-    gamekit.draw.tex(texture, .{ .x = 50, .y = 50 });
+    gamekit.gfx.draw.tex(texture, .{ .x = 50, .y = 50 });
     gamekit.gfx.endPass();
 }
 ```
