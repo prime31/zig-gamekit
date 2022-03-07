@@ -46,7 +46,7 @@ pub var input: Input = undefined;
 pub fn run(config: Config) !void {
     window = try Window.init(config.window);
 
-    renderkit.renderer.setup(.{
+    renderkit.setup(.{
         .gl_loader = sdl.SDL_GL_GetProcAddress,
         .disable_vsync = config.window.disable_vsync,
     }, std.heap.c_allocator);
@@ -79,7 +79,7 @@ pub fn run(config: Config) !void {
     if (enable_imgui) imgui_impl.deinit();
     if (config.shutdown) |shutdown| try shutdown();
     gfx.deinit();
-    renderkit.renderer.shutdown();
+    renderkit.shutdown();
     window.deinit();
     sdl.SDL_Quit();
 }

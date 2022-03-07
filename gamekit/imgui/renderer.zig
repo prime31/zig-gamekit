@@ -3,7 +3,6 @@ const imgui = @import("imgui");
 const gk = @import("../gamekit.zig");
 const gfx = gk.gfx;
 const rk = @import("renderkit");
-const renderer = rk.renderer;
 
 pub const Renderer = struct {
     font_texture: gfx.Texture,
@@ -16,13 +15,13 @@ pub const Renderer = struct {
     pub fn init(docking: bool, viewports: bool, icon_font: bool) Renderer {
         const max_verts = 16384;
         const index_buffer_size = @intCast(c_long, max_verts * 3 * @sizeOf(u16));
-        var ibuffer = renderer.createBuffer(u16, .{
+        var ibuffer = rk.createBuffer(u16, .{
             .type = .index,
             .usage = .stream,
             .size = index_buffer_size,
         });
         const vert_buffer_size = @intCast(c_long, max_verts * @sizeOf(gfx.Vertex));
-        var vertex_buffer = renderer.createBuffer(gfx.Vertex, .{
+        var vertex_buffer = rk.createBuffer(gfx.Vertex, .{
             .usage = .stream,
             .size = vert_buffer_size,
         });
@@ -63,14 +62,14 @@ pub const Renderer = struct {
             .font_texture = font_tex,
             .vert_buffer_size = vert_buffer_size,
             .index_buffer_size = index_buffer_size,
-            .bindings = renderer.BufferBindings.init(ibuffer, &[_]renderer.Buffer{vertex_buffer}),
+            .bindings = rk.BufferBindings.init(ibuffer, &[_]rk.Buffer{vertex_buffer}),
         };
     }
 
     pub fn deinit(self: Renderer) void {
         self.font_texture.deinit();
-        renderer.destroyBuffer(self.bindings.index_buffer);
-        renderer.destroyBuffer(self.bindings.vert_buffers[0]);
+        rk.destroyBuffer(self.bindings.index_buffer);
+        rk.destroyBuffer(self.bindings.vert_buffers[0]);
     }
 
     pub fn render(self: *Renderer) void {
@@ -92,23 +91,23 @@ pub const Renderer = struct {
         imgui.ogImDrawData_ScaleClipRects(draw_data, fb_scale);
         const width = @floatToInt(i32, draw_data.DisplaySize.x * fb_scale.x);
         const height = @floatToInt(i32, draw_data.DisplaySize.y * fb_scale.y);
-        renderer.viewport(0, 0, width, height);
+        rk.viewport(0, 0, width, height);
 
         gfx.setShader(null);
 
-        renderer.setRenderState(.{ .scissor = true });
+        rk.setRenderState(.{ .scissor = true });
 
         var vb_offset: u32 = 0;
         for (draw_data.CmdLists[0..@intCast(usize, draw_data.CmdListsCount)]) |list| {
             // append vertices and indices to buffers
             const indices = @ptrCast([*]u16, list.IdxBuffer.Data)[0..@intCast(usize, list.IdxBuffer.Size)];
-            self.bindings.index_buffer_offset = renderer.appendBuffer(u16, self.bindings.index_buffer, indices);
+            self.bindings.index_buffer_offset = rk.appendBuffer(u16, self.bindings.index_buffer, indices);
 
             const verts = @ptrCast([*]gfx.Vertex, list.VtxBuffer.Data)[0..@intCast(usize, list.VtxBuffer.Size)];
-            vb_offset = renderer.appendBuffer(gfx.Vertex, self.bindings.vert_buffers[0], verts);
+            vb_offset = rk.appendBuffer(gfx.Vertex, self.bindings.vert_buffers[0], verts);
             self.bindings.vertex_buffer_offsets[0] = vb_offset;
 
-            renderer.applyBindings(self.bindings);
+            rk.applyBindings(self.bindings);
 
             var base_element: c_int = 0;
             var vtx_offset: u32 = 0;
@@ -122,7 +121,7 @@ pub const Renderer = struct {
                     const clip_w = @floatToInt(i32, (cmd.ClipRect.z - draw_data.DisplayPos.x) * fb_scale.x);
                     const clip_h = @floatToInt(i32, (cmd.ClipRect.w - draw_data.DisplayPos.y) * fb_scale.y);
 
-                    renderer.scissor(clip_x, clip_y, clip_w - clip_x, clip_h - clip_y);
+                    rk.scissor(clip_x, clip_y, clip_w - clip_x, clip_h - clip_y);
 
                     if (tex_id != cmd.TextureId or vtx_offset != cmd.VtxOffset) {
                         tex_id = cmd.TextureId;
@@ -130,27 +129,27 @@ pub const Renderer = struct {
 
                         vtx_offset = cmd.VtxOffset;
                         self.bindings.vertex_buffer_offsets[0] = vb_offset + vtx_offset * @sizeOf(imgui.ImDrawVert);
-                        renderer.applyBindings(self.bindings);
+                        rk.applyBindings(self.bindings);
                     }
 
-                    renderer.draw(base_element, @intCast(c_int, cmd.ElemCount), 1);
+                    rk.draw(base_element, @intCast(c_int, cmd.ElemCount), 1);
                 }
                 base_element += @intCast(c_int, cmd.ElemCount);
             } // end for CmdBuffer.Data
         }
 
         // reset the scissor
-        renderer.scissor(0, 0, width, height);
-        renderer.setRenderState(.{});
+        rk.scissor(0, 0, width, height);
+        rk.setRenderState(.{});
     }
 
     pub fn updateBuffers(self: *Renderer, draw_data: *imgui.ImDrawData) void {
         // Expand buffers if we need more room
         if (draw_data.TotalIdxCount > self.index_buffer_size) {
-            renderer.destroyBuffer(self.bindings.index_buffer);
+            rk.destroyBuffer(self.bindings.index_buffer);
 
             self.index_buffer_size = @floatToInt(c_long, @intToFloat(f32, draw_data.TotalIdxCount) * 1.5);
-            var ibuffer = renderer.createBuffer(u16, .{
+            var ibuffer = rk.createBuffer(u16, .{
                 .type = .index,
                 .usage = .stream,
                 .size = self.index_buffer_size,
@@ -159,10 +158,10 @@ pub const Renderer = struct {
         }
 
         if (draw_data.TotalVtxCount > self.vert_buffer_size) {
-            renderer.destroyBuffer(self.bindings.vert_buffers[0]);
+            rk.destroyBuffer(self.bindings.vert_buffers[0]);
 
             self.vert_buffer_size = @floatToInt(c_long, @intToFloat(f32, draw_data.TotalVtxCount) * 1.5);
-            var vertex_buffer = renderer.createBuffer(gfx.Vertex, .{
+            var vertex_buffer = rk.createBuffer(gfx.Vertex, .{
                 .usage = .stream,
                 .size = self.vert_buffer_size,
             });

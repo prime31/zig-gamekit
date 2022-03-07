@@ -3,7 +3,6 @@ const stb_image = @import("stb");
 const gk = @import("../gamekit.zig");
 const imgui = @import("imgui");
 const renderkit = @import("renderkit");
-const renderer = renderkit.renderer;
 const fs = gk.utils.fs;
 
 pub const Texture = struct {
@@ -16,7 +15,7 @@ pub const Texture = struct {
     }
 
     pub fn initDynamic(width: i32, height: i32, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
-        const img = renderer.createImage(.{
+        const img = renderkit.createImage(.{
             .width = width,
             .height = height,
             .usage = .dynamic,
@@ -52,7 +51,7 @@ pub const Texture = struct {
     }
 
     pub fn initWithDataOptions(comptime T: type, width: i32, height: i32, pixels: []T, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
-        const img = renderer.createImage(.{
+        const img = renderkit.createImage(.{
             .width = width,
             .height = height,
             .min_filter = filter,
@@ -86,7 +85,7 @@ pub const Texture = struct {
     }
 
     pub fn initOffscreen(width: i32, height: i32, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
-        const img = renderer.createImage(.{
+        const img = renderkit.createImage(.{
             .render_target = true,
             .width = width,
             .height = height,
@@ -103,7 +102,7 @@ pub const Texture = struct {
     }
 
     pub fn initStencil(width: i32, height: i32, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
-        const img = renderer.createImage(.{
+        const img = renderkit.createImage(.{
             .render_target = true,
             .pixel_format = .stencil,
             .width = width,
@@ -121,11 +120,11 @@ pub const Texture = struct {
     }
 
     pub fn deinit(self: *const Texture) void {
-        renderer.destroyImage(self.img);
+        renderkit.destroyImage(self.img);
     }
 
     pub fn setData(self: *Texture, comptime T: type, data: []T) void {
-        renderer.updateImage(T, self.img, data);
+        renderkit.updateImage(T, self.img, data);
     }
 
     pub fn imTextureID(self: Texture) imgui.ImTextureID {

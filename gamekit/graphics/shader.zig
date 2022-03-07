@@ -2,7 +2,6 @@ const std = @import("std");
 const gk = @import("../gamekit.zig");
 const math = gk.math;
 const rk = gk.renderkit;
-const renderer = rk.renderer;
 const fs = gk.utils.fs;
 
 /// default params for the sprite shader. Translates the Mat32 into 2 arrays of f32 for the shader uniform slot.
@@ -88,18 +87,18 @@ pub const Shader = struct {
         };
 
         return Shader{
-            .shader = renderer.createShaderProgram(VertUniformT, FragUniformT, .{ .vs = vert, .fs = frag }),
+            .shader = rk.createShaderProgram(VertUniformT, FragUniformT, .{ .vs = vert, .fs = frag }),
             .onPostBind = options.onPostBind,
             .onSetTransformMatrix = options.onSetTransformMatrix,
         };
     }
 
     pub fn deinit(self: Shader) void {
-        renderer.destroyShaderProgram(self.shader);
+        rk.destroyShaderProgram(self.shader);
     }
 
     pub fn bind(self: *Shader) void {
-        renderer.useShaderProgram(self.shader);
+        rk.useShaderProgram(self.shader);
         if (self.onPostBind) |onPostBind| onPostBind(self);
     }
 
@@ -113,11 +112,11 @@ pub const Shader = struct {
     }
 
     pub fn setVertUniform(self: Shader, comptime VertUniformT: type, value: *VertUniformT) void {
-        renderer.setShaderProgramUniformBlock(VertUniformT, self.shader, .vs, value);
+        rk.setShaderProgramUniformBlock(VertUniformT, self.shader, .vs, value);
     }
 
     pub fn setFragUniform(self: Shader, comptime FragUniformT: type, value: *FragUniformT) void {
-        renderer.setShaderProgramUniformBlock(FragUniformT, self.shader, .fs, value);
+        rk.setShaderProgramUniformBlock(FragUniformT, self.shader, .fs, value);
     }
 };
 

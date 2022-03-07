@@ -74,7 +74,7 @@ pub fn setShader(shader: ?*Shader) void {
 
 pub fn setRenderState(renderstate: renderkit.RenderState) void {
     draw.batcher.flush();
-    renderkit.renderer.setRenderState(renderstate);
+    renderkit.setRenderState(renderstate);
 }
 
 pub fn beginPass(config: PassConfig) void {
@@ -83,12 +83,12 @@ pub fn beginPass(config: PassConfig) void {
     draw.batcher.begin();
 
     if (config.pass) |pass| {
-        renderkit.renderer.beginPass(pass.pass, clear_command);
+        renderkit.beginPass(pass.pass, clear_command);
         // inverted for OpenGL offscreen passes
         proj_mat = math.Mat32.initOrthoInverted(pass.color_texture.width, pass.color_texture.height);
     } else {
         const size = gamekit.window.drawableSize();
-        renderkit.renderer.beginDefaultPass(clear_command, size.w, size.h);
+        renderkit.beginDefaultPass(clear_command, size.w, size.h);
         proj_mat = math.Mat32.initOrtho(@intToFloat(f32, size.w), @intToFloat(f32, size.h));
     }
 
@@ -106,12 +106,12 @@ pub fn beginPass(config: PassConfig) void {
 pub fn endPass() void {
     setShader(null);
     draw.batcher.end();
-    renderkit.renderer.endPass();
+    renderkit.endPass();
 }
 
 /// if we havent yet blitted to the screen do so now
 pub fn commitFrame() void {
-    renderkit.renderer.commitFrame();
+    renderkit.commitFrame();
 }
 
 // import all the drawing methods
