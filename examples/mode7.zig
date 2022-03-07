@@ -5,8 +5,6 @@ const gfx = gk.gfx;
 const math = gk.math;
 const shaders = @import("assets/shaders.zig");
 
-pub const renderer: gk.renderkit.Renderer = .opengl;
-
 const Texture = gk.gfx.Texture;
 const Color = gk.math.Color;
 

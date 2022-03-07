@@ -7,7 +7,7 @@ const renderkit = gk.renderkit;
 pub const Mode7Shader = gfx.ShaderState(Mode7Params);
 
 pub fn createMode7Shader() Mode7Shader {
-    const frag = if (renderkit.current_renderer == .opengl) @embedFile("shaders/mode7_fs.glsl") else @embedFile("shaders/mode7_fs.metal");
+    const frag = @embedFile("shaders/mode7_fs.glsl");
     return Mode7Shader.init(.{ .frag = frag, .onPostBind = Mode7Shader.onPostBind });
 }
 

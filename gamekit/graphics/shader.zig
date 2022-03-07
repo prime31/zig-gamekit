@@ -22,19 +22,11 @@ pub const VertexParams = extern struct {
 };
 
 fn defaultVertexShader() [:0]const u8 {
-    return switch (rk.current_renderer) {
-        .opengl => @embedFile("../assets/sprite_vs.glsl"),
-        .metal => @embedFile("../assets/sprite_vs.metal"),
-        else => @panic("no default vert shader for renderer: " ++ rk.current_renderer),
-    };
+    return @embedFile("../assets/sprite_vs.glsl");
 }
 
 fn defaultFragmentShader() [:0]const u8 {
-    return switch (rk.current_renderer) {
-        .opengl => @embedFile("../assets/sprite_fs.glsl"),
-        .metal => @embedFile("../assets/sprite_fs.metal"),
-        else => @panic("no default vert shader for renderer: " ++ rk.current_renderer),
-    };
+    return @embedFile("../assets/sprite_fs.glsl");
 }
 
 pub const Shader = struct {
@@ -77,7 +69,7 @@ pub const Shader = struct {
             if (options.vert) |vert| {
                 // if we were provided an allocator that means this is a file
                 if (options.allocator) |allocator| {
-                    const vert_path = try std.mem.concat(allocator, u8, &[_][]const u8{ vert, rk.shaderFileExtension(), "\x00" });
+                    const vert_path = try std.mem.concat(allocator, u8, &[_][]const u8{ vert, ".glsl\x00" });
                     defer allocator.free(vert_path);
                     break :blk try fs.readZ(allocator, vert_path);
                 }
@@ -88,7 +80,7 @@ pub const Shader = struct {
         };
         const frag = blk: {
             if (options.allocator) |allocator| {
-                const frag_path = try std.mem.concat(allocator, u8, &[_][]const u8{ options.frag, rk.shaderFileExtension() });
+                const frag_path = try std.mem.concat(allocator, u8, &[_][]const u8{ options.frag, ".glsl" });
                 defer allocator.free(frag_path);
                 break :blk try fs.readZ(allocator, frag_path);
             }

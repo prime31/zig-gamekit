@@ -102,19 +102,8 @@ pub const Batcher = struct {
             self.buffer_offset = 0;
 
             // with GL we can just orphan the buffer
-            if (renderkit.current_renderer == .opengl) {
-                self.mesh.updateAllVerts();
-                self.mesh.bindings.vertex_buffer_offsets[0] = 0;
-            } else if (renderkit.current_renderer == .metal) {
-                // we need a bigger Mesh since Metal has no concept of buffer orphaning
-                var new_max_sprites = std.math.clamp(self.mesh.verts.len / 4 * 2, 0, std.math.maxInt(u16) / 6);
-
-                self.mesh.deinit();
-                self.mesh = try createDynamicMesh(self.mesh.allocator, @intCast(u16, new_max_sprites));
-                std.debug.print("Metal buffer overflow. Batcher creating new buffer with max_sprites {}\n", .{new_max_sprites});
-            } else {
-                return error.OutOfSpace;
-            }
+            self.mesh.updateAllVerts();
+            self.mesh.bindings.vertex_buffer_offsets[0] = 0;
         }
 
         // start a new draw call if we dont already have one going or whenever the texture changes

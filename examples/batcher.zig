@@ -4,8 +4,6 @@ const gk = @import("gamekit");
 const gfx = gk.gfx;
 const math = gk.math;
 
-pub const renderer: gk.renderkit.Renderer = .opengl;
-
 var rng = std.rand.DefaultPrng.init(0x12345678);
 
 const total_textures: usize = 8;

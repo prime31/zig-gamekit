@@ -85,11 +85,7 @@ pub fn beginPass(config: PassConfig) void {
     if (config.pass) |pass| {
         renderkit.renderer.beginPass(pass.pass, clear_command);
         // inverted for OpenGL offscreen passes
-        if (renderkit.current_renderer == .opengl) {
-            proj_mat = math.Mat32.initOrthoInverted(pass.color_texture.width, pass.color_texture.height);
-        } else {
-            proj_mat = math.Mat32.initOrtho(pass.color_texture.width, pass.color_texture.height);
-        }
+        proj_mat = math.Mat32.initOrthoInverted(pass.color_texture.width, pass.color_texture.height);
     } else {
         const size = gamekit.window.drawableSize();
         renderkit.renderer.beginDefaultPass(clear_command, size.w, size.h);

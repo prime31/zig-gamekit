@@ -3,7 +3,6 @@ const gk = @import("gamekit");
 const gfx = gk.gfx;
 const imgui = @import("imgui");
 
-pub const renderer: gk.renderkit.Renderer = .opengl;
 pub const enable_imgui = true;
 
 var clear_color = gk.math.Color.aya;

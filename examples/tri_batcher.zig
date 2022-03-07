@@ -3,7 +3,6 @@ const gk = @import("gamekit");
 const math = gk.math;
 const Color = math.Color;
 
-pub const renderer: gk.renderkit.Renderer = .opengl;
 var tri_batch: gk.gfx.TriangleBatcher = undefined;
 
 pub fn main() !void {
