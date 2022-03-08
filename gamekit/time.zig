@@ -176,6 +176,15 @@ pub const Time = struct {
             // spiral of death protection
             if (self.frame_accumulator > self.desired_frametime * 8) self.resync = true;
 
+            // TODO: why does vsync not work on x64 macs all of a sudden?!?! forced sleep.
+            if (@import("builtin").os.tag == .macos and @import("builtin").target.cpu.arch == std.Target.Cpu.Arch.x86_64) {
+                const elapsed = self.desired_frametime - delta_time;
+                if (elapsed > 0) {
+                    const diff = @intToFloat(f32, elapsed) / @intToFloat(f32, sdl.SDL_GetPerformanceFrequency());
+                    std.time.sleep(@floatToInt(u64, diff * 1000000000));
+                }
+            }
+
             // TODO: should we zero out the frame_accumulator here? timer resync if requested so reset all state
             if (self.resync) {
                 self.frame_accumulator = self.desired_frametime;

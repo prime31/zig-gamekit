@@ -26,11 +26,17 @@ pub const Vertex = extern struct {
 };
 
 pub const PassConfig = struct {
-    color_action: renderkit.ClearAction = .clear,
+    pub const ColorAttachmentAction = extern struct {
+        clear: bool = true,
+        color: math.Color = math.Color.aya,
+    };
+
+    clear_color: bool = true,
     color: math.Color = math.Color.aya,
-    stencil_action: renderkit.ClearAction = .dont_care,
+    mrt_colors: [3]ColorAttachmentAction = [_]ColorAttachmentAction{.{}} ** 3,
+    clear_stencil: bool = false,
     stencil: u8 = 0,
-    depth_action: renderkit.ClearAction = .dont_care,
+    clear_depth: bool = false,
     depth: f64 = 0,
 
     trans_mat: ?math.Mat32 = null,
@@ -38,14 +44,22 @@ pub const PassConfig = struct {
     pass: ?OffscreenPass = null,
 
     pub fn asClearCommand(self: PassConfig) renderkit.ClearCommand {
-        return .{
-            .color = self.color.asArray(),
-            .color_action = self.color_action,
-            .stencil_action = self.stencil_action,
-            .stencil = self.stencil,
-            .depth_action = self.depth_action,
-            .depth = self.depth,
-        };
+        var cmd = renderkit.ClearCommand{};
+        cmd.colors[0].clear = self.clear_color;
+        cmd.colors[0].color = self.color.asArray();
+
+        for (self.mrt_colors) |mrt_color, i| {
+            cmd.colors[i + 1] = .{
+                .clear = mrt_color.clear,
+                .color = mrt_color.color.asArray(),
+            };
+        }
+
+        cmd.clear_stencil = self.clear_stencil;
+        cmd.stencil = self.stencil;
+        cmd.clear_depth = self.clear_depth;
+        cmd.depth = self.depth;
+        return cmd;
     }
 };
 
@@ -116,4 +130,3 @@ pub fn commitFrame() void {
 
 // import all the drawing methods
 pub const draw = @import("draw.zig").draw;
-// pub usingnamespace draw;

@@ -57,7 +57,7 @@ fn render() !void {
     gk.gfx.beginPass(.{
         .color = math.Color.purple,
         .pass = pass,
-        .stencil_action = .clear,
+        .clear_stencil = true,
     });
     draw.point(points[0].pos, 160, points[0].col);
     gk.gfx.endPass();
@@ -73,8 +73,8 @@ fn render() !void {
         }
     });
     gk.gfx.beginPass(.{
-        .color_action = .load,
-        .stencil_action = .load,
+        .clear_color = false,
+        .clear_stencil = false,
         .pass = pass,
     });
     draw.point(points[1].pos, 60, points[1].col);
