@@ -11,6 +11,12 @@ pub fn createMode7Shader() Mode7Shader {
     return Mode7Shader.init(.{ .frag = frag, .onPostBind = Mode7Shader.onPostBind });
 }
 
+pub fn createMrtShader() !gfx.Shader {
+    const vert = @embedFile("shaders/sprite_vs.glsl");
+    const frag = @embedFile("shaders/mrt_fs.glsl");
+    return try gfx.Shader.initWithVertFrag(VertexParams, struct { pub const metadata = .{ .images = .{ "main_tex" } }; }, .{ .frag = frag, .vert = vert });
+}
+
 
 pub const VertexParams = extern struct {
     pub const metadata = .{
