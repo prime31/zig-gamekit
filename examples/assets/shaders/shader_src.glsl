@@ -92,8 +92,8 @@ layout(location = 0) out vec4 frag_color_0;
 layout(location = 1) out vec4 frag_color_1;
 
 void main() {
-	frag_color_0 = texture(main_tex, uv_out.st) * vec4(.0) + vec4(1.0, 0.0, 0.0, 1.0);
-	frag_color_1 = texture(main_tex, uv_out.st) * vec4(.0) + color_out;
+	frag_color_0 = texture(main_tex, uv_out.st);
+	frag_color_1 = texture(main_tex, uv_out.st) * color_out;
 }
 @end
 
