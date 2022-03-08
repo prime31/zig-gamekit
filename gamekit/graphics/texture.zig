@@ -104,7 +104,7 @@ pub const Texture = struct {
     pub fn initStencil(width: i32, height: i32, filter: renderkit.TextureFilter, wrap: renderkit.TextureWrap) Texture {
         const img = renderkit.createImage(.{
             .render_target = true,
-            .pixel_format = .stencil,
+            .pixel_format = .depth_stencil,
             .width = width,
             .height = height,
             .min_filter = filter,

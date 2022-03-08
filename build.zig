@@ -27,6 +27,7 @@ pub fn build(b: *Builder) !void {
         [_][]const u8{ "meshes", "examples/meshes.zig" },
         [_][]const u8{ "clear", "examples/clear.zig" },
         [_][]const u8{ "clear_imgui", "examples/clear_imgui.zig" },
+        [_][]const u8{ "stencil", "examples/stencil.zig" },
     };
 
     const examples_step = b.step("examples", "build all examples");
