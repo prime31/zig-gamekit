@@ -5,6 +5,9 @@ const gfx = @import("../gamekit.zig").gfx;
 pub const OffscreenPass = struct {
     pass: rk.Pass,
     color_texture: gfx.Texture,
+    color_texture1: ?gfx.Texture = null,
+    color_texture2: ?gfx.Texture = null,
+    color_texture3: ?gfx.Texture = null,
     depth_stencil_texture: ?gfx.Texture = null,
 
     pub fn init(width: i32, height: i32) OffscreenPass {
