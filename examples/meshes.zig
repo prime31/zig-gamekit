@@ -38,7 +38,7 @@ fn init() !void {
         .{ .pos = .{ .x = 10, .y = 100 }, .uv = .{ .x = 0, .y = 1 } }, // bl
     };
     var dyn_indices = [_]u16{ 0, 1, 2, 2, 3, 0 };
-    dyn_mesh = try gfx.DynamicMesh(u16, gfx.Vertex).init(std.testing.allocator, vertices.len, &dyn_indices);
+    dyn_mesh = try gfx.DynamicMesh(u16, gfx.Vertex).init(std.heap.c_allocator, vertices.len, &dyn_indices);
     for (dyn_vertices) |*vert, i| {
         vert.pos.x += 200;
         vert.pos.y += 200;

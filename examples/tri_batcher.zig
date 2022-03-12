@@ -13,7 +13,7 @@ pub fn main() !void {
 }
 
 fn init() !void {
-    tri_batch = try gk.gfx.TriangleBatcher.init(std.testing.allocator, 100);
+    tri_batch = try gk.gfx.TriangleBatcher.init(std.heap.c_allocator, 100);
 }
 
 fn render() !void {

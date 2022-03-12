@@ -31,7 +31,7 @@ const Camera = struct {
     sprites: std.ArrayList(Block) = undefined,
 
     pub fn init(sw: f32, sh: f32) Camera {
-        var cam = Camera{ .sw = sw, .sh = sh, .sprites = std.ArrayList(Block).init(std.testing.allocator) };
+        var cam = Camera{ .sw = sw, .sh = sh, .sprites = std.ArrayList(Block).init(std.heap.c_allocator) };
         cam.setRotation(0);
         return cam;
     }
@@ -127,12 +127,12 @@ fn init() !void {
     const drawable_size = gk.window.drawableSize();
     camera = Camera.init(@intToFloat(f32, drawable_size.w), @intToFloat(f32, drawable_size.h));
 
-    map = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/mario_kart.png", .nearest) catch unreachable;
-    block = Texture.initFromFile(std.testing.allocator, "examples/assets/textures/block.png", .nearest) catch unreachable;
+    map = Texture.initFromFile(std.heap.c_allocator, "examples/assets/textures/mario_kart.png", .nearest) catch unreachable;
+    block = Texture.initFromFile(std.heap.c_allocator, "examples/assets/textures/block.png", .nearest) catch unreachable;
 
     mode7_shader = shaders.createMode7Shader();
 
-    blocks = std.ArrayList(math.Vec2).init(std.testing.allocator);
+    blocks = std.ArrayList(math.Vec2).init(std.heap.c_allocator);
     _ = blocks.append(.{ .x = 0, .y = 0 }) catch unreachable;
 
     // uncomment for sorting stress test

@@ -15,9 +15,9 @@ pub const draw = struct {
 
     pub fn init() void {
         white_tex = Texture.initSingleColor(0xFFFFFFFF);
-        batcher = gfx.Batcher.init(std.testing.allocator, 1000);
+        batcher = gfx.Batcher.init(std.heap.c_allocator, 1000);
 
-        fontbook = gfx.FontBook.init(std.testing.allocator, 128, 128, .nearest) catch unreachable;
+        fontbook = gfx.FontBook.init(std.heap.c_allocator, 128, 128, .nearest) catch unreachable;
         _ = fontbook.addFontMem("ProggyTiny", @embedFile("assets/ProggyTiny.ttf"), false);
         fontbook.setSize(10);
     }

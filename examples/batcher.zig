@@ -82,17 +82,17 @@ fn init() !void {
         shader.?.setVertUniform(MultiFragUniform, &uniform);
     }
 
-    batcher = if (use_multi_texture_batcher) gfx.MultiBatcher.init(std.testing.allocator, max_sprites_per_batch) else gfx.Batcher.init(std.testing.allocator, max_sprites_per_batch);
+    batcher = if (use_multi_texture_batcher) gfx.MultiBatcher.init(std.heap.c_allocator, max_sprites_per_batch) else gfx.Batcher.init(std.heap.c_allocator, max_sprites_per_batch);
 
     loadTextures();
     makeThings(total_objects);
 }
 
 fn shutdown() !void {
-    std.testing.allocator.free(things);
+    std.heap.c_allocator.free(things);
     defer {
         for (textures) |tex| tex.deinit();
-        std.testing.allocator.free(textures);
+        std.heap.c_allocator.free(textures);
     }
 }
 
@@ -140,17 +140,17 @@ fn render() !void {
 }
 
 fn loadTextures() void {
-    textures = std.testing.allocator.alloc(gfx.Texture, total_textures) catch unreachable;
+    textures = std.heap.c_allocator.alloc(gfx.Texture, total_textures) catch unreachable;
 
     var buf: [512]u8 = undefined;
     for (textures) |_, i| {
         var name = std.fmt.bufPrintZ(&buf, "examples/assets/textures/bee-{}.png", .{i + 1}) catch unreachable;
-        textures[i] = gfx.Texture.initFromFile(std.testing.allocator, name, .nearest) catch unreachable;
+        textures[i] = gfx.Texture.initFromFile(std.heap.c_allocator, name, .nearest) catch unreachable;
     }
 }
 
 fn makeThings(n: usize) void {
-    things = std.testing.allocator.alloc(Thing, n) catch unreachable;
+    things = std.heap.c_allocator.alloc(Thing, n) catch unreachable;
 
     var count: usize = 0;
     var tid = range(usize, 0, total_textures);
