@@ -101,4 +101,31 @@ void main() {
 
 
 
+@vs vert_sway_vs
+uniform VertexSwayParams {
+	vec4 transform_matrix[2];
+	float time;
+};
+
+layout(location = 0) in vec2 pos_in;
+layout(location = 1) in vec2 uv_in;
+layout(location = 2) in vec4 color_in;
+
+out vec2 uv_out;
+out vec4 color_out;
+
+void main() {
+	uv_out = uv_in;
+	color_out = color_in;
+	mat3x2 transMat = mat3x2(transform_matrix[0].x, transform_matrix[0].y, transform_matrix[0].z, transform_matrix[0].w, transform_matrix[1].x, transform_matrix[1].y);
+
+	vec2 pos = pos_in;
+	pos.x += (sin(time) * 20) * (1 - uv_in.y);
+	gl_Position = vec4(transMat * vec3(pos, 1), 0, 1);
+}
+@end
+
+@program vert_sway vert_sway_vs sprite_fs
+
+
 #@include example_include_commented_out.glsl

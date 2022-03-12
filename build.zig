@@ -13,10 +13,6 @@ var enable_imgui: ?bool = null;
 
 pub fn build(b: *Builder) !void {
     const target = b.standardTargetOptions(.{});
-    // const mode = b.standardReleaseOptions();
-
-    // use a different cache folder for macos arm builds
-    // b.cache_root = if (builtin.os.tag == .macos and builtin.arch == builtin.Arch.aarch64) "zig-arm-cache" else "zig-cache";
 
     const examples = [_][2][]const u8{
         [_][]const u8{ "mode7", "examples/mode7.zig" },
@@ -29,6 +25,7 @@ pub fn build(b: *Builder) !void {
         [_][]const u8{ "clear_imgui", "examples/clear_imgui.zig" },
         [_][]const u8{ "stencil", "examples/stencil.zig" },
         [_][]const u8{ "mrt", "examples/mrt.zig" },
+        [_][]const u8{ "vert_sway", "examples/vert_sway.zig" },
     };
 
     const examples_step = b.step("examples", "build all examples");
