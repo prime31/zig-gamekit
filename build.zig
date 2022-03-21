@@ -31,15 +31,12 @@ pub fn build(b: *Builder) !void {
     const examples_step = b.step("examples", "build all examples");
     b.default_step.dependOn(examples_step);
 
-    for (examples) |example, i| {
+    for (examples) |example| {
         const name = example[0];
         const source = example[1];
 
         var exe = createExe(b, target, name, source);
         examples_step.dependOn(&exe.step);
-
-        // first element in the list is added as "run" so "zig build run" works
-        if (i == 0) _ = createExe(b, target, "run", source);
     }
 
     // shader compiler, run with `zig build compile-shaders`
@@ -63,7 +60,7 @@ pub fn build(b: *Builder) !void {
 fn createExe(b: *Builder, target: CrossTarget, name: []const u8, source: []const u8) *std.build.LibExeObjStep {
     var exe = b.addExecutable(name, source);
     exe.setBuildMode(b.standardReleaseOptions());
-    exe.setOutputDir(std.fs.path.join(b.allocator, &[_][]const u8{ b.cache_root, "bin" }) catch unreachable);
+    exe.setOutputDir("zig-cache/bin");
 
     addGameKitToArtifact(b, exe, target, "");
 

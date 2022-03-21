@@ -23,6 +23,21 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
         std.fs.cwd().makePath("zig-cache\\bin") catch unreachable;
         const src_dir = std.fs.cwd().openDir("c:\\SDL2\\lib\\x64", .{}) catch unreachable;
         src_dir.copyFile("SDL2.dll", std.fs.cwd(), "zig-cache\\bin\\SDL2.dll", .{}) catch unreachable;
+    } else if (builtin.os.tag == .macos) {
+        exe.linkSystemLibrary("iconv");
+        exe.linkFramework("AppKit");
+        exe.linkFramework("AudioToolbox");
+        exe.linkFramework("Carbon");
+        exe.linkFramework("Cocoa");
+        exe.linkFramework("CoreAudio");
+        exe.linkFramework("CoreFoundation");
+        exe.linkFramework("CoreGraphics");
+        exe.linkFramework("CoreHaptics");
+        exe.linkFramework("CoreVideo");
+        exe.linkFramework("ForceFeedback");
+        exe.linkFramework("GameController");
+        exe.linkFramework("IOKit");
+        exe.linkFramework("Metal");
     }
 
     exe.addPackage(getPackage(prefix_path));

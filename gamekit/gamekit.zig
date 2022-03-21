@@ -65,7 +65,7 @@ pub fn run(config: Config) !void {
         try config.render();
 
         if (enable_imgui) {
-            gfx.beginPass(.{ .color_action = .load });
+            gfx.beginPass(.{ .clear_color = false });
             imgui_impl.render();
             gfx.endPass();
             _ = sdl.SDL_GL_MakeCurrent(window.sdl_window, window.gl_ctx);
