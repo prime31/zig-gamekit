@@ -112,7 +112,7 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
     // gamekit
     const gamekit_package = Pkg{
         .name = "gamekit",
-        .path = .{ .path = prefix_path ++ "gamekit/gamekit.zig" },
+        .source = .{ .path = prefix_path ++ "gamekit/gamekit.zig" },
         .dependencies = &[_]Pkg{ renderkit_pkg, sdl_pkg, stb_pkg, fontstash_pkg, imgui_pkg },
     };
     exe.addPackage(gamekit_package);
