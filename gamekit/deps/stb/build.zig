@@ -21,6 +21,6 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
 pub fn getPackage(comptime prefix_path: []const u8) std.build.Pkg {
     return .{
         .name = "stb",
-        .path = .{ .path = prefix_path ++ "gamekit/deps/stb/stb.zig" },
+        .source = .{ .path = prefix_path ++ "gamekit/deps/stb/stb.zig" },
     };
 }
