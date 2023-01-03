@@ -10,7 +10,7 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
     _ = b;
     _ = target;
     exe.linkLibC();
-    exe.addIncludeDir(prefix_path ++ "gamekit/deps/stb/src");
+    exe.addIncludePath(prefix_path ++ "gamekit/deps/stb/src");
 
     const lib_cflags = &[_][]const u8{"-std=c99"};
     exe.addCSourceFile(prefix_path ++ "gamekit/deps/stb/src/stb_impl.c", lib_cflags);
