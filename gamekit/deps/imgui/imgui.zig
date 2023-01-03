@@ -23,10 +23,10 @@ pub const struct___sFILE = extern struct {
     _bf: struct___sbuf,
     _lbfsize: c_int,
     _cookie: ?*anyopaque,
-    _close: ?fn (?*anyopaque) callconv(.C) c_int,
-    _read: ?fn (?*anyopaque, [*c]u8, c_int) callconv(.C) c_int,
-    _seek: ?fn (?*anyopaque, fpos_t, c_int) callconv(.C) fpos_t,
-    _write: ?fn (?*anyopaque, [*c]const u8, c_int) callconv(.C) c_int,
+    _close: ?*const fn (?*anyopaque) callconv(.C) c_int,
+    _read: ?*const fn (?*anyopaque, [*c]u8, c_int) callconv(.C) c_int,
+    _seek: ?*const fn (?*anyopaque, fpos_t, c_int) callconv(.C) fpos_t,
+    _write: ?*const fn (?*anyopaque, [*c]const u8, c_int) callconv(.C) c_int,
     _ub: struct___sbuf,
     _extra: ?*struct___sFILEX,
     _ur: c_int,
@@ -242,12 +242,12 @@ pub const ImGuiStyleMod = struct_ImGuiStyleMod;
 pub const struct_ImGuiSettingsHandler = extern struct {
     TypeName: [*c]const u8,
     TypeHash: ImGuiID,
-    ClearAllFn: ?fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler) callconv(.C) void,
-    ReadInitFn: ?fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler) callconv(.C) void,
-    ReadOpenFn: ?fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler, [*c]const u8) callconv(.C) ?*anyopaque,
-    ReadLineFn: ?fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler, ?*anyopaque, [*c]const u8) callconv(.C) void,
-    ApplyAllFn: ?fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler) callconv(.C) void,
-    WriteAllFn: ?fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler, [*c]ImGuiTextBuffer) callconv(.C) void,
+    ClearAllFn: ?*const fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler) callconv(.C) void,
+    ReadInitFn: ?*const fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler) callconv(.C) void,
+    ReadOpenFn: ?*const fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler, [*c]const u8) callconv(.C) ?*anyopaque,
+    ReadLineFn: ?*const fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler, ?*anyopaque, [*c]const u8) callconv(.C) void,
+    ApplyAllFn: ?*const fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler) callconv(.C) void,
+    WriteAllFn: ?*const fn ([*c]ImGuiContext, [*c]ImGuiSettingsHandler, [*c]ImGuiTextBuffer) callconv(.C) void,
     UserData: ?*anyopaque,
 };
 pub const ImGuiSettingsHandler = struct_ImGuiSettingsHandler;
@@ -571,30 +571,30 @@ pub const struct_ImGuiPlatformMonitor = extern struct {
 };
 pub const ImGuiPlatformMonitor = struct_ImGuiPlatformMonitor;
 pub const struct_ImGuiPlatformIO = extern struct {
-    Platform_CreateWindow: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Platform_DestroyWindow: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Platform_ShowWindow: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Platform_SetWindowPos: ?fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
-    Platform_GetWindowPos: ?fn ([*c]ImGuiViewport) callconv(.C) ImVec2,
-    Platform_SetWindowSize: ?fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
-    Platform_GetWindowSize: ?fn ([*c]ImGuiViewport) callconv(.C) ImVec2,
-    Platform_SetWindowFocus: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Platform_GetWindowFocus: ?fn ([*c]ImGuiViewport) callconv(.C) bool,
-    Platform_GetWindowMinimized: ?fn ([*c]ImGuiViewport) callconv(.C) bool,
-    Platform_SetWindowTitle: ?fn ([*c]ImGuiViewport, [*c]const u8) callconv(.C) void,
-    Platform_SetWindowAlpha: ?fn ([*c]ImGuiViewport, f32) callconv(.C) void,
-    Platform_UpdateWindow: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Platform_RenderWindow: ?fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
-    Platform_SwapBuffers: ?fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
-    Platform_GetWindowDpiScale: ?fn ([*c]ImGuiViewport) callconv(.C) f32,
-    Platform_OnChangedViewport: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Platform_SetImeInputPos: ?fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
-    Platform_CreateVkSurface: ?fn ([*c]ImGuiViewport, ImU64, ?*const anyopaque, [*c]ImU64) callconv(.C) c_int,
-    Renderer_CreateWindow: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Renderer_DestroyWindow: ?fn ([*c]ImGuiViewport) callconv(.C) void,
-    Renderer_SetWindowSize: ?fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
-    Renderer_RenderWindow: ?fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
-    Renderer_SwapBuffers: ?fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
+    Platform_CreateWindow: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Platform_DestroyWindow: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Platform_ShowWindow: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Platform_SetWindowPos: ?*const fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
+    Platform_GetWindowPos: ?*const fn ([*c]ImGuiViewport) callconv(.C) ImVec2,
+    Platform_SetWindowSize: ?*const fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
+    Platform_GetWindowSize: ?*const fn ([*c]ImGuiViewport) callconv(.C) ImVec2,
+    Platform_SetWindowFocus: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Platform_GetWindowFocus: ?*const fn ([*c]ImGuiViewport) callconv(.C) bool,
+    Platform_GetWindowMinimized: ?*const fn ([*c]ImGuiViewport) callconv(.C) bool,
+    Platform_SetWindowTitle: ?*const fn ([*c]ImGuiViewport, [*c]const u8) callconv(.C) void,
+    Platform_SetWindowAlpha: ?*const fn ([*c]ImGuiViewport, f32) callconv(.C) void,
+    Platform_UpdateWindow: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Platform_RenderWindow: ?*const fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
+    Platform_SwapBuffers: ?*const fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
+    Platform_GetWindowDpiScale: ?*const fn ([*c]ImGuiViewport) callconv(.C) f32,
+    Platform_OnChangedViewport: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Platform_SetImeInputPos: ?*const fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
+    Platform_CreateVkSurface: ?*const fn ([*c]ImGuiViewport, ImU64, ?*const anyopaque, [*c]ImU64) callconv(.C) c_int,
+    Renderer_CreateWindow: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Renderer_DestroyWindow: ?*const fn ([*c]ImGuiViewport) callconv(.C) void,
+    Renderer_SetWindowSize: ?*const fn ([*c]ImGuiViewport, ImVec2) callconv(.C) void,
+    Renderer_RenderWindow: ?*const fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
+    Renderer_SwapBuffers: ?*const fn ([*c]ImGuiViewport, ?*anyopaque) callconv(.C) void,
     Monitors: ImVector_ImGuiPlatformMonitor,
     MainViewport: [*c]ImGuiViewport,
     Viewports: ImVector_ImGuiViewportPtr,
@@ -678,8 +678,8 @@ pub const struct_ImGuiIO = extern struct {
     BackendPlatformUserData: ?*anyopaque,
     BackendRendererUserData: ?*anyopaque,
     BackendLanguageUserData: ?*anyopaque,
-    GetClipboardTextFn: ?fn (?*anyopaque) callconv(.C) [*c]const u8,
-    SetClipboardTextFn: ?fn (?*anyopaque, [*c]const u8) callconv(.C) void,
+    GetClipboardTextFn: ?*const fn (?*anyopaque) callconv(.C) [*c]const u8,
+    SetClipboardTextFn: ?*const fn (?*anyopaque, [*c]const u8) callconv(.C) void,
     ClipboardUserData: ?*anyopaque,
     RenderDrawListsFnUnused: ?*anyopaque,
     MousePos: ImVec2,
@@ -1104,8 +1104,8 @@ pub const ImGuiViewportFlags = c_int;
 pub const ImGuiWindowFlags = c_int;
 pub const ImTextureID = ?*anyopaque;
 pub const ImGuiID = c_uint;
-pub const ImGuiInputTextCallback = ?fn ([*c]ImGuiInputTextCallbackData) callconv(.C) c_int;
-pub const ImGuiSizeCallback = ?fn ([*c]ImGuiSizeCallbackData) callconv(.C) void;
+pub const ImGuiInputTextCallback = ?*const fn ([*c]ImGuiInputTextCallbackData) callconv(.C) c_int;
+pub const ImGuiSizeCallback = ?*const fn ([*c]ImGuiSizeCallbackData) callconv(.C) void;
 pub const ImWchar16 = c_ushort;
 pub const ImWchar32 = c_uint;
 pub const ImWchar = ImWchar16;
@@ -1117,7 +1117,7 @@ pub const ImS32 = c_int;
 pub const ImU32 = c_uint;
 pub const ImS64 = i64;
 pub const ImU64 = u64;
-pub const ImDrawCallback = ?fn ([*c]const ImDrawList, [*c]const ImDrawCmd) callconv(.C) void;
+pub const ImDrawCallback = ?*const fn ([*c]const ImDrawList, [*c]const ImDrawCmd) callconv(.C) void;
 pub const ImDrawIdx = c_ushort;
 pub const ImGuiDataAuthority = c_int;
 pub const ImGuiLayoutType = c_int;
@@ -2925,7 +2925,7 @@ pub extern fn igBeginCombo(label: [*c]const u8, preview_value: [*c]const u8, fla
 pub extern fn igEndCombo() void;
 pub extern fn igComboStr_arr(label: [*c]const u8, current_item: [*c]c_int, items: [*c]const [*c]const u8, items_count: c_int, popup_max_height_in_items: c_int) bool;
 pub extern fn igComboStr(label: [*c]const u8, current_item: [*c]c_int, items_separated_by_zeros: [*c]const u8, popup_max_height_in_items: c_int) bool;
-pub extern fn igComboFnBoolPtr(label: [*c]const u8, current_item: [*c]c_int, items_getter: ?fn (?*anyopaque, c_int, [*c][*c]const u8) callconv(.C) bool, data: ?*anyopaque, items_count: c_int, popup_max_height_in_items: c_int) bool;
+pub extern fn igComboFnBoolPtr(label: [*c]const u8, current_item: [*c]c_int, items_getter: ?*const fn (?*anyopaque, c_int, [*c][*c]const u8) callconv(.C) bool, data: ?*anyopaque, items_count: c_int, popup_max_height_in_items: c_int) bool;
 pub extern fn igDragFloat(label: [*c]const u8, v: [*c]f32, v_speed: f32, v_min: f32, v_max: f32, format: [*c]const u8, flags: ImGuiSliderFlags) bool;
 pub extern fn igDragFloat2(label: [*c]const u8, v: [*c]f32, v_speed: f32, v_min: f32, v_max: f32, format: [*c]const u8, flags: ImGuiSliderFlags) bool;
 pub extern fn igDragFloat3(label: [*c]const u8, v: [*c]f32, v_speed: f32, v_min: f32, v_max: f32, format: [*c]const u8, flags: ImGuiSliderFlags) bool;
@@ -2992,14 +2992,14 @@ pub extern fn igSetNextItemOpen(is_open: bool, cond: ImGuiCond) void;
 pub extern fn igSelectableBool(label: [*c]const u8, selected: bool, flags: ImGuiSelectableFlags, size: ImVec2) bool;
 pub extern fn igSelectableBoolPtr(label: [*c]const u8, p_selected: [*c]bool, flags: ImGuiSelectableFlags, size: ImVec2) bool;
 pub extern fn igListBoxStr_arr(label: [*c]const u8, current_item: [*c]c_int, items: [*c]const [*c]const u8, items_count: c_int, height_in_items: c_int) bool;
-pub extern fn igListBoxFnBoolPtr(label: [*c]const u8, current_item: [*c]c_int, items_getter: ?fn (?*anyopaque, c_int, [*c][*c]const u8) callconv(.C) bool, data: ?*anyopaque, items_count: c_int, height_in_items: c_int) bool;
+pub extern fn igListBoxFnBoolPtr(label: [*c]const u8, current_item: [*c]c_int, items_getter: ?*const fn (?*anyopaque, c_int, [*c][*c]const u8) callconv(.C) bool, data: ?*anyopaque, items_count: c_int, height_in_items: c_int) bool;
 pub extern fn igListBoxHeaderVec2(label: [*c]const u8, size: ImVec2) bool;
 pub extern fn igListBoxHeaderInt(label: [*c]const u8, items_count: c_int, height_in_items: c_int) bool;
 pub extern fn igListBoxFooter() void;
 pub extern fn igPlotLinesFloatPtr(label: [*c]const u8, values: [*c]const f32, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, graph_size: ImVec2, stride: c_int) void;
-pub extern fn igPlotLinesFnFloatPtr(label: [*c]const u8, values_getter: ?fn (?*anyopaque, c_int) callconv(.C) f32, data: ?*anyopaque, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, graph_size: ImVec2) void;
+pub extern fn igPlotLinesFnFloatPtr(label: [*c]const u8, values_getter: ?*const fn (?*anyopaque, c_int) callconv(.C) f32, data: ?*anyopaque, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, graph_size: ImVec2) void;
 pub extern fn igPlotHistogramFloatPtr(label: [*c]const u8, values: [*c]const f32, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, graph_size: ImVec2, stride: c_int) void;
-pub extern fn igPlotHistogramFnFloatPtr(label: [*c]const u8, values_getter: ?fn (?*anyopaque, c_int) callconv(.C) f32, data: ?*anyopaque, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, graph_size: ImVec2) void;
+pub extern fn igPlotHistogramFnFloatPtr(label: [*c]const u8, values_getter: ?*const fn (?*anyopaque, c_int) callconv(.C) f32, data: ?*anyopaque, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, graph_size: ImVec2) void;
 pub extern fn igValueBool(prefix: [*c]const u8, b: bool) void;
 pub extern fn igValueInt(prefix: [*c]const u8, v: c_int) void;
 pub extern fn igValueUint(prefix: [*c]const u8, v: c_uint) void;
@@ -3127,7 +3127,7 @@ pub extern fn igLoadIniSettingsFromMemory(ini_data: [*c]const u8, ini_size: usiz
 pub extern fn igSaveIniSettingsToDisk(ini_filename: [*c]const u8) void;
 pub extern fn igSaveIniSettingsToMemory(out_ini_size: [*c]usize) [*c]const u8;
 pub extern fn igDebugCheckVersionAndDataLayout(version_str: [*c]const u8, sz_io: usize, sz_style: usize, sz_vec2: usize, sz_vec4: usize, sz_drawvert: usize, sz_drawidx: usize) bool;
-pub extern fn igSetAllocatorFunctions(alloc_func: ?fn (usize, ?*anyopaque) callconv(.C) ?*anyopaque, free_func: ?fn (?*anyopaque, ?*anyopaque) callconv(.C) void, user_data: ?*anyopaque) void;
+pub extern fn igSetAllocatorFunctions(alloc_func: ?*const fn (usize, ?*anyopaque) callconv(.C) ?*anyopaque, free_func: ?*const fn (?*anyopaque, ?*anyopaque) callconv(.C) void, user_data: ?*anyopaque) void;
 pub extern fn igMemAlloc(size: usize) ?*anyopaque;
 pub extern fn igMemFree(ptr: ?*anyopaque) void;
 pub extern fn igGetPlatformIO() [*c]ImGuiPlatformIO;
@@ -3795,7 +3795,7 @@ pub extern fn igGetInputTextState(id: ImGuiID) [*c]ImGuiInputTextState;
 pub extern fn igColorTooltip(text: [*c]const u8, col: [*c]const f32, flags: ImGuiColorEditFlags) void;
 pub extern fn igColorEditOptionsPopup(col: [*c]const f32, flags: ImGuiColorEditFlags) void;
 pub extern fn igColorPickerOptionsPopup(ref_col: [*c]const f32, flags: ImGuiColorEditFlags) void;
-pub extern fn igPlotEx(plot_type: ImGuiPlotType, label: [*c]const u8, values_getter: ?fn (?*anyopaque, c_int) callconv(.C) f32, data: ?*anyopaque, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, frame_size: ImVec2) c_int;
+pub extern fn igPlotEx(plot_type: ImGuiPlotType, label: [*c]const u8, values_getter: ?*const fn (?*anyopaque, c_int) callconv(.C) f32, data: ?*anyopaque, values_count: c_int, values_offset: c_int, overlay_text: [*c]const u8, scale_min: f32, scale_max: f32, frame_size: ImVec2) c_int;
 pub extern fn igShadeVertsLinearColorGradientKeepAlpha(draw_list: [*c]ImDrawList, vert_start_idx: c_int, vert_end_idx: c_int, gradient_p0: ImVec2, gradient_p1: ImVec2, col0: ImU32, col1: ImU32) void;
 pub extern fn igShadeVertsLinearUV(draw_list: [*c]ImDrawList, vert_start_idx: c_int, vert_end_idx: c_int, a: ImVec2, b: ImVec2, uv_a: ImVec2, uv_b: ImVec2, clamp: bool) void;
 pub extern fn igGcCompactTransientWindowBuffers(window: ?*ImGuiWindow) void;
