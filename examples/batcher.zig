@@ -77,7 +77,7 @@ fn init() !void {
 
     if (use_multi_texture_batcher) {
         var uniform = MultiFragUniform{};
-        for (uniform.samplers) |*val, i| val.* = @intCast(c_int, i);
+        for (uniform.samplers, 0..) |*val, i| val.* = @intCast(c_int, i);
         shader.?.bind();
         shader.?.setVertUniform(MultiFragUniform, &uniform);
     }
@@ -143,7 +143,7 @@ fn loadTextures() void {
     textures = std.heap.c_allocator.alloc(gfx.Texture, total_textures) catch unreachable;
 
     var buf: [512]u8 = undefined;
-    for (textures) |_, i| {
+    for (textures, 0..) |_, i| {
         var name = std.fmt.bufPrintZ(&buf, "examples/assets/textures/bee-{}.png", .{i + 1}) catch unreachable;
         textures[i] = gfx.Texture.initFromFile(std.heap.c_allocator, name, .nearest) catch unreachable;
     }

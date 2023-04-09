@@ -11,17 +11,15 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
     _ = b;
     _ = target;
     if (prefix_path.len > 0 and !std.mem.endsWith(u8, prefix_path, "/")) @panic("prefix-path must end with '/' if it is not empty");
-    exe.addPackage(getPackage(prefix_path));
     exe.linkLibC();
 
     const lib_cflags = &[_][]const u8{"-O3"};
     exe.addCSourceFile(prefix_path ++ "gamekit/deps/fontstash/src/fontstash.c", lib_cflags);
 }
 
-pub fn getPackage(comptime prefix_path: []const u8) std.build.Pkg {
+pub fn getModule(b: *std.Build, comptime prefix_path: []const u8) *std.build.Module {
     if (prefix_path.len > 0 and !std.mem.endsWith(u8, prefix_path, "/")) @panic("prefix-path must end with '/' if it is not empty");
-    return .{
-        .name = "fontstash",
-        .source = .{ .path = prefix_path ++ "gamekit/deps/fontstash/fontstash.zig" },
-    };
+    return b.createModule(.{
+        .source_file = .{ .path = prefix_path ++ "gamekit/deps/fontstash/fontstash.zig" },
+    });
 }

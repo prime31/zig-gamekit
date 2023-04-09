@@ -1,7 +1,7 @@
 const std = @import("std");
 const gk = @import("gamekit");
 const gfx = gk.gfx;
-const imgui = @import("imgui");
+const imgui = gk.imgui;
 
 pub const enable_imgui = true;
 

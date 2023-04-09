@@ -14,7 +14,6 @@ pub fn build(b: *std.build.Builder) !void {
 /// prefix_path is used to add package paths. It should be the the same path used to include this build file
 pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.CrossTarget, comptime prefix_path: []const u8) void {
     if (prefix_path.len > 0 and !std.mem.endsWith(u8, prefix_path, "/")) @panic("prefix-path must end with '/' if it is not empty");
-    exe.addPackage(getImGuiPackage(prefix_path));
 
     if (target.isWindows()) {
         exe.linkSystemLibrary("user32");
@@ -54,7 +53,7 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
 fn macosFrameworksDir(b: *Builder) ![]u8 {
     if (framework_dir) |dir| return dir;
 
-    var str = try b.exec(&[_][]const u8{ "xcrun", "--show-sdk-path" });
+    var str = b.exec(&[_][]const u8{ "xcrun", "--show-sdk-path" });
     const strip_newline = std.mem.lastIndexOf(u8, str, "\n");
     if (strip_newline) |index| {
         str = str[0..index];
@@ -63,10 +62,9 @@ fn macosFrameworksDir(b: *Builder) ![]u8 {
     return framework_dir.?;
 }
 
-pub fn getImGuiPackage(comptime prefix_path: []const u8) std.build.Pkg {
+pub fn getModule(b: *std.Build, comptime prefix_path: []const u8) *std.build.Module {
     if (prefix_path.len > 0 and !std.mem.endsWith(u8, prefix_path, "/")) @panic("prefix-path must end with '/' if it is not empty");
-    return .{
-        .name = "imgui",
-        .source = .{ .path = prefix_path ++ "gamekit/deps/imgui/imgui.zig" },
-    };
+    return b.createModule(.{
+        .source_file = .{ .path = prefix_path ++ "gamekit/deps/imgui/imgui.zig" },
+    });
 }

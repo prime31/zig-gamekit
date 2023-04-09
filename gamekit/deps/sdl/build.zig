@@ -39,14 +39,11 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
         exe.linkFramework("IOKit");
         exe.linkFramework("Metal");
     }
-
-    exe.addPackage(getPackage(prefix_path));
 }
 
-pub fn getPackage(comptime prefix_path: []const u8) std.build.Pkg {
+pub fn getModule(b: *std.Build, comptime prefix_path: []const u8) *std.build.Module {
     if (prefix_path.len > 0 and !std.mem.endsWith(u8, prefix_path, "/")) @panic("prefix-path must end with '/' if it is not empty");
-    return .{
-        .name = "sdl",
-        .source = .{ .path = prefix_path ++ "gamekit/deps/sdl/sdl.zig" },
-    };
+    return b.createModule(.{
+        .source_file = .{ .path = prefix_path ++ "gamekit/deps/sdl/sdl.zig" },
+    });
 }

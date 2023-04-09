@@ -1,5 +1,4 @@
 const std = @import("std");
-const renderkit = @import("renderkit");
 const gk = @import("gamekit");
 const gfx = gk.gfx;
 const math = gk.math;

@@ -403,7 +403,6 @@ pub inline fn SDL_SwapFloat(arg_x: f32) f32 {
         f: f32,
         ui32: Uint32,
     };
-    _ = union_unnamed_8;
     var swapper: union_unnamed_8 = undefined;
     swapper.f = x;
     swapper.ui32 = __builtin_bswap32(swapper.ui32);

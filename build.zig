@@ -4,7 +4,6 @@ const builtin = @import("builtin");
 const LibExeObjStep = std.build.LibExeObjStep;
 const Builder = std.build.Builder;
 const CrossTarget = std.zig.CrossTarget;
-const Pkg = std.build.Pkg;
 
 const renderkit_build = @import("renderkit/build.zig");
 const ShaderCompileStep = renderkit_build.ShaderCompileStep;
@@ -13,6 +12,7 @@ var enable_imgui: ?bool = null;
 
 pub fn build(b: *Builder) !void {
     const target = b.standardTargetOptions(.{});
+    const optimize = b.standardOptimizeOption(.{});
 
     const examples = [_][2][]const u8{
         [_][]const u8{ "mode7", "examples/mode7.zig" },
@@ -35,7 +35,7 @@ pub fn build(b: *Builder) !void {
         const name = example[0];
         const source = example[1];
 
-        var exe = createExe(b, target, name, source);
+        var exe = createExe(b, target, optimize, name, source);
         examples_step.dependOn(&exe.step);
     }
 
@@ -53,13 +53,17 @@ pub fn build(b: *Builder) !void {
     });
 
     const comple_shaders_step = b.step("compile-shaders", "compiles all shaders");
-    b.default_step.dependOn(comple_shaders_step);
+    // b.default_step.dependOn(comple_shaders_step); // optionally always run it
     comple_shaders_step.dependOn(&res.step);
 }
 
-fn createExe(b: *Builder, target: CrossTarget, name: []const u8, source: []const u8) *std.build.LibExeObjStep {
-    var exe = b.addExecutable(name, source);
-    exe.setBuildMode(b.standardReleaseOptions());
+fn createExe(b: *Builder, target: CrossTarget, optimize: std.builtin.Mode, name: []const u8, source: []const u8) *std.build.LibExeObjStep {
+    const exe = b.addExecutable(.{
+        .name = name,
+        .root_source_file = .{ .path = source },
+        .target = target,
+        .optimize = optimize,
+    });
     exe.setOutputDir("zig-cache/bin");
 
     addGameKitToArtifact(b, exe, target, "");
@@ -83,37 +87,45 @@ pub fn addGameKitToArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: 
     exe.addOptions("gamekit_build_options", exe_options);
     exe_options.addOption(bool, "enable_imgui", enable_imgui.?);
 
-    // var dependencies = std.ArrayList(Pkg).init(b.allocator);
-
     // sdl
     const sdl_builder = @import("gamekit/deps/sdl/build.zig");
     sdl_builder.linkArtifact(b, exe, target, prefix_path);
-    const sdl_pkg = sdl_builder.getPackage(prefix_path);
+    const sdl_pkg = sdl_builder.getModule(b, prefix_path);
+    exe.addModule("sdl", sdl_pkg);
 
     // stb
     const stb_builder = @import("gamekit/deps/stb/build.zig");
     stb_builder.linkArtifact(b, exe, target, prefix_path);
-    const stb_pkg = stb_builder.getPackage(prefix_path);
+    const stb_pkg = stb_builder.getModule(b, prefix_path);
+    exe.addModule("stb", stb_pkg);
 
     // fontstash
     const fontstash_build = @import("gamekit/deps/fontstash/build.zig");
     fontstash_build.linkArtifact(b, exe, target, prefix_path);
-    const fontstash_pkg = fontstash_build.getPackage(prefix_path);
+    const fontstash_pkg = fontstash_build.getModule(b, prefix_path);
+    exe.addModule("stb", fontstash_pkg);
 
     // renderkit
     renderkit_build.addRenderKitToArtifact(b, exe, target, prefix_path ++ "renderkit/");
-    const renderkit_pkg = renderkit_build.getRenderKitPackage(prefix_path ++ "renderkit/");
+    const renderkit_pkg = renderkit_build.getModule(b, prefix_path ++ "renderkit/");
 
     // imgui
     const imgui_builder = @import("gamekit/deps/imgui/build.zig");
     imgui_builder.linkArtifact(b, exe, target, prefix_path);
-    const imgui_pkg = imgui_builder.getImGuiPackage(prefix_path);
+    const imgui_pkg = imgui_builder.getModule(b, prefix_path);
+    exe.addModule("imgui", imgui_pkg);
 
     // gamekit
-    const gamekit_package = Pkg{
-        .name = "gamekit",
-        .source = .{ .path = prefix_path ++ "gamekit/gamekit.zig" },
-        .dependencies = &[_]Pkg{ renderkit_pkg, sdl_pkg, stb_pkg, fontstash_pkg, imgui_pkg },
-    };
-    exe.addPackage(gamekit_package);
+    //CreateModuleOptions
+    const gamekit_module = b.createModule(.{
+        .source_file = .{ .path = prefix_path ++ "gamekit/gamekit.zig" },
+        .dependencies = &.{
+            .{ .name = "renderkit", .module = renderkit_pkg },
+            .{ .name = "sdl", .module = sdl_pkg },
+            .{ .name = "fontstash", .module = fontstash_pkg },
+            .{ .name = "imgui", .module = imgui_pkg },
+            .{ .name = "stb", .module = stb_pkg },
+        },
+    });
+    exe.addModule("gamekit", gamekit_module);
 }

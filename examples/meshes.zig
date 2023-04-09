@@ -39,17 +39,17 @@ fn init() !void {
     };
     var dyn_indices = [_]u16{ 0, 1, 2, 2, 3, 0 };
     dyn_mesh = try gfx.DynamicMesh(u16, gfx.Vertex).init(std.heap.c_allocator, vertices.len, &dyn_indices);
-    for (dyn_vertices) |*vert, i| {
-        vert.pos.x += 200;
-        vert.pos.y += 200;
-        dyn_mesh.verts[i] = vert.*;
+    for (dyn_vertices, 0..) |_, i| {
+        dyn_vertices[i].pos.x += 200;
+        dyn_vertices[i].pos.y += 200;
+        dyn_mesh.verts[i] = dyn_vertices[i];
     }
 }
 
 fn update() !void {
     for (dyn_mesh.verts) |*vert| {
-        vert.pos.x += 0.1;
-        vert.pos.y += 0.1;
+        vert.pos.x += 0.01;
+        vert.pos.y += 0.01;
     }
     dyn_mesh.updateAllVerts();
 }

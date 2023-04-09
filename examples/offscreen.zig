@@ -79,18 +79,18 @@ fn update() !void {
         thing.pos.y += thing.vel.y * gk.time.dt();
     }
 
-    rt_pos.x += 0.5;
-    rt_pos.y += 0.5;
+    rt_pos.x += 0.05;
+    rt_pos.y += 0.05;
 
     if (gk.input.keyDown(.a)) {
-        camera.pos.x += 100 * gk.time.dt();
+        camera.pos.x += 1 * gk.time.dt();
     } else if (gk.input.keyDown(.d)) {
-        camera.pos.x -= 100 * gk.time.dt();
+        camera.pos.x -= 1 * gk.time.dt();
     }
     if (gk.input.keyDown(.w)) {
-        camera.pos.y -= 100 * gk.time.dt();
+        camera.pos.y -= 1 * gk.time.dt();
     } else if (gk.input.keyDown(.s)) {
-        camera.pos.y += 100 * gk.time.dt();
+        camera.pos.y += 1 * gk.time.dt();
     }
 }
 

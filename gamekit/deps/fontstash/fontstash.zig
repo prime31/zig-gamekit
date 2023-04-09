@@ -19,9 +19,9 @@ pub const Params = extern struct {
     height: c_int = 256,
     flags: Flags = .top_left,
     user_ptr: *anyopaque,
-    renderCreate: ?fn (?*anyopaque, c_int, c_int) callconv(.C) c_int = null,
-    renderResize: ?fn (?*anyopaque, c_int, c_int) callconv(.C) c_int = null,
-    renderUpdate: ?fn (?*anyopaque, [*c]c_int, [*c]const u8) callconv(.C) c_int = null,
+    renderCreate: ?*const fn (?*anyopaque, c_int, c_int) callconv(.C) c_int = null,
+    renderResize: ?*const fn (?*anyopaque, c_int, c_int) callconv(.C) c_int = null,
+    renderUpdate: ?*const fn (?*anyopaque, [*c]c_int, [*c]const u8) callconv(.C) c_int = null,
 };
 
 pub const Flags = enum(u8) {

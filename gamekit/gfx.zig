@@ -48,7 +48,7 @@ pub const PassConfig = struct {
         cmd.colors[0].clear = self.clear_color;
         cmd.colors[0].color = self.color.asArray();
 
-        for (self.mrt_colors) |mrt_color, i| {
+        for (self.mrt_colors, 0..) |mrt_color, i| {
             cmd.colors[i + 1] = .{
                 .clear = mrt_color.clear,
                 .color = mrt_color.color.asArray(),

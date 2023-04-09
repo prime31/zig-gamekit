@@ -142,7 +142,7 @@ pub const Mat32 = extern struct {
     }
 
     pub fn transformVec2Slice(self: Mat32, comptime T: type, dst: []T, src: []Vec2) void {
-        for (src) |_, i| {
+        for (src, 0..) |_, i| {
             const x = src[i].x * self.data[0] + src[i].y * self.data[2] + self.data[4];
             const y = src[i].x * self.data[1] + src[i].y * self.data[3] + self.data[5];
             dst[i].x = x;
@@ -153,7 +153,7 @@ pub const Mat32 = extern struct {
     /// transforms the positions in Quad and copies them to dst along with the uvs and color. This could be made generic
     /// if we have other common Vertex types
     pub fn transformQuad(self: Mat32, dst: []Vertex, quad: Quad, color: Color) void {
-        for (dst) |*item, i| {
+        for (dst, 0..) |*item, i| {
             item.*.pos.x = quad.positions[i].x * self.data[0] + quad.positions[i].y * self.data[2] + self.data[4];
             item.*.pos.y = quad.positions[i].x * self.data[1] + quad.positions[i].y * self.data[3] + self.data[5];
             item.*.uv = quad.uvs[i];
@@ -162,7 +162,7 @@ pub const Mat32 = extern struct {
     }
 
     pub fn transformVertexSlice(self: Mat32, dst: []Vertex) void {
-        for (dst) |_, i| {
+        for (dst, 0..) |_, i| {
             const x = dst[i].pos.x * self.data[0] + dst[i].pos.y * self.data[2] + self.data[4];
             const y = dst[i].pos.x * self.data[1] + dst[i].pos.y * self.data[3] + self.data[5];
 

@@ -1,8 +1,8 @@
 const std = @import("std");
 const sdl = @import("sdl");
-const imgui = @import("imgui");
 const imgui_impl = @import("imgui/implementation.zig");
 
+pub const imgui = @import("imgui");
 pub const renderkit = @import("renderkit");
 pub const utils = @import("utils/utils.zig");
 pub const math = @import("math/math.zig");
@@ -43,7 +43,7 @@ pub var window: Window = undefined;
 pub var time: Time = undefined;
 pub var input: Input = undefined;
 
-pub fn run(config: Config) !void {
+pub fn run(comptime config: Config) !void {
     window = try Window.init(config.window);
 
     renderkit.setup(.{

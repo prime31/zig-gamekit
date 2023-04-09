@@ -36,24 +36,22 @@ fn init() !void {
 fn update() !void {
     const speed: f32 = 5;
     const size = gk.window.size();
-    for (points) |*p| {
+    for (&points) |*p| {
         p.pos.x += p.dir * speed;
-        if (p.pos.x + 30 > @intToFloat(f32, size.w)) p.dir *= -1;
-        if (p.pos.x - 30 < 0) p.dir *= -1;
+        if (p.pos.x + 0.30 * gk.time.rawDeltaTime() > @intToFloat(f32, size.w)) p.dir *= -1;
+        if (p.pos.x - 0.30 * gk.time.rawDeltaTime() < 0) p.dir *= -1;
     }
 }
 
 fn render() !void {
     // offscreen rendering. set stencil to write
-    gfx.setRenderState(.{
-        .stencil = .{
-            .enabled = true,
-            .write_mask = 0xFF,
-            .compare_func = .always,
-            .ref = 1,
-            .read_mask = 0xFF,
-        }
-    });
+    gfx.setRenderState(.{ .stencil = .{
+        .enabled = true,
+        .write_mask = 0xFF,
+        .compare_func = .always,
+        .ref = 1,
+        .read_mask = 0xFF,
+    } });
     gk.gfx.beginPass(.{
         .color = math.Color.purple,
         .pass = pass,
@@ -70,7 +68,7 @@ fn render() !void {
             .compare_func = .equal,
             .ref = 1,
             .read_mask = 0xFF,
-        }
+        },
     });
     gk.gfx.beginPass(.{
         .clear_color = false,
