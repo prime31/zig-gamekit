@@ -15,6 +15,8 @@ pub fn build(b: *std.build.Builder) !void {
 pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.CrossTarget, comptime prefix_path: []const u8) void {
     if (prefix_path.len > 0 and !std.mem.endsWith(u8, prefix_path, "/")) @panic("prefix-path must end with '/' if it is not empty");
 
+	exe.linkLibCpp();
+	
     if (target.isWindows()) {
         exe.linkSystemLibrary("user32");
         exe.linkSystemLibrary("gdi32");
