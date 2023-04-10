@@ -14,7 +14,7 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
 
     if (builtin.os.tag == .windows) {
         // Windows include dirs for SDL2. This requires downloading SDL2 dev and extracting to c:\SDL2
-        exe.addLibPath("c:\\SDL2\\lib\\x64");
+        exe.addLibraryPath("c:\\SDL2\\lib\\x64");
 
         // SDL2.dll needs to be copied to the zig-cache/bin folder
         // TODO: installFile doesnt seeem to work so manually copy the file over
