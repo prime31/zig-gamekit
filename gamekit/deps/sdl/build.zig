@@ -38,6 +38,9 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
         exe.linkFramework("GameController");
         exe.linkFramework("IOKit");
         exe.linkFramework("Metal");
+		
+		exe.linkSystemLibraryName("SDL2");
+		exe.linkSystemLibraryName("SDL2main");
     }
 }
 
