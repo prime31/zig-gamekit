@@ -64,11 +64,10 @@ fn createExe(b: *Builder, target: CrossTarget, optimize: std.builtin.Mode, name:
         .target = target,
         .optimize = optimize,
     });
-    exe.setOutputDir("zig-cache/bin");
 
     addGameKitToArtifact(b, exe, target, "");
 
-    const run_cmd = exe.run();
+    const run_cmd = b.addRunArtifact(exe);
     const exe_step = b.step(name, b.fmt("run {s}.zig", .{name}));
     exe_step.dependOn(&run_cmd.step);
 
