@@ -30,7 +30,7 @@ pub fn linkArtifact(b: *Builder, exe: *std.build.LibExeObjStep, target: std.zig.
         exe.linkFramework("Metal");
         exe.linkFramework("MetalKit");
         exe.linkFramework("OpenGL");
-        exe.linkFramework("Audiotoolbox");
+        exe.linkFramework("AudioToolbox");
         exe.linkFramework("CoreAudio");
         exe.linkSystemLibrary("c++");
     } else {
