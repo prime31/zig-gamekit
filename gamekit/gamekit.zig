@@ -15,7 +15,7 @@ const Time = @import("time.zig").Time;
 
 pub const Config = struct {
     init: fn () anyerror!void,
-    update: ?fn () anyerror!void = null,
+    update: ?fn () anyerror!bool = null,
     render: fn () anyerror!void,
     shutdown: ?fn () anyerror!void = null,
 
@@ -59,9 +59,10 @@ pub fn run(comptime config: Config) !void {
 
     try config.init();
 
-    while (!pollEvents()) {
+    var running = true;
+    while (running and !pollEvents()) {
         time.tick();
-        if (config.update) |update| try update();
+        if (config.update) |update| running = try update();
         try config.render();
 
         if (enable_imgui) {
