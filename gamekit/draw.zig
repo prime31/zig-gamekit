@@ -100,7 +100,7 @@ pub const draw = struct {
         }
     }
 
-    pub fn textOptions(str: []const u8, fb: ?*gfx.FontBook, options: struct { x: f32, y: f32, rot: f32 = 0, sx: f32 = 1, sy: f32 = 1, alignment: gfx.FontBook.Align = .default, color: math.Color = math.Color.White }) void {
+    pub fn textOptions(str: []const u8, fb: ?*gfx.FontBook, options: struct { x: f32, y: f32, rot: f32 = 0, sx: f32 = 1, sy: f32 = 1, alignment: gfx.FontBook.Align = .default, color: math.Color = math.Color.white }) void {
         var book = fb orelse fontbook;
         var matrix = math.Mat32.initTransform(.{ .x = options.x, .y = options.y, .angle = options.rot, .sx = options.sx, .sy = options.sy });
         book.setAlign(options.alignment);
