@@ -47,7 +47,7 @@ pub const FontBook = struct {
 
     // add fonts
     pub fn addFont(self: *FontBook, file: [:0]const u8) c_int {
-        const data = gk.fs.read(self.allocator, file) catch unreachable;
+        const data = gk.utils.fs.read(self.allocator, file) catch unreachable;
 
         // we can let FONS free the data since we are using the c_allocator here
         return fons.fonsAddFontMem(self.stash, file, @ptrCast([*c]const u8, data), @intCast(i32, data.len), 1);
