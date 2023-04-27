@@ -35,7 +35,7 @@ pub const Window = struct {
 
         window.createOpenGlWindow(config, flags);
 
-        if (config.disable_vsync) _ = sdl.SDL_GL_SetSwapInterval(0);
+        _ = sdl.SDL_GL_SetSwapInterval(if (config.disable_vsync) 0 else 1);
 
         window.id = sdl.SDL_GetWindowID(window.sdl_window);
         return window;

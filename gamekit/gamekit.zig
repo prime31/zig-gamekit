@@ -48,7 +48,6 @@ pub fn run(comptime config: Config) !void {
 
     renderkit.setup(.{
         .gl_loader = sdl.SDL_GL_GetProcAddress,
-        .disable_vsync = config.window.disable_vsync,
     }, std.heap.c_allocator);
 
     gfx.init();
